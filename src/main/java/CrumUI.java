@@ -11,4 +11,17 @@ public class CrumUI {
     private JLabel readLabel;
     private JLabel writeLabel;
     private JLabel writeMetrics;
+
+    public static void main(String[] args){
+        JFrame frame = new JFrame("C.R.U.M");
+
+        frame.setSize(700,700);
+        frame.setContentPane(new CrumUI().rootPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.pack();
+        //centers the window
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
 }
