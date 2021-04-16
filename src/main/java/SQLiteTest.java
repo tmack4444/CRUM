@@ -24,14 +24,25 @@ public class SQLiteTest {
             String sql_disc = "CREATE TABLE IF NOT EXISTS TESTDISC " +
                     "(DISC_ID INT      NOT NULL," +
                     "MACHINE_ID INT      NOT NULL," +
-                    "TIMESTAMP DATETIME NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
                     " DISC_NAME           TEXT    NOT NULL, " +
                     " DISC_MODEL          TEXT     NOT NULL, " +
                     " DISC_SIZE        INT    NOT NULL, " +
-                    "DISC_USEd        INT   NOT NULL," +
+                    "DISC_USED        INT   NOT NULL," +
+                    "DISC_SPEED INT NOT NULL, " +
                     "PRIMARY KEY(DISC_ID, MACHINE_ID, TIMESTAMP)," +
                     "FOREIGN KEY(MACHINE_ID) REFERENCES TESTMACHINE(MACHINE_ID))";
             stmt.executeUpdate(sql_disc);
+
+            String sql_user = "CREATE TABLE IF NOT EXISTS TESTUSER " +
+                    "(USER_ID INT NOT NULL, " +
+                    "MACHINE_ID INT NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    "PASSWORD HASH TEXT NOT NULL," +
+                    "PRIMARY KEY(USER_ID, MACHINE_ID, TIMESTAMP)," +
+                    "FOREIGN KEY(MACHINE_ID) REFERENCES TESTMACHINE(MACHINE_ID))";
+            stmt.executeUpdate(sql_user);
+
             System.out.println("Table created successfully");
 
             Calendar calendar = Calendar.getInstance();
