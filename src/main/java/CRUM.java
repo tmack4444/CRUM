@@ -1,13 +1,16 @@
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
-
+import java.sql.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CRUM {
 
     public static void main(String[] args) throws InterruptedException {
+        c = DriverManager.getConnection("jdbc:sqlite:test.db");
+        System.out.println("Opened database successfully");
+        stmt = c.createStatement();
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
         List<HWDiskStore> disks = hal.getDiskStores();
