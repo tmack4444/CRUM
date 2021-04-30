@@ -14,22 +14,26 @@ public class CRUM {
         for(int i = 0; i < disks.size(); i++){
             LOGGER.info("Initializing new Disk {}", i);
             HWDiskStore disk = disks.get(i);
+            LOGGER.info("disk name:  {}", disk.getName());
+            LOGGER.info("disk model: {}", disk.getModel());
+            LOGGER.info("disk size:  {} GB", (disk.getSize() / 1073741824));
+            /*
             System.out.println();
             System.out.println("disk name: " + disk.getName());
             System.out.println("disk model: " + disk.getModel());
             System.out.println("disk size: " + (disk.getSize() / 1073741824) + " GB");
+            */
         }
         while(true){
             for(int i = 0; i < disks.size(); i++){
                 List<HWDiskStore> Disks = hal.getDiskStores();
                 HWDiskStore disk = Disks.get(i);
-                System.out.println();
-                System.out.println(disk.getName());
-                System.out.println("Reads: " + disk.getReads());
-                System.out.println("Bytes read: " + disk.getReadBytes());
-                System.out.println("Writes: " + disk.getReads());
-                System.out.println("Bytes written: " + disk.getReadBytes());
-                System.out.println("Time in use: " + disk.getTransferTime());
+                LOGGER.info("Disk:  {}", disk.getName());
+                LOGGER.info("Reads:  {}", disk.getReads());
+                LOGGER.info("Bytes read: {} GB", disk.getReadBytes());
+                LOGGER.info("Writes:  {}", disk.getWrites());
+                LOGGER.info("Bytes written: {} GB", disk.getWriteBytes());
+                LOGGER.info("Time in use: {} \n", disk.getTransferTime());
             }
             TimeUnit.SECONDS.sleep(1);
         }
