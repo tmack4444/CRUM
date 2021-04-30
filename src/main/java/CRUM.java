@@ -1,17 +1,18 @@
 import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
-
+import org.slf4j.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CRUM {
-
+    static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
     public static void main(String[] args) throws InterruptedException {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
         List<HWDiskStore> disks = hal.getDiskStores();
         for(int i = 0; i < disks.size(); i++){
+            LOGGER.info("Initializing new Disk {}", i);
             HWDiskStore disk = disks.get(i);
             System.out.println();
             System.out.println("disk name: " + disk.getName());
