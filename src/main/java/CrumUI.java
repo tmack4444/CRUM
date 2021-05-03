@@ -1,6 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
 
-public class CrumUI {
+public class CrumUI extends JFrame {
     private JTabbedPane tabbedPane1;
     private JPanel rootPanel;
     private JPanel CpuPanel;
