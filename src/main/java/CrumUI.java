@@ -11,6 +11,10 @@ public class CrumUI {
     private JLabel readLabel;
     private JLabel writeLabel;
     private JLabel writeMetrics;
+    private JLabel bytesRead;
+    private JLabel readBytesNum;
+    private JLabel bytesWritten;
+    private JLabel writeBytesNum;
 
     public static void main(String[] args){
         JFrame frame = new JFrame("C.R.U.M");
