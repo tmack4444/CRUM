@@ -45,7 +45,7 @@ public class CRUM {
                     smi.setInt(7, usedSpace);
                     smi.setLong(8, disk.getTransferTime());
                     smi.execute();
-
+                    /*
                     String sql_Search = "SELECT * FROM TESTDISC";
                     ResultSet rs = stmt.executeQuery(sql_Search);
                     while(rs.next()) {
@@ -55,6 +55,7 @@ public class CRUM {
                         System.out.println("DISC_SPEED: "+rs.getString("DISC_SPEED"));
                         System.out.println();
                     }
+                    */
                 }
                 TimeUnit.SECONDS.sleep(1);
             }
