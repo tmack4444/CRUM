@@ -59,7 +59,7 @@
             <border type="none"/>
             <children/>
           </grid>
-          <grid id="28ad0" binding="DiskPanel" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="28ad0" binding="DiskPane" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Disk">
@@ -69,45 +69,45 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="a365a" class="javax.swing.JLabel" binding="readLabel">
+              <component id="a365a" class="javax.swing.JLabel" binding="readSpeed">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Source Code Pro"/>
                   <text value="Read Speed:"/>
                 </properties>
               </component>
-              <component id="64842" class="javax.swing.JLabel" binding="readMetrics">
+              <component id="fcb5d" class="javax.swing.JLabel" binding="writeSpeed">
                 <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Metrics go here"/>
-                </properties>
-              </component>
-              <component id="fcb5d" class="javax.swing.JLabel" binding="writeLabel">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Source Code Pro"/>
                   <text value="Write Speed:"/>
                 </properties>
               </component>
-              <component id="ee1bf" class="javax.swing.JLabel" binding="writeMetrics">
-                <constraints>
-                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Metrics go here"/>
-                </properties>
-              </component>
               <vspacer id="65cc">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
+              <component id="59398" class="javax.swing.JLabel" binding="bytesRead">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Bytes Read:"/>
+                </properties>
+              </component>
+              <component id="431cc" class="javax.swing.JLabel" binding="bytesWritten">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Bytes Written:"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
