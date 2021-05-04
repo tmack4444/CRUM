@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * File: DiskPanel.java
@@ -19,6 +20,7 @@ public class DiskPanel extends JPanel {
 
     // Defualt constrctor
     DiskPanel(){
+        this.setLayout(new GridBagLayout());
         this.add(diskName);
         this.add(readSpeed);
         this.add(writeSpeed);
