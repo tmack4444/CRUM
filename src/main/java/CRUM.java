@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
     public static void main(String[] args) throws InterruptedException {
+        //
         Connection c = null;
         Statement stmt = null;
         try {
