@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
+    public static int numDisks;
     public static void main(String[] args) throws InterruptedException {
         //
         Connection c = null;
@@ -21,6 +22,7 @@ public class CRUM {
             HardwareAbstractionLayer hal = si.getHardware();
             String SerialNum = hal.getComputerSystem().getSerialNumber();
             List<HWDiskStore> disks = hal.getDiskStores();
+            numDisks = disks.size();
             for(int i = 0; i < disks.size(); i++){
                 HWDiskStore disk = disks.get(i);
                 System.out.println();
