@@ -29,8 +29,8 @@ public class CrumUI extends JFrame {
         this.tabbedPane1.addTab("Disk:0", new DiskPanel());
         this.pack();
     }
-
-    public static void main(String[] args){
+    
+    public static void createUI(){
         JFrame frame = new CrumUI("C.R.U.M");
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
