@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit;
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
     public static int numDisks;
+    static Connection c = null;
+    static Statement stmt = null;
+
     public static void main(String[] args) throws InterruptedException {
         //
-        Connection c = null;
-        Statement stmt = null;
+
         try {
-            c = DriverManager.getConnection("jdbc:sqlite:test.db");
-            System.out.println("Opened database successfully");
-            stmt = c.createStatement();
+            initDB();
             SystemInfo si = new SystemInfo();
             HardwareAbstractionLayer hal = si.getHardware();
             String SerialNum = hal.getComputerSystem().getSerialNumber();
@@ -44,7 +44,7 @@ public class CRUM {
                     LOGGER.info("Bytes written: {} GB", disk.getWriteBytes());
                     LOGGER.info("Time in use: {} \n", disk.getTransferTime());
                     int usedSpace = (int) (disk.getSize() - disk.getWriteBytes());
-                    String sql_mach_insert = "INSERT INTO TESTDISC VALUES(?,?,?,?,?,?,?,?)";
+                    String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
                     PreparedStatement smi = c.prepareStatement(sql_mach_insert);
                     smi.setInt(1, i);
                     smi.setString(2, SerialNum);
@@ -67,7 +67,48 @@ public class CRUM {
     }
 
     public static void initDB(){
-      
+        try {
+            c = DriverManager.getConnection("jdbc:sqlite:test.db");
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+
+            String sql_machine = "CREATE TABLE IF NOT EXISTS MACHINE " +
+                    "(MACHINE_ID TEXT      NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    " MACHINE_MODEL           TEXT    NOT NULL, " +
+                    " MACHINE_VENDOR      TEXT     NOT NULL, " +
+                    "PRIMARY KEY(MACHINE_ID, TIMESTAMP))";
+
+            stmt.executeUpdate(sql_machine);
+
+            String sql_disc = "CREATE TABLE IF NOT EXISTS DISC " +
+                    "(DISC_ID INT      NOT NULL," +
+                    "MACHINE_ID TEXT      NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    " DISC_NAME           TEXT    NOT NULL, " +
+                    " DISC_MODEL          TEXT     NOT NULL, " +
+                    " DISC_SIZE        INT    NOT NULL, " +
+                    "DISC_USED        INT   NOT NULL," +
+                    "DISC_SPEED INT NOT NULL, " +
+                    "PRIMARY KEY(DISC_ID, MACHINE_ID, TIMESTAMP)," +
+                    "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+            stmt.executeUpdate(sql_disc);
+
+            String sql_user = "CREATE TABLE IF NOT EXISTS USER " +
+                    "(USER_ID INT NOT NULL, " +
+                    "MACHINE_ID TEXT NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    "PASSWORD HASH TEXT NOT NULL," +
+                    "PRIMARY KEY(USER_ID, MACHINE_ID, TIMESTAMP)," +
+                    "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+            stmt.executeUpdate(sql_user);
+
+            System.out.println("Tables created successfully");
+
+        } catch (Exception e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
     }
 
     public static void initOSHI(){
