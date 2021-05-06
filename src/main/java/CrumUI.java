@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class CrumUI extends JFrame {
     private JTabbedPane tabbedPane1;
@@ -12,6 +13,11 @@ public class CrumUI extends JFrame {
     private JLabel writeSpeed;
     private JLabel bytesRead;
     private JLabel bytesWritten;
+
+    // this ArrayList will store our disks, if more than one
+    // use this to edit/refresh each DiskPanel component
+    // individually
+    public ArrayList<DiskPanel> diskList = new ArrayList<>();
 
     /**
      * This constructor method also handles
@@ -29,7 +35,9 @@ public class CrumUI extends JFrame {
         // Create and add DiskPanel object for each disk detected
         for(int i=0; i < CRUM.numDisks; i++){
             // +i is added so that we will have disk 0, disk 1, etc
-            this.tabbedPane1.addTab("Disk: "+i, new DiskPanel());
+            DiskPanel diskPanel = new DiskPanel();
+            this.tabbedPane1.addTab("Disk: "+i, diskPanel);
+            diskList.add(diskPanel);
         }
         this.pack();
     }
