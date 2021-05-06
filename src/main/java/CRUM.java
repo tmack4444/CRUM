@@ -23,6 +23,7 @@ public class CRUM {
             String SerialNum = hal.getComputerSystem().getSerialNumber();
             List<HWDiskStore> disks = hal.getDiskStores();
             numDisks = disks.size();
+            CrumUI.createUI();
             for(int i = 0; i < disks.size(); i++){
                 HWDiskStore disk = disks.get(i);
                 System.out.println();
