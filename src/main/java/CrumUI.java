@@ -26,7 +26,13 @@ public class CrumUI extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(rootPanel);
-        this.tabbedPane1.addTab("Disk:0", new DiskPanel());
+        // Create and add DiskPanel object for each disk detected
+        // numDisks-1 is so I successfully make disks 0 and 1 rather
+        // than disks 0 1 and 2 when numDisks = 2
+        for(int i=0; i < CRUM.numDisks-1; i++){
+            // +i is added so that we will have disk 0, disk 1, etc
+            this.tabbedPane1.addTab("Disk: "+i, new DiskPanel());
+        }
         this.pack();
     }
     
