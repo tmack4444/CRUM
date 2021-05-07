@@ -8,11 +8,6 @@ public class CrumUI extends JFrame {
     private JPanel CpuPanel;
     private JPanel RamPanel;
     private JPanel NetworkPanel;
-    private JPanel DiskPane;
-    private JLabel readSpeed;
-    private JLabel writeSpeed;
-    private JLabel bytesRead;
-    private JLabel bytesWritten;
 
     // this ArrayList will store our disks, if more than one
     // use this to edit/refresh each DiskPanel component
