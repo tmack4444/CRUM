@@ -14,13 +14,13 @@ import java.awt.*;
  * CrumUI.java
  */
 public class DiskPanel extends JPanel {
-    private JLabel diskName = new JLabel("Disk Name here");
+    private JLabel diskName = new JLabel("Disk:0");
     private JLabel readSpeed = new JLabel("Read Speed:");
-    private JLabel writeSpeed = new JLabel("Write Speed:");
+    private JLabel writeSpeed = new JLabel("Write Speed");
 
     // Defualt constrctor
     DiskPanel(){
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
         this.add(diskName);
         this.add(readSpeed);
         this.add(writeSpeed);
