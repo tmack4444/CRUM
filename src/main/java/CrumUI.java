@@ -41,7 +41,15 @@ public class CrumUI extends JFrame {
         }
         this.pack();
     }
-    
+
+    /**
+     * This method takes in a given frame or
+     * extension of JFrame and displays it
+     * This method purely exists so I can
+     * create a new instance of CrumUI in
+     * CRUM.java and call methods from that object
+     * @param frame
+     */
     public static void createUI(JFrame frame){
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
