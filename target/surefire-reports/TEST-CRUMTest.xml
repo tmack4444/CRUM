@@ -1,67 +1,71 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="0" failures="0" name="CRUMTest" time="0" errors="0" skipped="0">
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="CRUMTest" time="1.116" tests="1" errors="0" skipped="0" failures="1">
   <properties>
-    <property name="idea.version" value="2021.1.1"/>
-    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\bin"/>
-    <property name="java.vm.version" value="25.271-b09"/>
-    <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM"/>
-    <property name="java.vendor.url" value="http://java.oracle.com/"/>
-    <property name="path.separator" value=";"/>
-    <property name="guice.disable.misplaced.annotation.check" value="true"/>
-    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="file.encoding.pkg" value="sun.io"/>
-    <property name="user.script" value=""/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM\target\test-classes;C:\Users\Paul Ippolito\Documents\GitHub\CRUM\target\classes;C:\Users\Paul Ippolito\.m2\repository\com\github\oshi\oshi-core\5.6.0\oshi-core-5.6.0.jar;C:\Users\Paul Ippolito\.m2\repository\net\java\dev\jna\jna\5.7.0\jna-5.7.0.jar;C:\Users\Paul Ippolito\.m2\repository\net\java\dev\jna\jna-platform\5.7.0\jna-platform-5.7.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\Paul Ippolito\.m2\repository\org\slf4j\slf4j-simple\1.7.5\slf4j-simple-1.7.5.jar;C:\Users\Paul Ippolito\.m2\repository\org\xerial\sqlite-jdbc\3.34.0\sqlite-jdbc-3.34.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.5.2\junit-jupiter-engine-5.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\platform\junit-platform-engine\1.5.2\junit-platform-engine-1.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.5.2\junit-jupiter-api-5.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\platform\junit-platform-commons\1.5.2\junit-platform-commons-1.5.2.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="sun.os.patch.level" value=""/>
-    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM"/>
-    <property name="java.runtime.version" value="1.8.0_271-b09"/>
-    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\endorsed"/>
-    <property name="os.arch" value="amd64"/>
-    <property name="java.io.tmpdir" value="C:\Users\Paul Ippolito\AppData\Local\Temp\"/>
-    <property name="line.separator" value="
-"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="user.variant" value=""/>
-    <property name="os.name" value="Windows 10"/>
-    <property name="maven.ext.class.path" value="D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\plugins\maven\lib\maven-event-listener.jar"/>
-    <property name="classworlds.conf" value="D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\plugins\maven\lib\maven3\bin\m2.conf"/>
-    <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_271\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;D:\Oracle\Oracle_DB-Home\bin;C:\Program Files (x86)\Java\jre1.8.0_201\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Git\cmd;D:\OS Fall 2019\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\Git LFS\Git LFS;D:\Scala\bin;C:\Users\Paul Ippolito\AppData\Local\Microsoft\WindowsApps;C:\Users\Paul Ippolito\AppData\Local\GitHubDesktop\bin;C:\Users\Paul Ippolito\AppData\Local\Microsoft\WindowsApps;C:\Users\Paul Ippolito\AppData\Roaming\npm;D:\VsCode\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Gradle\gradle-6.7.1\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;C:\Program Files\MongoDB\Server\3.6\bin;D:\SQLite\sqlite-tools-win32-x86-3350400;;."/>
-    <property name="maven.conf" value="D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\plugins\maven\lib\maven3/conf"/>
-    <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="java.class.version" value="52.0"/>
-    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="10.0"/>
-    <property name="user.home" value="C:\Users\Paul Ippolito"/>
-    <property name="user.timezone" value="America/New_York"/>
-    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
-    <property name="java.specification.version" value="1.8"/>
-    <property name="file.encoding" value="UTF-8"/>
-    <property name="user.name" value="Paul Ippolito"/>
-    <property name="java.class.path" value="D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\plugins\maven\lib\maven3\boot\plexus-classworlds-2.6.0.jar;D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\plugins\maven\lib\maven3\boot\plexus-classworlds.license;D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\lib\idea_rt.jar"/>
-    <property name="java.vm.specification.version" value="1.8"/>
-    <property name="sun.arch.data.model" value="64"/>
-    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_271\jre"/>
-    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2021.1.1 test"/>
-    <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="user.language" value="en"/>
-    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
-    <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.version" value="1.8.0_271"/>
-    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
-    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_271\jre\classes"/>
-    <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="maven.home" value="D:\IntelliJ\IntelliJ IDEA Community Edition 2020.3.2\plugins\maven\lib\maven3"/>
-    <property name="file.separator" value="\"/>
-    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\Paul Ippolito\AppData\Local\Temp\surefire1548013338524822032\surefirebooter4318547153654285854.jar C:\Users\Paul Ippolito\AppData\Local\Temp\surefire1548013338524822032 2021-05-07T15-50-02_773-jvmRun1 surefire8322818270592485531tmp surefire_06475679911097538390tmp"/>
+    <property name="surefire.test.class.path" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM\target\test-classes;C:\Users\Paul Ippolito\Documents\GitHub\CRUM\target\classes;C:\Users\Paul Ippolito\.m2\repository\com\github\oshi\oshi-core\5.6.0\oshi-core-5.6.0.jar;C:\Users\Paul Ippolito\.m2\repository\net\java\dev\jna\jna\5.7.0\jna-5.7.0.jar;C:\Users\Paul Ippolito\.m2\repository\net\java\dev\jna\jna-platform\5.7.0\jna-platform-5.7.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\Paul Ippolito\.m2\repository\org\slf4j\slf4j-simple\1.7.5\slf4j-simple-1.7.5.jar;C:\Users\Paul Ippolito\.m2\repository\org\xerial\sqlite-jdbc\3.34.0\sqlite-jdbc-3.34.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.5.2\junit-jupiter-engine-5.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\platform\junit-platform-engine\1.5.2\junit-platform-engine-1.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.5.2\junit-jupiter-api-5.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\platform\junit-platform-commons\1.5.2\junit-platform-commons-1.5.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\Paul Ippolito"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_271\jre"/>
+    <property name="basedir" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\Paul Ippolito\AppData\Local\Temp\surefire1548013338524822032\surefirebooter4318547153654285854.jar"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_271\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_271-b09"/>
+    <property name="user.name" value="Paul Ippolito"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="jnidispatch.path" value="C:\Users\Paul Ippolito\AppData\Local\Temp\jna--1599185930\jna5171579915464507610.dll"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\Paul Ippolito\.m2\repository"/>
+    <property name="jna.loaded" value="true"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\Paul Ippolito\AppData\Local\Temp\"/>
+    <property name="idea.version" value="2021.1.1"/>
+    <property name="java.version" value="1.8.0_271"/>
+    <property name="user.dir" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;D:\Oracle\Oracle_DB-Home\bin;C:\Program Files (x86)\Java\jre1.8.0_201\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Git\cmd;D:\OS Fall 2019\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\Git LFS\Git LFS;D:\Scala\bin;C:\Users\Paul Ippolito\AppData\Local\Microsoft\WindowsApps;C:\Users\Paul Ippolito\AppData\Local\GitHubDesktop\bin;C:\Users\Paul Ippolito\AppData\Local\Microsoft\WindowsApps;C:\Users\Paul Ippolito\AppData\Roaming\npm;D:\VsCode\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Gradle\gradle-6.7.1\bin;C:\Program Files\MySQL\MySQL Server 5.7\bin;C:\Program Files\MongoDB\Server\3.6\bin;D:\SQLite\sqlite-tools-win32-x86-3350400;;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.271-b09"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="sun.desktop" value="windows"/>
-    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="java.class.version" value="52.0"/>
   </properties>
+  <testcase name="initOSHITest" classname="CRUMTest" time="1.092">
+    <failure type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: not <null>
+	at CRUMTest.initOSHITest(CRUMTest.java:21)
+]]></failure>
+  </testcase>
 </testsuite>
