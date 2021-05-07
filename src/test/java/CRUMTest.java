@@ -17,11 +17,12 @@ public class CRUMTest {
 
   @Test
   void initOSHITest(){
-      CRUM.initOSHI();
-      assertNotNull(si);
-      assertNotNull(hal);
-      assertNotNull(disks);
-      assertNotNull(SerialNum);
+      CRUM crum = new CRUM();
+      crum.initOSHI();
+      assertNotNull(crum.si);
+      assertNotNull(crum.hal);
+      assertNotNull(crum.disks);
+      assertNotNull(crum.SerialNum);
   }
 
 }

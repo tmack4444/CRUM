@@ -11,19 +11,19 @@ import java.util.concurrent.TimeUnit;
 
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
-    private static List<HWDiskStore> disks;
-    private static SystemInfo si;
-    private static HardwareAbstractionLayer hal;
-    private static String SerialNum;
+    public static List<HWDiskStore> disks;
+    public static SystemInfo si;
+    public static HardwareAbstractionLayer hal;
+    public static String SerialNum;
     public static int numDisks;
     static Connection c = null;
     static Statement stmt = null;
 
     public static void main(String[] args) throws InterruptedException {
 
-
+            CRUM crum = new CRUM();
             initDB();
-            initOSHI();
+            crum.initOSHI();
             // Realized I can't manipulate labels accurately
             // unless I do it this way, sorry -Paul
             CrumUI ui = new CrumUI("C.R.U.M");
@@ -87,7 +87,7 @@ public class CRUM {
         }
     }
 
-    public static void initOSHI(){
+    public void initOSHI(){
         si = new SystemInfo();
         hal = si.getHardware();
         SerialNum = hal.getComputerSystem().getSerialNumber();
