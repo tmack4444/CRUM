@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="CRUMTest" time="1.116" tests="1" errors="0" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="CRUMTest" time="0.877" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\Paul Ippolito\AppData\Local\Temp\surefire1548013338524822032\surefirebooter4318547153654285854.jar C:\Users\Paul Ippolito\AppData\Local\Temp\surefire1548013338524822032 2021-05-07T15-50-02_773-jvmRun1 surefire8322818270592485531tmp surefire_06475679911097538390tmp"/>
+    <property name="sun.java.command" value="C:\Users\Paul Ippolito\AppData\Local\Temp\surefire2858473866275487273\surefirebooter1960744309867293423.jar C:\Users\Paul Ippolito\AppData\Local\Temp\surefire2858473866275487273 2021-05-07T16-56-40_193-jvmRun1 surefire342840791690582161tmp surefire_04981328883815816450tmp"/>
     <property name="surefire.test.class.path" value="C:\Users\Paul Ippolito\Documents\GitHub\CRUM\target\test-classes;C:\Users\Paul Ippolito\Documents\GitHub\CRUM\target\classes;C:\Users\Paul Ippolito\.m2\repository\com\github\oshi\oshi-core\5.6.0\oshi-core-5.6.0.jar;C:\Users\Paul Ippolito\.m2\repository\net\java\dev\jna\jna\5.7.0\jna-5.7.0.jar;C:\Users\Paul Ippolito\.m2\repository\net\java\dev\jna\jna-platform\5.7.0\jna-platform-5.7.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\Paul Ippolito\.m2\repository\org\slf4j\slf4j-simple\1.7.5\slf4j-simple-1.7.5.jar;C:\Users\Paul Ippolito\.m2\repository\org\xerial\sqlite-jdbc\3.34.0\sqlite-jdbc-3.34.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.5.2\junit-jupiter-engine-5.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\platform\junit-platform-engine\1.5.2\junit-platform-engine-1.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.5.2\junit-jupiter-api-5.5.2.jar;C:\Users\Paul Ippolito\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Paul Ippolito\.m2\repository\org\junit\platform\junit-platform-commons\1.5.2\junit-platform-commons-1.5.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Paul Ippolito"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Paul Ippolito\AppData\Local\Temp\surefire1548013338524822032\surefirebooter4318547153654285854.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Paul Ippolito\AppData\Local\Temp\surefire2858473866275487273\surefirebooter1960744309867293423.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_271\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_271\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -42,7 +42,7 @@
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_271\jre\lib\endorsed"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="file.encoding" value="Cp1252"/>
-    <property name="jnidispatch.path" value="C:\Users\Paul Ippolito\AppData\Local\Temp\jna--1599185930\jna5171579915464507610.dll"/>
+    <property name="jnidispatch.path" value="C:\Users\Paul Ippolito\AppData\Local\Temp\jna--1599185930\jna514835866185684096.dll"/>
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
     <property name="localRepository" value="C:\Users\Paul Ippolito\.m2\repository"/>
     <property name="jna.loaded" value="true"/>
@@ -63,9 +63,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="initOSHITest" classname="CRUMTest" time="1.092">
-    <failure type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: not <null>
-	at CRUMTest.initOSHITest(CRUMTest.java:21)
-]]></failure>
-  </testcase>
+  <testcase name="initOSHITest" classname="CRUMTest" time="0.86"/>
 </testsuite>

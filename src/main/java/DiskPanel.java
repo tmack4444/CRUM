@@ -18,11 +18,29 @@ public class DiskPanel extends JPanel {
     private JLabel readSpeed = new JLabel("Read Speed:");
     private JLabel writeSpeed = new JLabel("Write Speed");
 
-    // Defualt constrctor
+    /**
+     * The constructor method
+     * Since this is a dynamically created
+     * JPanel and IntelliJ limitations, I cannot
+     * simply open this JPanel in the GUI Designer
+     * and manipulate the components there. What I am
+     * about to make in this following method is an
+     * ungodly mess, but at least the data will be
+     * in an easy to read format when it is finished
+     */
     DiskPanel(){
+        // Set layout and constraints
         this.setLayout(new GridBagLayout());
-        this.add(diskName);
-        this.add(readSpeed);
-        this.add(writeSpeed);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.insets = new Insets(5,5,5,5);
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        this.add(diskName, constraints);
+        constraints.gridy = 1;
+        this.add(readSpeed, constraints);
+        constraints.gridy = 2;
+        this.add(writeSpeed, constraints);
     }
 }
