@@ -26,8 +26,8 @@ public class CRUM {
             initOSHI();
             // Realized I can't manipulate labels accurately
             // unless I do it this way, sorry -Paul
-            JFrame ui = new CrumUI("C.R.U.M");
-            CrumUI.createUI(ui);
+            CrumUI ui = new CrumUI("C.R.U.M");
+            ui.createUI(ui);
             for(int i = 0; i < disks.size(); i++){
                 HWDiskStore disk = disks.get(i);
                 System.out.println();
