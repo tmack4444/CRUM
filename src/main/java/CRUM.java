@@ -2,6 +2,8 @@ import oshi.SystemInfo;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
 import org.slf4j.*;
+
+import javax.swing.*;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.List;
@@ -22,7 +24,10 @@ public class CRUM {
 
             initDB();
             initOSHI();
-            CrumUI.createUI();
+            // Realized I can't manipulate labels accurately
+            // unless I do it this way, sorry -Paul
+            JFrame ui = new CrumUI("C.R.U.M");
+            CrumUI.createUI(ui);
             for(int i = 0; i < disks.size(); i++){
                 HWDiskStore disk = disks.get(i);
                 System.out.println();

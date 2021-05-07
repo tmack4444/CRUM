@@ -42,8 +42,7 @@ public class CrumUI extends JFrame {
         this.pack();
     }
     
-    public static void createUI(){
-        JFrame frame = new CrumUI("C.R.U.M");
+    public static void createUI(JFrame frame){
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
