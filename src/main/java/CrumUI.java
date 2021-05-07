@@ -50,4 +50,17 @@ public class CrumUI extends JFrame {
         frame.setVisible(true);
     }
 
+    /**
+     * refreshDisks is called to refresh the data on
+     * each of the DiskPanels created. By iterating through
+     * the diskList, the method will tell the corresponding disk
+     * to update its JLabels to whatever the new Disk database
+     * values are.
+     */
+    public void refreshDisks(){
+        for (int i=0; i < diskList.size(); i++){
+            diskList.get(i).refreshLabels();
+        }
+    }
+
 }

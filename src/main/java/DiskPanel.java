@@ -15,8 +15,8 @@ import java.awt.*;
  */
 public class DiskPanel extends JPanel {
     private JLabel diskName = new JLabel("Disk:0");
-    private JLabel readSpeed = new JLabel("Read Speed:");
-    private JLabel writeSpeed = new JLabel("Write Speed");
+    private JLabel reads = new JLabel("Read Speed:");
+    private JLabel writes = new JLabel("Write Speed");
 
     /**
      * The constructor method
@@ -39,8 +39,18 @@ public class DiskPanel extends JPanel {
         constraints.gridy = 0;
         this.add(diskName, constraints);
         constraints.gridy = 1;
-        this.add(readSpeed, constraints);
+        this.add(reads, constraints);
         constraints.gridy = 2;
-        this.add(writeSpeed, constraints);
+        this.add(writes, constraints);
+    }
+
+    /**
+     * If called, this method will change the
+     * JLabels contained within the corresponding
+     * DiskPanel object to the correct/updated
+     * database value
+     */
+    public void refreshLabels(){
+
     }
 }
