@@ -20,10 +20,10 @@ public class CRUM {
     static Statement stmt = null;
 
     public static void main(String[] args) throws InterruptedException {
-
+            Calendar calendar = Calendar.getInstance();
             CRUM crum = new CRUM();
-            initDB();
-            crum.initOSHI();
+            crum.initDB();
+            crum.initOSHI(calendar);
             // Realized I can't manipulate labels accurately
             // unless I do it this way, sorry -Paul
             CrumUI ui = new CrumUI("C.R.U.M");
@@ -36,13 +36,13 @@ public class CRUM {
                 System.out.println("disk size: " + (disk.getSize() / 1073741824) + " GB");
             }
             while(true){
-                Calendar calendar = Calendar.getInstance();
+                calendar = Calendar.getInstance();
                 getDiskData(calendar);
                 TimeUnit.SECONDS.sleep(1);
             }
     }
 
-    public static void initDB(){
+    public void initDB(){
         try {
             c = DriverManager.getConnection("jdbc:sqlite:test.db");
             System.out.println("Opened database successfully");
@@ -87,12 +87,14 @@ public class CRUM {
         }
     }
 
-    public void initOSHI(){
+    public void initOSHI(Calendar calendar){
         si = new SystemInfo();
         hal = si.getHardware();
         SerialNum = hal.getComputerSystem().getSerialNumber();
         disks = hal.getDiskStores();
         numDisks = disks.size();
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+
     }
 
     public static void getDiskData(Calendar calendar){

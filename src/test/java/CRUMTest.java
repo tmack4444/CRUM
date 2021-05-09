@@ -18,7 +18,8 @@ public class CRUMTest {
   @Test
   void initOSHITest(){
       CRUM crum = new CRUM();
-      crum.initOSHI();
+      Calendar calendar = Calendar.getInstance();
+      crum.initOSHI(calendar);
       assertNotNull(crum.si);
       assertNotNull(crum.hal);
       assertNotNull(crum.disks);
@@ -28,15 +29,16 @@ public class CRUMTest {
   @Test
   void getDiskDataTest(){
       CRUM crum = new CRUM();
-      crum.initOSHI();
-      crum.initDB();
       Calendar calendar = Calendar.getInstance();
+      crum.initOSHI(calendar);
+      crum.initDB();
       crum.getDiskData(calendar);
+      String machineID = crum.hal.getComputerSystem().getSerialNumber();
       String sourceFile = "test.txt";
       try {
           c = DriverManager.getConnection("jdbc:sqlite:test.db");
           stmt = c.createStatement();
-          String sql_Search = "SELECT * FROM DISC";
+          String sql_Search = "SELECT * FROM DISC ";
           ResultSet rs = stmt.executeQuery(sql_Search);
           int initUsed = rs.getInt("DISC_USED");
           OutputStream os = new FileOutputStream("test2.txt");
@@ -44,7 +46,9 @@ public class CRUMTest {
           os.write(is.read());
           is.close();
           os.close();
-          sql_Search = "SELECT * FROM DISC";
+          crum.getDiskData(calendar);
+          java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+          sql_Search = "SELECT * FROM DISC WHERE TIMESTAMP >= " + currentTime;
           rs = stmt.executeQuery(sql_Search);
           int finalUsed = rs.getInt("DISC_USED");
           assertTrue((finalUsed > initUsed));
@@ -55,6 +59,5 @@ public class CRUMTest {
       } catch (SQLException throwables) {
           throwables.printStackTrace();
       }
-      crum.getDiskData(calendar);
   }
 }
