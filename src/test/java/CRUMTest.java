@@ -3,10 +3,7 @@ import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,9 +34,11 @@ public class CRUMTest {
       crum.getDiskData(calendar);
       String sourceFile = "test.txt";
       try {
+          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+          stmt = c.createStatement();
           String sql_Search = "SELECT * FROM DISC";
           ResultSet rs = stmt.executeQuery(sql_Search);
-          long initReads = rs.getLong("DISC_SPEED");
+          int initReads = rs.getInt("DISC_USED");
           OutputStream os = new FileOutputStream("test2.txt");
           InputStream is = new FileInputStream(sourceFile);
           os.write(is.read());
@@ -47,7 +46,7 @@ public class CRUMTest {
           os.close();
           sql_Search = "SELECT * FROM DISC";
           rs = stmt.executeQuery(sql_Search);
-          long finalReads = rs.getLong("DISC_SPEED");
+          int finalReads = rs.getInt("DISC_USED");
           assertTrue((finalReads > initReads));
       } catch (FileNotFoundException e) {
           e.printStackTrace();
