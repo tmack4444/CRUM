@@ -72,10 +72,19 @@ public class CRUMTest {
   }
 
   @Test
-  public void initDBTest(){
-    CRUM crum = new CRUM();
-    crum.initDB();
-    //Somehow check that each table exists here
+  public void initDBTest() throws SQLException {
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      stmt = c.createStatement();
+      CRUM crum = new CRUM();
+      crum.initDB();
+      //Somehow check that each table exists here
+      DatabaseMetaData meta = c.getMetaData();
+      ResultSet res = meta.getTables(null, null, "MACHINE", new String[] {"TABLE"});
+      assertEquals("MACHINE", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "DISC", new String[] {"TABLE"});
+      assertEquals("DISC", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "USER", new String[] {"TABLE"});
+      assertEquals("USER", res.getString("TABLE_NAME"));
 
   }
 }
