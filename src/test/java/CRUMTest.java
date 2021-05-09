@@ -20,7 +20,7 @@ public class CRUMTest {
   void initOSHITest(){
       CRUM crum = new CRUM();
       Calendar calendar = Calendar.getInstance();
-      crum.initOSHI(calendar);
+      crum.initOSHI();
       assertNotNull(crum.si);
       assertNotNull(crum.hal);
       assertNotNull(crum.disks);
@@ -31,7 +31,7 @@ public class CRUMTest {
   void getDiskDataTest(){
       CRUM crum = new CRUM();
       Calendar calendar = Calendar.getInstance();
-      crum.initOSHI(calendar);
+      crum.initOSHI();
       crum.initDB();
       crum.getDiskData(calendar);
       String machineID = crum.hal.getComputerSystem().getSerialNumber();
