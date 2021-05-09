@@ -87,4 +87,19 @@ public class CRUMTest {
       assertEquals("USER", res.getString("TABLE_NAME"));
 
   }
+
+  @Test
+  public void initMachineTest() throws SQLException {
+      CRUM crum = new CRUM();
+      crum.initOSHI();
+      crum.initDB();
+      crum.initMachine();
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      stmt = c.createStatement();
+      String sql_Search = "SELECT * FROM MACHINE ";
+      ResultSet rs = stmt.executeQuery(sql_Search);
+      assertEquals(crum.SerialNum, rs.getString("MACHINE_ID"));
+      assertEquals(crum.hal.getComputerSystem().getModel(), rs.getString("MACHINE_MODEL"));
+      assertEquals(crum.hal.getComputerSystem().getManufacturer(), rs.getString("MACHINE_VENDOR"));
+  }
 }
