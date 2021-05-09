@@ -11,6 +11,7 @@ public class CrumUI extends JFrame {
     private JPanel MachinePanel;
     private JLabel machineModelLabel;
     private JLabel machineVendorLabel;
+    private JLabel machineIDlabel;
 
     // this ArrayList will store our disks, if more than one
     // use this to edit/refresh each DiskPanel component
