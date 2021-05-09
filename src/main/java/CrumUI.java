@@ -9,9 +9,14 @@ public class CrumUI extends JFrame {
     private JPanel RamPanel;
     private JPanel NetworkPanel;
     private JPanel MachinePanel;
-    private JLabel machineModelLabel;
-    private JLabel machineVendorLabel;
-    private JLabel machineIDlabel;
+    private JLabel titleLabel;
+    private JLabel modelLabel;
+    private JLabel machineIDLabel;
+    private JLabel vendorLabel;
+    private JButton NetworkButton;
+    private JButton DiskButton;
+    private JButton RAMButton;
+    private JButton CPUButton;
 
     // this ArrayList will store our disks, if more than one
     // use this to edit/refresh each DiskPanel component
@@ -50,6 +55,7 @@ public class CrumUI extends JFrame {
      * @param frame
      */
     public static void createUI(JFrame frame){
+        frame.setSize(700, 700);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
