@@ -17,6 +17,10 @@ public class DiskPanel extends JPanel {
     private JLabel diskName = new JLabel("Disk:0");
     private JLabel reads = new JLabel("Read Speed:");
     private JLabel writes = new JLabel("Write Speed");
+    private JLabel model = new JLabel("Disk Model: ");
+    private JLabel diskSize = new JLabel("Size available: ");
+    private JLabel amountUsed = new JLabel("Amount used: ");
+    private JLabel speed = new JLabel("Disk speed: ");
 
     /**
      * The constructor method
@@ -26,22 +30,41 @@ public class DiskPanel extends JPanel {
      * and manipulate the components there. What I am
      * about to make in this following method is an
      * ungodly mess, but at least the data will be
-     * in an easy to read format when it is finished
+     * in an easy to read format when it is finished.
+     * I doubt it will be in a nice format, but it will
+     * be readable
      */
     DiskPanel(){
-        // Set layout and constraints
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.WEST;
-        constraints.insets = new Insets(5,5,5,5);
+        // Set layout
+        // yes, null is generally bad, however, I tried to use the layout
+        // managers nicely in code. It did not want to cooperate, so now
+        // we have this. It looks how I want it to and that's what matters
+        this.setLayout(null);
+        // add diskName
+        this.add(diskName);
+        diskName.setBounds(new Rectangle(new Point(10, 0), diskName.getPreferredSize()));
 
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        this.add(diskName, constraints);
-        constraints.gridy = 1;
-        this.add(reads, constraints);
-        constraints.gridy = 2;
-        this.add(writes, constraints);
+        // add reads and writes
+        this.add(reads);
+        reads.setBounds(new Rectangle(new Point(10, 15), reads.getPreferredSize()));
+        this.add(writes);
+        writes.setBounds(new Rectangle(new Point(10, 35), writes.getPreferredSize()));
+
+        // add model
+        this.add(model);
+        model.setBounds(new Rectangle(new Point(10, 55), model.getPreferredSize()));
+
+        // add disk size
+        this.add(diskSize);
+        diskSize.setBounds(new Rectangle(new Point(10, 75), diskSize.getPreferredSize()));
+
+        // add amount of disk being used
+        this.add(amountUsed);
+        amountUsed.setBounds(new Rectangle(new Point(10, 95), amountUsed.getPreferredSize()));
+
+        // add speed of disk
+        this.add(speed);
+        speed.setBounds(new Rectangle(new Point(10, 115), speed.getPreferredSize()));
     }
 
     /**
