@@ -1,0 +1,2 @@
+This is a test txt file. The initial bytesRead should be taken before this file is read. 
+The amount of bytes read should be higher after this is read.
