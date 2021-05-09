@@ -53,8 +53,11 @@ public class CRUMTest {
           c = DriverManager.getConnection("jdbc:sqlite:test.db");
           stmt = c.createStatement();
           java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-          sql_Search = "SELECT * FROM DISC WHERE DATETIME(TIMESTAMP) >= '" + currentTime.toString() + "'";
-          rs = stmt.executeQuery(sql_Search);
+          String timeSearch = currentTime.toString();
+          String[] timeSplitTemp = timeSearch.split(".");
+          timeSearch = timeSplitTemp[0];
+          String secondSearch = "SELECT * FROM DISC WHERE DATETIME(TIMESTAMP) >= '" + timeSearch + "'";
+          rs = stmt.executeQuery(secondSearch);
           int finalUsed = rs.getInt("DISC_USED");
           assertTrue((finalUsed > initUsed));
       } catch (FileNotFoundException e) {
