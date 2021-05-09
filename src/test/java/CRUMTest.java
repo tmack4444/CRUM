@@ -32,20 +32,23 @@ public class CRUMTest {
   void getDiskDataTest(){
       CRUM crum = new CRUM();
       crum.initOSHI();
+      crum.initDB();
       Calendar calendar = Calendar.getInstance();
       crum.getDiskData(calendar);
       String sourceFile = "test.txt";
-      crum.getDiskData(calendar);
       try {
-          String sql_Search = "SELECT * FROM TESTMACHINE";
+          String sql_Search = "SELECT * FROM DISC";
           ResultSet rs = stmt.executeQuery(sql_Search);
-          int length;
-          byte[] buffer = new byte[1024];
+          long initReads = rs.getLong("DISC_SPEED");
           OutputStream os = new FileOutputStream("test2.txt");
           InputStream is = new FileInputStream(sourceFile);
-          while((length = is.read(buffer)) > 0) {
-              os.write(buffer, 0, length);
-          }
+          os.write(is.read());
+          is.close();
+          os.close();
+          sql_Search = "SELECT * FROM DISC";
+          rs = stmt.executeQuery(sql_Search);
+          long finalReads = rs.getLong("DISC_SPEED");
+          assertTrue((finalReads > initReads));
       } catch (FileNotFoundException e) {
           e.printStackTrace();
       } catch (IOException e) {
