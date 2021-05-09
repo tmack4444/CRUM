@@ -60,6 +60,7 @@ public class CRUMTest {
           rs = stmt.executeQuery(secondSearch);
           int finalUsed = rs.getInt("DISC_USED");
           assertTrue((finalUsed > initUsed));
+          c.close();
       } catch (FileNotFoundException e) {
           e.printStackTrace();
       } catch (IOException e) {
@@ -85,7 +86,7 @@ public class CRUMTest {
       assertEquals("DISC", res.getString("TABLE_NAME"));
       res = meta.getTables(null, null, "USER", new String[] {"TABLE"});
       assertEquals("USER", res.getString("TABLE_NAME"));
-
+      c.close();
   }
 
   @Test
@@ -101,5 +102,6 @@ public class CRUMTest {
       assertEquals(crum.SerialNum, rs.getString("MACHINE_ID"));
       assertEquals(crum.hal.getComputerSystem().getModel(), rs.getString("MACHINE_MODEL"));
       assertEquals(crum.hal.getComputerSystem().getManufacturer(), rs.getString("MACHINE_VENDOR"));
+      c.close();
   }
 }
