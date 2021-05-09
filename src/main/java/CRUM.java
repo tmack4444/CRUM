@@ -19,11 +19,12 @@ public class CRUM {
     static Connection c = null;
     static Statement stmt = null;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, SQLException {
             Calendar calendar = Calendar.getInstance();
             CRUM crum = new CRUM();
             crum.initDB();
-            crum.initOSHI(calendar);
+            crum.initOSHI();
+            crum.initMachine();
             // Realized I can't manipulate labels accurately
             // unless I do it this way, sorry -Paul
             CrumUI ui = new CrumUI("C.R.U.M");
@@ -87,14 +88,24 @@ public class CRUM {
         }
     }
 
-    public void initOSHI(Calendar calendar){
+    public void initOSHI(){
         si = new SystemInfo();
         hal = si.getHardware();
         SerialNum = hal.getComputerSystem().getSerialNumber();
         disks = hal.getDiskStores();
         numDisks = disks.size();
-        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+    }
 
+    public void initMachine() throws SQLException {
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+        String sql_mach_insert = "INSERT INTO MACHINE VALUES(?,?,?,?)";
+        PreparedStatement smi = c.prepareStatement(sql_mach_insert);
+        smi.setString(1, SerialNum);
+        smi.setTimestamp(2, currentTime);
+        smi.setString(3, hal.getComputerSystem().getModel());
+        smi.setString(4, hal.getComputerSystem().getManufacturer());
+        smi.execute();
     }
 
     public static void getDiskData(Calendar calendar){
