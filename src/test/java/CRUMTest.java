@@ -38,7 +38,7 @@ public class CRUMTest {
           stmt = c.createStatement();
           String sql_Search = "SELECT * FROM DISC";
           ResultSet rs = stmt.executeQuery(sql_Search);
-          int initReads = rs.getInt("DISC_USED");
+          int initUsed = rs.getInt("DISC_USED");
           OutputStream os = new FileOutputStream("test2.txt");
           InputStream is = new FileInputStream(sourceFile);
           os.write(is.read());
@@ -46,8 +46,8 @@ public class CRUMTest {
           os.close();
           sql_Search = "SELECT * FROM DISC";
           rs = stmt.executeQuery(sql_Search);
-          int finalReads = rs.getInt("DISC_USED");
-          assertTrue((finalReads > initReads));
+          int finalUsed = rs.getInt("DISC_USED");
+          assertTrue((finalUsed > initUsed));
       } catch (FileNotFoundException e) {
           e.printStackTrace();
       } catch (IOException e) {
