@@ -70,4 +70,12 @@ public class CRUMTest {
 
       }
   }
+
+  @Test
+  public void initDBTest(){
+    CRUM crum = new CRUM();
+    crum.initDB();
+    //Somehow check that each table exists here
+
+  }
 }
