@@ -1,4 +1,5 @@
 import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
 import org.slf4j.*;
@@ -16,6 +17,7 @@ public class CRUM {
     public static HardwareAbstractionLayer hal;
     public static String SerialNum;
     public static int numDisks;
+    public static CentralProcessor cpu;
     static Connection c = null;
     static Statement stmt = null;
 
@@ -31,14 +33,15 @@ public class CRUM {
             ui.createUI(ui);
             for(int i = 0; i < disks.size(); i++){
                 HWDiskStore disk = disks.get(i);
-                System.out.println();
-                System.out.println("disk name: " + disk.getName());
-                System.out.println("disk model: " + disk.getModel());
-                System.out.println("disk size: " + (disk.getSize() / 1073741824) + " GB");
+                //System.out.println();
+                //System.out.println("disk name: " + disk.getName());
+                //System.out.println("disk model: " + disk.getModel());
+                //System.out.println("disk size: " + (disk.getSize() / 1073741824) + " GB");
             }
             while(true){
                 calendar = Calendar.getInstance();
                 getDiskData(calendar);
+                getCPUData(calendar);
                 TimeUnit.SECONDS.sleep(1);
             }
     }
@@ -94,6 +97,7 @@ public class CRUM {
         SerialNum = hal.getComputerSystem().getSerialNumber();
         disks = hal.getDiskStores();
         numDisks = disks.size();
+        cpu = hal.getProcessor();
     }
 
     public void initMachine() throws SQLException {
@@ -137,6 +141,9 @@ public class CRUM {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
+    }
 
+    public static void getCPUData(Calendar calendar){
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
     }
 }
