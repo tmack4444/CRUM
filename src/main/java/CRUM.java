@@ -149,14 +149,19 @@ public class CRUM {
     public static void getCPUData(Calendar calendar){
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         currLoadTicks = cpu.getProcessorCpuLoadBetweenTicks(prevLoadTicks);          //Returns the percentage of load for each logical processor
-        //TODO Create a for loop to breakdown the load by cpu, maybe average them together since we're only displaying one total value instead of the usage by logical processor/core
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
+        double currentLoad = 0.0;
+        for(int i = 0; i  < cpu.getLogicalProcessorCount(); i++){
+            currentLoad += currLoadTicks[i];
+        }
+        currentLoad = (currentLoad / cpu.getLogicalProcessorCount()) * 100;
         LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
         LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
         LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
+        LOGGER.info("Current Load: {}", currentLoad);
         LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
         LOGGER.info("Frequency {}", cpu.getCurrentFreq());
-        LOGGER.info("Max Frequency {}", cpu.getMaxFreq());
+        LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
 
     }
 }
