@@ -80,10 +80,46 @@ public class CRUM {
                     "(USER_ID INT NOT NULL, " +
                     "MACHINE_ID TEXT NOT NULL," +
                     "TIMESTAMP TIMESTAMP NOT NULL," +
-                    "PASSWORD HASH TEXT NOT NULL," +
+                    "PASSWORD_HASH TEXT NOT NULL," +
                     "PRIMARY KEY(USER_ID, MACHINE_ID, TIMESTAMP)," +
                     "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
             stmt.executeUpdate(sql_user);
+
+            String sql_cpu = "CREATE TABLE IF NOT EXISTS CPU " +
+                    "(CPU_ID INT NOT NULL, " +
+                    "MACHINE_ID TEXT NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    "CPU_MODEL TEXT NOT NULL," +
+                    "CLOCK_SPEED INT NOT NULL," +
+                    "CPU_NUM_CORE INT NOT NULL," +
+                    "CORE_USAGE INT NOT NULL," +
+                    "NUM_PROCESS INT NOT NULL," +
+                    "PRIMARY KEY(CPU_ID, MACHINE_ID, TIMESTAMP)," +
+                    "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+            stmt.executeUpdate(sql_cpu);
+
+            String sql_network = "CREATE TABLE IF NOT EXISTS NETWORK " +
+                    "(NETWORK_ID INT NOT NULL, " +
+                    "MACHINE_ID TEXT NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    "INBOUND_WIFI INT NOT NULL," +
+                    "OUTBOUND_WIFI INT NOT NULL," +
+                    "INBOUND_ETHERNET INT NOT NULL," +
+                    "OUTBOUND_ETHERNET INT NOT NULL," +
+                    "MAC_ADDRESS TEXT NOT NULL," +
+                    "PRIMARY KEY(NETWORK_ID, MACHINE_ID, TIMESTAMP)," +
+                    "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+            stmt.executeUpdate(sql_network);
+
+            String sql_ram = "CREATE TABLE IF NOT EXISTS RAM " +
+                    "(RAM_ID INT NOT NULL, " +
+                    "MACHINE_ID TEXT NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL," +
+                    "TOTAL_SPACE INT NOT NULL," +
+                    "USED_SPACE INT NOT NULL," +
+                    "PRIMARY KEY(RAM_ID, MACHINE_ID, TIMESTAMP)," +
+                    "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+            stmt.executeUpdate(sql_ram);
 
             System.out.println("Tables created successfully");
 
