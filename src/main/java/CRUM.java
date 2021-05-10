@@ -18,6 +18,8 @@ public class CRUM {
     public static String SerialNum;
     public static int numDisks;
     public static CentralProcessor cpu;
+    public static long[][] prevLoadTicks;
+    public static double[] currLoadTicks;
     static Connection c = null;
     static Statement stmt = null;
 
@@ -98,6 +100,7 @@ public class CRUM {
         disks = hal.getDiskStores();
         numDisks = disks.size();
         cpu = hal.getProcessor();
+        prevLoadTicks = cpu.getProcessorCpuLoadTicks();
     }
 
     public void initMachine() throws SQLException {
@@ -118,12 +121,12 @@ public class CRUM {
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
             List<HWDiskStore> Disks = hal.getDiskStores();
             HWDiskStore disk = Disks.get(i);
-            LOGGER.info("Disk:  {}", disk.getName());
-            LOGGER.info("Reads:  {}", disk.getReads());
-            LOGGER.info("Bytes read: {} GB", disk.getReadBytes());
-            LOGGER.info("Writes:  {}", disk.getWrites());
-            LOGGER.info("Bytes written: {} GB", disk.getWriteBytes());
-            LOGGER.info("Time in use: {} \n", disk.getTransferTime());
+            //LOGGER.info("Disk:  {}", disk.getName());
+            //LOGGER.info("Reads:  {}", disk.getReads());
+            //LOGGER.info("Bytes read: {}", disk.getReadBytes());
+            //LOGGER.info("Writes:  {}", disk.getWrites());
+            //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
+            //LOGGER.info("Time in use: {} \n", disk.getTransferTime());
             int usedSpace = (int) (disk.getSize() - disk.getWriteBytes());
             String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement smi = c.prepareStatement(sql_mach_insert);
@@ -145,5 +148,15 @@ public class CRUM {
 
     public static void getCPUData(Calendar calendar){
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+        currLoadTicks = cpu.getProcessorCpuLoadBetweenTicks(prevLoadTicks);          //Returns the percentage of load for each logical processor
+        //TODO Create a for loop to breakdown the load by cpu, maybe average them together since we're only displaying one total value instead of the usage by logical processor/core
+        prevLoadTicks = cpu.getProcessorCpuLoadTicks();
+        LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
+        LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
+        LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
+        LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
+        LOGGER.info("Frequency {}", cpu.getCurrentFreq());
+        LOGGER.info("Max Frequency {}", cpu.getMaxFreq());
+
     }
 }
