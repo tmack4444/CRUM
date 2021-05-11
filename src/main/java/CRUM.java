@@ -91,7 +91,8 @@ public class CRUM {
                     "TIMESTAMP TIMESTAMP NOT NULL," +
                     "CPU_MODEL TEXT NOT NULL," +
                     "CLOCK_SPEED INT NOT NULL," +
-                    "CPU_NUM_CORE INT NOT NULL," +
+                    "CORE_PHYSICAL INT NOT NULL," +
+                    "CORE_LOGICAL INT NOT NULL," +
                     "CORE_USAGE INT NOT NULL," +
                     "NUM_PROCESS INT NOT NULL," +
                     "PRIMARY KEY(CPU_ID, MACHINE_ID, TIMESTAMP)," +
