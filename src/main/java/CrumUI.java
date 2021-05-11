@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class CrumUI extends JFrame {
@@ -44,6 +46,33 @@ public class CrumUI extends JFrame {
             diskList.add(diskPanel);
         }
         this.pack();
+
+        // Set CPU main button to switch to CPU tab
+        CPUButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane1.setSelectedIndex(1);
+            }
+        });
+        RAMButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane1.setSelectedIndex(2);
+            }
+        });
+        NetworkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane1.setSelectedIndex(3);
+            }
+        });
+        // This one worries me as index 4 does not INITIALLY exist
+        DiskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane1.setSelectedIndex(4);
+            }
+        });
     }
 
     /**
