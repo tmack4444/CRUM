@@ -67,6 +67,7 @@ public class CrumUI extends JFrame {
             }
         });
         // This one worries me as index 4 does not INITIALLY exist
+        // Luckily the disk tabs are added before actual frame creation
         DiskButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
