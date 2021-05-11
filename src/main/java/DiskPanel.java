@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * File: DiskPanel.java
@@ -73,7 +75,7 @@ public class DiskPanel extends JPanel {
      * DiskPanel object to the correct/updated
      * database value
      */
-    public void refreshLabels(){
-
+    public void refreshLabels(Connection c) throws SQLException {
+        System.out.println("Refreshing Disk labels");
     }
 }

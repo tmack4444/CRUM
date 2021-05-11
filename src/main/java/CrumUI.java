@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CrumUI extends JFrame {
@@ -96,11 +100,31 @@ public class CrumUI extends JFrame {
      * the diskList, the method will tell the corresponding disk
      * to update its JLabels to whatever the new Disk database
      * values are.
+     * @param c the Database Connection object so we are on the
+     *          correct DB
      */
-    public void refreshDisks(){
+    public void refreshDisks(Connection c) throws SQLException {
         for (int i=0; i < diskList.size(); i++){
-            diskList.get(i).refreshLabels();
+            diskList.get(i).refreshLabels(c);
         }
+    }
+
+    /**
+     * This method is basically the same as refreshDisks, but for
+     * all the other UI components created by CrumUI.
+     * Disk is separate because they are dynamically added later
+     * @param c the database connection from CRUM.java
+     */
+    public void refreshUILabels(Connection c) throws SQLException {
+        Statement stmt = c.createStatement();
+        String sqlGetMachineData = "SELECT MACHINE_ID, MACHINE_MODEL, MACHINE_VENDOR FROM MACHINE";
+        ResultSet rs = stmt.executeQuery(sqlGetMachineData);
+        while (rs.next()){
+            modelLabel.setText("Machine Model: " +rs.getString("MACHINE_MODEL"));
+            machineIDLabel.setText("Machine ID: " +rs.getString("MACHINE_ID"));
+            vendorLabel.setText("Machine Vendor: " +rs.getString("MACHINE_VENDOR"));
+        }
+
     }
 
 }

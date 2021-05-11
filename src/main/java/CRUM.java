@@ -44,6 +44,7 @@ public class CRUM {
                 calendar = Calendar.getInstance();
                 getDiskData(calendar);
                 getCPUData(calendar);
+                ui.refreshUILabels(c);
                 TimeUnit.SECONDS.sleep(1);
             }
     }
