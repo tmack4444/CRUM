@@ -153,17 +153,19 @@ public class CrumUI extends JFrame {
     public void refreshCPU(Connection c) throws SQLException {
 
         // Get and display CPU data
-        String sqlGetCPUData = "SELECT * FROM CPU";
+        String sqlGetCPUData = "SELECT CPU_MODEL, CLOCK_SPEED, CORE_PHYSICAL, " +
+                "CORE_LOGICAL, CORE_USAGE, NUM_PROCESS FROM CPU";
         Statement cpuStmt = c.createStatement();
         ResultSet cpuRS = cpuStmt.executeQuery(sqlGetCPUData);
         while(cpuRS.next()){
             cpuModelLabel.setText(cpuRS.getString("CPU_MODEL"));
-            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getInt("CLOCK_SPEED"));
+            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getLong("CLOCK_SPEED") / 1000000000 + "GHz");
             physicalCoresLabel.setText("Physical Cores: " + cpuRS.getInt("CORE_PHYSICAL"));
             logicalCoresLabel.setText("Logical Cores: " + cpuRS.getInt("CORE_LOGICAL"));
-            usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE"));
-            processesLabel.setText("Processes: " + cpuRS.getInt("NUM_PROCESS"));
+            usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
+            processesLabel.setText("Processes: " + cpuRS.getLong("NUM_PROCESS"));
         }
+        cpuStmt.close();
     }
 
 }

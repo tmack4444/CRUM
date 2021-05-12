@@ -209,7 +209,7 @@ public class CRUM {
         smi.setString(1, cpu.getProcessorIdentifier().getProcessorID());
         smi.setString(2, SerialNum);
         smi.setTimestamp(3, currentTime);
-        smi.setString(4, cpu.getProcessorIdentifier().getModel());
+        smi.setString(4, cpu.getProcessorIdentifier().getName());
         smi.setLong(5, cpu.getMaxFreq());
         smi.setInt(6, cpu.getPhysicalProcessorCount());
         smi.setLong(7,  cpu.getLogicalProcessorCount());
