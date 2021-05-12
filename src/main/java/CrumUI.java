@@ -125,6 +125,7 @@ public class CrumUI extends JFrame {
             machineIDLabel.setText("Machine ID: " +rs.getString("MACHINE_ID"));
             vendorLabel.setText("Machine Vendor: " +rs.getString("MACHINE_VENDOR"));
         }
+        stmt.close();
 
     }
 
