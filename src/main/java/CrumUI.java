@@ -162,7 +162,7 @@ public class CrumUI extends JFrame {
             physicalCoresLabel.setText("Physical Cores: " + cpuRS.getInt("CORE_PHYSICAL"));
             logicalCoresLabel.setText("Logical Cores: " + cpuRS.getInt("CORE_LOGICAL"));
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE"));
-            processesLabel.setText("Processes: " + cpuRS.getInt("NUM_PROCESSES"));
+            processesLabel.setText("Processes: " + cpuRS.getInt("NUM_PROCESS"));
         }
     }
 

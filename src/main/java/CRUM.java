@@ -93,13 +93,13 @@ public class CRUM {
             String sql_cpu = "CREATE TABLE IF NOT EXISTS CPU " +
                     "(CPU_ID TEXT NOT NULL, " +
                     "MACHINE_ID TEXT NOT NULL," +
-                    "TIMESTAMP TIMESTAMP NOT NULL," +
-                    "CPU_MODEL TEXT NOT NULL," +
-                    "CLOCK_SPEED INT NOT NULL," +
-                    "CORE_PHYSICAL INT NOT NULL," +
-                    "CORE_LOGICAL INT NOT NULL," +
-                    "CORE_USAGE INT NOT NULL," +
-                    "NUM_PROCESS INT NOT NULL," +
+                    "TIMESTAMP TIMESTAMP NOT NULL, " +
+                    "CPU_MODEL TEXT NOT NULL, " +
+                    "CLOCK_SPEED INT NOT NULL, " +
+                    "CORE_PHYSICAL INT NOT NULL, " +
+                    "CORE_LOGICAL INT NOT NULL, " +
+                    "CORE_USAGE INT NOT NULL, " +
+                    "NUM_PROCESS INT NOT NULL, " +
                     "PRIMARY KEY(CPU_ID, MACHINE_ID, TIMESTAMP)," +
                     "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
             stmt.executeUpdate(sql_cpu);
@@ -204,7 +204,7 @@ public class CRUM {
             currentLoad += currLoadTicks[i];
         }
         currentLoad = (currentLoad / cpu.getLogicalProcessorCount()) * 100;
-        String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
+        String sql_mach_insert = "INSERT INTO CPU VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement smi = c.prepareStatement(sql_mach_insert);
         smi.setString(1, cpu.getProcessorIdentifier().getProcessorID());
         smi.setString(2, SerialNum);
