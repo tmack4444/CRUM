@@ -3,6 +3,8 @@ import oshi.hardware.CentralProcessor;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
 import org.slf4j.*;
+import oshi.software.os.FileSystem;
+import oshi.software.os.OSFileStore;
 
 import javax.swing.*;
 import java.sql.*;
@@ -13,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
     public static List<HWDiskStore> disks;
+    public static FileSystem fs;
+    public static List<OSFileStore> fileStores;
     public static SystemInfo si;
     public static HardwareAbstractionLayer hal;
     public static String SerialNum;
@@ -136,6 +140,8 @@ public class CRUM {
         si = new SystemInfo();
         hal = si.getHardware();
         SerialNum = hal.getComputerSystem().getSerialNumber();
+        fs = si.getOperatingSystem().getFileSystem();
+        fileStores = fs.getFileStores();
         disks = hal.getDiskStores();
         numDisks = disks.size();
         cpu = hal.getProcessor();
@@ -159,8 +165,9 @@ public class CRUM {
           for(int i = 0; i < disks.size(); i++) {
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
             HWDiskStore disk = disks.get(i);
+            List<OSFileStore> fileStores = fs.getFileStores();
+            OSFileStore currStore = fileStores.get(i);
             disk.updateAttributes();
-            long usedSpace = (disk.getSize() - disk.getWriteBytes());
             String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement smi = c.prepareStatement(sql_mach_insert);
             smi.setInt(1, i);
@@ -169,7 +176,7 @@ public class CRUM {
             smi.setString(4, disk.getName());
             smi.setString(5, disk.getModel());
             smi.setLong(6, disk.getSize());
-            smi.setLong(7, usedSpace);
+            smi.setLong(7, currStore.getTotalSpace());
             smi.setLong(8, disk.getTransferTime());
             smi.execute();
               LOGGER.info("Disk:  {}", disk.getName());
@@ -177,9 +184,10 @@ public class CRUM {
               LOGGER.info("Bytes read: {}", disk.getReadBytes());
               LOGGER.info("Writes:  {}", disk.getWrites());
               LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-              LOGGER.info("usedSpace: {}", usedSpace);
-              LOGGER.info("Total Space in GB: {}", disk.getSize() / (1024 * 1024 * 1024));
-              LOGGER.info("usedSpace in GB: {}", usedSpace / (1024 * 1024 * 1024));
+              LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
+              LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
+              LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+              LOGGER.info("usable space in GB: {}", currStore.getFreeSpace() / (1024 * 1024 * 1024));
               LOGGER.info("Time in use: {} \n", disk.getTransferTime());
           }
         } catch ( Exception e ) {
