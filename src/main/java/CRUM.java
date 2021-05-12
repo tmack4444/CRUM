@@ -176,7 +176,7 @@ public class CRUM {
             smi.setString(4, disk.getName());
             smi.setString(5, disk.getModel());
             smi.setLong(6, disk.getSize());
-            smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+            smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace()));
             smi.setLong(8, disk.getTransferTime());
             smi.execute();
               LOGGER.info("Disk:  {}", disk.getName());
