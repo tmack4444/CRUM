@@ -2,10 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CrumUI extends JFrame {
@@ -23,6 +20,14 @@ public class CrumUI extends JFrame {
     private JButton DiskButton;
     private JButton RAMButton;
     private JButton CPUButton;
+    private JLabel physicalCoresLabel;
+    private JLabel logicalCoresLabel;
+    private JPanel cpuGraphPanel;
+    private JLabel cpuModelLabel;
+    private JLabel usageLabel;
+    private JLabel dummylabel;
+    private JLabel processesLabel;
+    private JLabel clockSpeedLabel;
 
     // this ArrayList will store our disks, if more than one
     // use this to edit/refresh each DiskPanel component
@@ -126,7 +131,39 @@ public class CrumUI extends JFrame {
             vendorLabel.setText("Machine Vendor: " +rs.getString("MACHINE_VENDOR"));
         }
         stmt.close();
+    }
 
+    /**
+     * This method calls all other refresh methods, this way
+     * CRUM.java only has to call one method for each update
+     * @param c
+     * @throws SQLException
+     */
+    public void refresh(Connection c) throws SQLException {
+        refreshUILabels(c);
+        refreshDisks(c);
+        refreshCPU(c);
+    }
+
+    /**
+     * Refreshes all JLabels in CPU
+     * @param c
+     * @throws SQLException
+     */
+    public void refreshCPU(Connection c) throws SQLException {
+
+        // Get and display CPU data
+        String sqlGetCPUData = "SELECT * FROM CPU";
+        Statement cpuStmt = c.createStatement();
+        ResultSet cpuRS = cpuStmt.executeQuery(sqlGetCPUData);
+        while(cpuRS.next()){
+            cpuModelLabel.setText(cpuRS.getString("CPU_MODEL"));
+            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getInt("CLOCK_SPEED"));
+            physicalCoresLabel.setText("Physical Cores: " + cpuRS.getInt("CORE_PHYSICAL"));
+            logicalCoresLabel.setText("Logical Cores: " + cpuRS.getInt("CORE_LOGICAL"));
+            usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE"));
+            processesLabel.setText("Processes: " + cpuRS.getInt("NUM_PROCESSES"));
+        }
     }
 
 }

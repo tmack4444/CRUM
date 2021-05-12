@@ -110,7 +110,7 @@
               </component>
             </children>
           </grid>
-          <grid id="fa15f" binding="CpuPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="fa15f" binding="CpuPanel" layout-manager="GridLayoutManager" row-count="8" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="CPU">
@@ -121,7 +121,89 @@
               <minimumSize width="300" height="300"/>
             </properties>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="a0d8b" class="javax.swing.JLabel" binding="cpuModelLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Lucida Console" size="20"/>
+                  <text value="CPU Model"/>
+                </properties>
+              </component>
+              <vspacer id="5f656">
+                <constraints>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="94f7a" class="javax.swing.JLabel" binding="physicalCoresLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Lucida Console" size="20"/>
+                  <text value="Physical Cores:"/>
+                </properties>
+              </component>
+              <component id="4124d" class="javax.swing.JLabel" binding="logicalCoresLabel">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Lucida Console" size="20"/>
+                  <text value="Logical Cores:"/>
+                </properties>
+              </component>
+              <grid id="c90f0" binding="cpuGraphPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="500" height="500"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <toolTipText value=""/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="5f2" class="javax.swing.JLabel" binding="dummylabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="A graph will go here eventually"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <component id="36e02" class="javax.swing.JLabel" binding="usageLabel">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Lucida Console" size="20"/>
+                  <text value="Usage:"/>
+                </properties>
+              </component>
+              <component id="9fabb" class="javax.swing.JLabel" binding="clockSpeedLabel">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Lucida Console" size="20"/>
+                  <text value="Clock Speed:"/>
+                </properties>
+              </component>
+              <component id="10a08" class="javax.swing.JLabel" binding="processesLabel">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Lucida Console" size="20"/>
+                  <text value="Processes:"/>
+                </properties>
+              </component>
+            </children>
           </grid>
           <grid id="7546" binding="RamPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
