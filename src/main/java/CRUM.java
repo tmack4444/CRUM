@@ -158,8 +158,8 @@ public class CRUM {
         try {
           for(int i = 0; i < disks.size(); i++) {
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-            List<HWDiskStore> Disks = hal.getDiskStores();
-            HWDiskStore disk = Disks.get(i);
+            HWDiskStore disk = disks.get(i);
+            disk.updateAttributes();
             //LOGGER.info("Disk:  {}", disk.getName());
             //LOGGER.info("Reads:  {}", disk.getReads());
             //LOGGER.info("Bytes read: {}", disk.getReadBytes());
