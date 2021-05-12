@@ -103,5 +103,6 @@ public class DiskPanel extends JPanel {
             amountUsed.setText("Disk Used: " +rs.getLong("DISC_USED") + " GB");
             speed.setText("Disk Speed: " + rs.getInt("DISC_SPEED"));
         }
+        stmt.close();
     }
 }
