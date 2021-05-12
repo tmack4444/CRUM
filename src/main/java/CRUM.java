@@ -178,8 +178,8 @@ public class CRUM {
               LOGGER.info("Writes:  {}", disk.getWrites());
               LOGGER.info("Bytes written: {}", disk.getWriteBytes());
               LOGGER.info("usedSpace: {}", usedSpace);
-              LOGGER.info("Total Space in GB: {}", disk.getSize() / 1000000000);
-              LOGGER.info("usedSpace in GB: {}", usedSpace / 1000000000);
+              LOGGER.info("Total Space in GB: {}", disk.getSize() / (1024 * 1024 * 1024));
+              LOGGER.info("usedSpace in GB: {}", usedSpace / (1024 * 1024 * 1024));
               LOGGER.info("Time in use: {} \n", disk.getTransferTime());
           }
         } catch ( Exception e ) {
