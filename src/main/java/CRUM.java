@@ -160,13 +160,7 @@ public class CRUM {
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
             HWDiskStore disk = disks.get(i);
             disk.updateAttributes();
-            //LOGGER.info("Disk:  {}", disk.getName());
-            //LOGGER.info("Reads:  {}", disk.getReads());
-            //LOGGER.info("Bytes read: {}", disk.getReadBytes());
-            //LOGGER.info("Writes:  {}", disk.getWrites());
-            //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-            //LOGGER.info("Time in use: {} \n", disk.getTransferTime());
-            int usedSpace = (int) (disk.getSize() - disk.getWriteBytes());
+            long usedSpace = (disk.getSize() - disk.getWriteBytes());
             String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement smi = c.prepareStatement(sql_mach_insert);
             smi.setInt(1, i);
@@ -175,9 +169,18 @@ public class CRUM {
             smi.setString(4, disk.getName());
             smi.setString(5, disk.getModel());
             smi.setLong(6, disk.getSize());
-            smi.setInt(7, usedSpace);
+            smi.setLong(7, usedSpace);
             smi.setLong(8, disk.getTransferTime());
             smi.execute();
+              LOGGER.info("Disk:  {}", disk.getName());
+              LOGGER.info("Reads:  {}", disk.getReads());
+              LOGGER.info("Bytes read: {}", disk.getReadBytes());
+              LOGGER.info("Writes:  {}", disk.getWrites());
+              LOGGER.info("Bytes written: {}", disk.getWriteBytes());
+              LOGGER.info("usedSpace: {}", usedSpace);
+              LOGGER.info("Total Space in GB: {}", disk.getSize() / 1000000000);
+              LOGGER.info("usedSpace in GB: {}", usedSpace / 1000000000);
+              LOGGER.info("Time in use: {} \n", disk.getTransferTime());
           }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -194,13 +197,13 @@ public class CRUM {
             currentLoad += currLoadTicks[i];
         }
         currentLoad = (currentLoad / cpu.getLogicalProcessorCount()) * 100;
-        LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
-        LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
-        LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
-        LOGGER.info("Current Load: {}", currentLoad);
-        LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
-        LOGGER.info("Frequency {}", cpu.getCurrentFreq());
-        LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
+        //LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
+        //LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
+        //LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
+        //LOGGER.info("Current Load: {}", currentLoad);
+        //LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
+        //LOGGER.info("Frequency {}", cpu.getCurrentFreq());
+        //LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
 
     }
 }
