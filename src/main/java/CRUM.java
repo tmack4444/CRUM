@@ -91,7 +91,7 @@ public class CRUM {
             stmt.executeUpdate(sql_user);
 
             String sql_cpu = "CREATE TABLE IF NOT EXISTS CPU " +
-                    "(CPU_ID INT NOT NULL, " +
+                    "(CPU_ID TEXT NOT NULL, " +
                     "MACHINE_ID TEXT NOT NULL," +
                     "TIMESTAMP TIMESTAMP NOT NULL," +
                     "CPU_MODEL TEXT NOT NULL," +
@@ -195,7 +195,7 @@ public class CRUM {
         }
     }
 
-    public static void getCPUData(Calendar calendar){
+    public static void getCPUData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         currLoadTicks = cpu.getProcessorCpuLoadBetweenTicks(prevLoadTicks);          //Returns the percentage of load for each logical processor
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
@@ -204,6 +204,18 @@ public class CRUM {
             currentLoad += currLoadTicks[i];
         }
         currentLoad = (currentLoad / cpu.getLogicalProcessorCount()) * 100;
+        String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
+        PreparedStatement smi = c.prepareStatement(sql_mach_insert);
+        smi.setString(1, cpu.getProcessorIdentifier().getProcessorID());
+        smi.setString(2, SerialNum);
+        smi.setTimestamp(3, currentTime);
+        smi.setString(4, cpu.getProcessorIdentifier().getModel());
+        smi.setLong(5, cpu.getMaxFreq());
+        smi.setInt(6, cpu.getPhysicalProcessorCount());
+        smi.setLong(7,  cpu.getLogicalProcessorCount());
+        smi.setDouble(8, currentLoad);
+        smi.setLong(9,10);
+        smi.execute();
         //LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
         //LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
         //LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
