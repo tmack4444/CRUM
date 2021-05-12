@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * File: DiskPanel.java
@@ -24,6 +26,7 @@ public class DiskPanel extends JPanel {
     private JLabel amountUsed = new JLabel("Amount used: ");
     private JLabel speed = new JLabel("Disk speed: ");
 
+
     /**
      * The constructor method
      * Since this is a dynamically created
@@ -37,6 +40,16 @@ public class DiskPanel extends JPanel {
      * be readable
      */
     DiskPanel(){
+        // Set preferred sizes so that the JLabels actually display in full
+        Dimension dim = new Dimension(10000, 10);
+        diskName.setPreferredSize(dim);
+        reads.setPreferredSize(dim);
+        writes.setPreferredSize(dim);
+        model.setPreferredSize(dim);
+        diskSize.setPreferredSize(dim);
+        amountUsed.setPreferredSize(dim);
+        speed.setPreferredSize(dim);
+
         // Set layout
         // yes, null is generally bad, however, I tried to use the layout
         // managers nicely in code. It did not want to cooperate, so now
@@ -70,12 +83,25 @@ public class DiskPanel extends JPanel {
     }
 
     /**
-     * If called, this method will change the
+     * This method will change the
      * JLabels contained within the corresponding
      * DiskPanel object to the correct/updated
      * database value
+     * @param c Connection: Database Connection Object
+     * @param i Int: Desired ID of Disk
      */
-    public void refreshLabels(Connection c) throws SQLException {
-        System.out.println("Refreshing Disk labels");
+    public void refreshLabels(Connection c, int i) throws SQLException {
+        Statement stmt = c.createStatement();
+        // We pass i in so it gets the correct Disk, that way Disk 0 and Disk 1
+        // won't have the same data
+        String sqlGetDiskData = "SELECT * FROM DISC WHERE DISC_ID = " + i;
+        ResultSet rs = stmt.executeQuery(sqlGetDiskData);
+        while(rs.next()){
+            diskName.setText("Disk Name: " + rs.getString("DISC_NAME"));
+            model.setText("Disk Model: " + rs.getString("DISC_MODEL"));
+            diskSize.setText("Disk Size: " + rs.getLong("DISC_SIZE") + " GB");
+            amountUsed.setText("Disk Used: " +rs.getLong("DISC_USED") + " GB");
+            speed.setText("Disk Speed: " + rs.getInt("DISC_SPEED"));
+        }
     }
 }

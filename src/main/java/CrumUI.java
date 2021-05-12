@@ -105,7 +105,7 @@ public class CrumUI extends JFrame {
      */
     public void refreshDisks(Connection c) throws SQLException {
         for (int i=0; i < diskList.size(); i++){
-            diskList.get(i).refreshLabels(c);
+            diskList.get(i).refreshLabels(c, i);
         }
     }
 
@@ -117,6 +117,7 @@ public class CrumUI extends JFrame {
      */
     public void refreshUILabels(Connection c) throws SQLException {
         Statement stmt = c.createStatement();
+        // Get and Display Machine data and info from Machine table
         String sqlGetMachineData = "SELECT MACHINE_ID, MACHINE_MODEL, MACHINE_VENDOR FROM MACHINE";
         ResultSet rs = stmt.executeQuery(sqlGetMachineData);
         while (rs.next()){

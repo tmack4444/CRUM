@@ -45,6 +45,7 @@ public class CRUM {
                 getDiskData(calendar);
                 getCPUData(calendar);
                 ui.refreshUILabels(c);
+                ui.refreshDisks(c);
                 TimeUnit.SECONDS.sleep(1);
             }
     }
