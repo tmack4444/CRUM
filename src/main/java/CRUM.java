@@ -223,6 +223,23 @@ public class CRUM {
         //LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
         //LOGGER.info("Frequency {}", cpu.getCurrentFreq());
         //LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
-
     }
+
+    public static void getMemoryData(Calendar calendar) throws SQLException {
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime())
+        /*
+        String sql_ram = "CREATE TABLE IF NOT EXISTS RAM " +
+                "(RAM_ID INT NOT NULL, " +
+                "MACHINE_ID TEXT NOT NULL," +
+                "TIMESTAMP TIMESTAMP NOT NULL," +
+                "TOTAL_SPACE INT NOT NULL," +
+                "USED_SPACE INT NOT NULL," +
+                "PRIMARY KEY(RAM_ID, MACHINE_ID, TIMESTAMP)," +
+                "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+        stmt.executeUpdate(sql_ram);
+         */
+    }
+
+
+
 }
