@@ -43,6 +43,7 @@ public class CrumUI extends JFrame {
     public ArrayList<DiskPanel> diskList = new ArrayList<>();
     // Database Connection object, assigned to c from CRUM.java
     private Connection c;
+    private ChartPanel cpuChartPanel;
 
     /**
      * This constructor method also handles
@@ -74,8 +75,8 @@ public class CrumUI extends JFrame {
         String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
         JDBCCategoryDataset dataset = new JDBCCategoryDataset(c, sql);
         JFreeChart cpuChart = ChartFactory.createLineChart("CPU Usage", "Time",
-                "Utilization", dataset, PlotOrientation.VERTICAL, false, true, true);
-        ChartPanel cpuChartPanel = new ChartPanel(cpuChart);
+                "Utilization", dataset, PlotOrientation.VERTICAL, false, false, false);
+        cpuChartPanel = new ChartPanel(cpuChart);
         this.cpuGraphPanel.add(cpuChartPanel, BorderLayout.CENTER);
 
         this.pack();
@@ -188,6 +189,7 @@ public class CrumUI extends JFrame {
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
             processesLabel.setText("Processes: " + cpuRS.getLong("NUM_PROCESS"));
         }
+        
         cpuStmt.close();
     }
 
