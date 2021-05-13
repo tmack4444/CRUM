@@ -1,3 +1,12 @@
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +34,6 @@ public class CrumUI extends JFrame {
     private JPanel cpuGraphPanel;
     private JLabel cpuModelLabel;
     private JLabel usageLabel;
-    private JLabel dummylabel;
     private JLabel processesLabel;
     private JLabel clockSpeedLabel;
 
@@ -33,6 +41,7 @@ public class CrumUI extends JFrame {
     // use this to edit/refresh each DiskPanel component
     // individually
     public ArrayList<DiskPanel> diskList = new ArrayList<>();
+    // Database Connection object, assigned to c from CRUM.java
     private Connection c;
 
     /**
@@ -41,14 +50,18 @@ public class CrumUI extends JFrame {
      * multiples of a hardware component, like Disk.
      * Any additional tabs will be added within here,
      * as the constructor has access to tabbedPane1
-     * @param title
+     * @param title title of Frame
+     * @param c Database Connection
      */
-    public CrumUI(String title, Connection c){
+    public CrumUI(String title, Connection c) throws SQLException {
         super(title);
 
+        // set c for this instance to whatever c was passed
         this.c = c;
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(rootPanel);
+
         // Create and add DiskPanel object for each disk detected
         for(int i=0; i < CRUM.numDisks; i++){
             // +i is added so that we will have disk 0, disk 1, etc
@@ -56,6 +69,15 @@ public class CrumUI extends JFrame {
             this.tabbedPane1.addTab("Disk: "+i, diskPanel);
             diskList.add(diskPanel);
         }
+
+        // create CPU chart and add it to cpuGraphPanel
+        String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
+        JDBCCategoryDataset dataset = new JDBCCategoryDataset(c, sql);
+        JFreeChart cpuChart = ChartFactory.createLineChart("CPU Usage", "Time",
+                "Utilization", dataset, PlotOrientation.VERTICAL, false, true, true);
+        ChartPanel cpuChartPanel = new ChartPanel(cpuChart);
+        this.cpuGraphPanel.add(cpuChartPanel, BorderLayout.CENTER);
+
         this.pack();
 
         // Set CPU main button to switch to CPU tab
@@ -79,12 +101,14 @@ public class CrumUI extends JFrame {
         });
         // This one worries me as index 4 does not INITIALLY exist
         // Luckily the disk tabs are added before actual frame creation
+        // Also yes, this button only goes to Disk:0
         DiskButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tabbedPane1.setSelectedIndex(4);
             }
         });
+
     }
 
     /**
@@ -158,7 +182,7 @@ public class CrumUI extends JFrame {
         ResultSet cpuRS = cpuStmt.executeQuery(sqlGetCPUData);
         while(cpuRS.next()){
             cpuModelLabel.setText(cpuRS.getString("CPU_MODEL"));
-            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getLong("CLOCK_SPEED") / 1000000000 + "GHz");
+            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getDouble("CLOCK_SPEED") / 1000000000 + "GHz");
             physicalCoresLabel.setText("Physical Cores: " + cpuRS.getInt("CORE_PHYSICAL"));
             logicalCoresLabel.setText("Logical Cores: " + cpuRS.getInt("CORE_LOGICAL"));
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
