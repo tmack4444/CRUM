@@ -33,6 +33,7 @@ public class CrumUI extends JFrame {
     // use this to edit/refresh each DiskPanel component
     // individually
     public ArrayList<DiskPanel> diskList = new ArrayList<>();
+    private Connection c;
 
     /**
      * This constructor method also handles
@@ -42,9 +43,10 @@ public class CrumUI extends JFrame {
      * as the constructor has access to tabbedPane1
      * @param title
      */
-    public CrumUI(String title){
+    public CrumUI(String title, Connection c){
         super(title);
 
+        this.c = c;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(rootPanel);
         // Create and add DiskPanel object for each disk detected
@@ -105,10 +107,8 @@ public class CrumUI extends JFrame {
      * the diskList, the method will tell the corresponding disk
      * to update its JLabels to whatever the new Disk database
      * values are.
-     * @param c the Database Connection object so we are on the
-     *          correct DB
      */
-    public void refreshDisks(Connection c) throws SQLException {
+    public void refreshDisks() throws SQLException {
         for (int i=0; i < diskList.size(); i++){
             diskList.get(i).refreshLabels(c, i);
         }
@@ -118,9 +118,9 @@ public class CrumUI extends JFrame {
      * This method is basically the same as refreshDisks, but for
      * all the other UI components created by CrumUI.
      * Disk is separate because they are dynamically added later
-     * @param c the database connection from CRUM.java
+     *
      */
-    public void refreshUILabels(Connection c) throws SQLException {
+    public void refreshUILabels() throws SQLException {
         Statement stmt = c.createStatement();
         // Get and Display Machine data and info from Machine table
         String sqlGetMachineData = "SELECT MACHINE_ID, MACHINE_MODEL, MACHINE_VENDOR FROM MACHINE";
@@ -136,21 +136,20 @@ public class CrumUI extends JFrame {
     /**
      * This method calls all other refresh methods, this way
      * CRUM.java only has to call one method for each update
-     * @param c
+     *
      * @throws SQLException
      */
-    public void refresh(Connection c) throws SQLException {
-        refreshUILabels(c);
-        refreshDisks(c);
-        refreshCPU(c);
+    public void refresh() throws SQLException {
+        refreshUILabels();
+        refreshDisks();
+        refreshCPU();
     }
 
     /**
      * Refreshes all JLabels in CPU
-     * @param c
      * @throws SQLException
      */
-    public void refreshCPU(Connection c) throws SQLException {
+    public void refreshCPU() throws SQLException {
 
         // Get and display CPU data
         String sqlGetCPUData = "SELECT CPU_MODEL, CLOCK_SPEED, CORE_PHYSICAL, " +

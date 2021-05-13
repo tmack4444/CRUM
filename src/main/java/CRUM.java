@@ -35,7 +35,7 @@ public class CRUM {
             crum.initMachine();
             // Realized I can't manipulate labels accurately
             // unless I do it this way, sorry -Paul
-            CrumUI ui = new CrumUI("C.R.U.M");
+            CrumUI ui = new CrumUI("C.R.U.M", c);
             ui.createUI(ui);
             for(int i = 0; i < disks.size(); i++){
                 HWDiskStore disk = disks.get(i);
@@ -48,7 +48,7 @@ public class CRUM {
                 calendar = Calendar.getInstance();
                 getDiskData(calendar);
                 getCPUData(calendar);
-                ui.refresh(c);
+                ui.refresh();
                 TimeUnit.SECONDS.sleep(1);
             }
     }
