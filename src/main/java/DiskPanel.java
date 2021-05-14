@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * File: DiskPanel.java
@@ -19,12 +20,11 @@ import java.sql.Statement;
  */
 public class DiskPanel extends JPanel {
     private JLabel diskName = new JLabel("Disk:0");
-    private JLabel reads = new JLabel("Read Speed:");
-    private JLabel writes = new JLabel("Write Speed");
     private JLabel model = new JLabel("Disk Model: ");
     private JLabel diskSize = new JLabel("Size available: ");
     private JLabel amountUsed = new JLabel("Amount used: ");
     private JLabel speed = new JLabel("Disk speed: ");
+    private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 
 
     /**
@@ -41,14 +41,16 @@ public class DiskPanel extends JPanel {
      */
     DiskPanel(){
         // Set preferred sizes so that the JLabels actually display in full
-        Dimension dim = new Dimension(10000, 10);
-        diskName.setPreferredSize(dim);
-        reads.setPreferredSize(dim);
-        writes.setPreferredSize(dim);
-        model.setPreferredSize(dim);
-        diskSize.setPreferredSize(dim);
-        amountUsed.setPreferredSize(dim);
-        speed.setPreferredSize(dim);
+        Dimension dim = new Dimension(10000, 100);
+        labels.add(diskName);
+        labels.add(model);
+        labels.add(diskSize);
+        labels.add(amountUsed);
+        labels.add(speed);
+        for(int i = 0; i < labels.size(); i++){
+            labels.get(i).setFont(new Font("Lucidia Console", Font.PLAIN, 20));
+            labels.get(i).setPreferredSize(dim);
+        }
 
         // Set layout
         // yes, null is generally bad, however, I tried to use the layout
@@ -59,27 +61,21 @@ public class DiskPanel extends JPanel {
         this.add(diskName);
         diskName.setBounds(new Rectangle(new Point(10, 0), diskName.getPreferredSize()));
 
-        // add reads and writes
-        this.add(reads);
-        reads.setBounds(new Rectangle(new Point(10, 15), reads.getPreferredSize()));
-        this.add(writes);
-        writes.setBounds(new Rectangle(new Point(10, 35), writes.getPreferredSize()));
-
         // add model
         this.add(model);
-        model.setBounds(new Rectangle(new Point(10, 55), model.getPreferredSize()));
+        model.setBounds(new Rectangle(new Point(10, 75), model.getPreferredSize()));
 
         // add disk size
         this.add(diskSize);
-        diskSize.setBounds(new Rectangle(new Point(10, 75), diskSize.getPreferredSize()));
+        diskSize.setBounds(new Rectangle(new Point(10, 95), diskSize.getPreferredSize()));
 
         // add amount of disk being used
         this.add(amountUsed);
-        amountUsed.setBounds(new Rectangle(new Point(10, 95), amountUsed.getPreferredSize()));
+        amountUsed.setBounds(new Rectangle(new Point(10, 115), amountUsed.getPreferredSize()));
 
         // add speed of disk
         this.add(speed);
-        speed.setBounds(new Rectangle(new Point(10, 115), speed.getPreferredSize()));
+        speed.setBounds(new Rectangle(new Point(10, 135), speed.getPreferredSize()));
     }
 
     /**
