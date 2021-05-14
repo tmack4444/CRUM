@@ -2,6 +2,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.general.DatasetChangeEvent;
+import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 import javax.swing.*;
@@ -61,9 +63,20 @@ public class CrumUI extends JFrame {
     // Database Connection object, assigned to c from CRUM.java
     private Connection c;
 
+    // SQL Strings and JDBCCategoryDataSet
+    public String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
+    JDBCCategoryDataset dataset;
+    public String ramSql = "SELECT TIMESTAMP, USED_SPACE FROM RAM";
+    JDBCCategoryDataset ramDS;
+
     // ChartPanels for JFreeChart usage
     private ChartPanel cpuChartPanel;
     private ChartPanel ramChartPanel;
+
+    // JFreeCharts
+    JFreeChart ramChart;
+    JFreeChart cpuChart;
+
 
     /**
      * This constructor method also handles
@@ -97,17 +110,16 @@ public class CrumUI extends JFrame {
          * Initialize JFreeCharts throughout the tabs
          */
         // create CPU chart and add it to cpuGraphPanel
-        String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
-        JDBCCategoryDataset dataset = new JDBCCategoryDataset(c, sql);
-        JFreeChart cpuChart = ChartFactory.createLineChart("CPU Usage", "Time",
+        dataset = new JDBCCategoryDataset(c, sql);
+        cpuChart = ChartFactory.createLineChart("CPU Usage", "Time",
                 "Utilization", dataset, PlotOrientation.VERTICAL, false, false, false);
         cpuChartPanel = new ChartPanel(cpuChart);
         this.cpuGraphPanel.add(cpuChartPanel, BorderLayout.CENTER);
 
         // create and add ramChart to ramGraphPanel
-        String ramSql = "SELECT TIMESTAMP, USED_SPACE FROM RAM";
-        JDBCCategoryDataset ramDS = new JDBCCategoryDataset(c, ramSql);
-        JFreeChart ramChart = ChartFactory.createLineChart("RAM Usage", "Time", "Usage",
+
+        ramDS = new JDBCCategoryDataset(c, ramSql);
+        ramChart = ChartFactory.createLineChart("RAM Usage", "Time", "Usage",
                 ramDS, PlotOrientation.VERTICAL, false, false, false);
         ramChartPanel = new ChartPanel(ramChart);
         this.RAMGraphPanel.add(ramChartPanel, BorderLayout.CENTER);
@@ -226,7 +238,10 @@ public class CrumUI extends JFrame {
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
             processesLabel.setText("Processes: " + cpuRS.getLong("NUM_PROCESS"));
         }
-        
+
+        // Re-execute query to change dataset, automatically redraws graph
+        dataset.executeQuery(sql);
+
         cpuStmt.close();
     }
 
@@ -244,6 +259,10 @@ public class CrumUI extends JFrame {
             RAMUsedLabel.setText("In Use: " + rs.getLong("USED_SPACE") / 1000000000 + "GB");
             RAMSizeLabel.setText("Total RAM: " + rs.getLong("TOTAL_SPACE") / 1000000000 + "GB");
         }
+
+        // Re-execute query to change dataset, automatically redraws graph
+        ramDS.executeQuery(ramSql);
+
         stmt.close();
 
     }
