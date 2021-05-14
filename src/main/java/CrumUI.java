@@ -189,7 +189,7 @@ public class CrumUI extends JFrame {
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
             processesLabel.setText("Processes: " + cpuRS.getLong("NUM_PROCESS"));
         }
-        
+
         cpuStmt.close();
     }
 
