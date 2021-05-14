@@ -1,10 +1,7 @@
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 import javax.swing.*;
@@ -14,6 +11,23 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * =======================
+ *      CrumUI.java
+ * =======================
+ * @author Paul Ippolito
+ * @version 0.8.9
+ *
+ * This class is the main UI code for the
+ * CRUM application. It contains/connects to
+ * the CrumUI.form file, which is the base UI.
+ * Within this class, all static components are added
+ * to the rootPanel and subsequent panels contained
+ * within root's JTabbedPane. Throughout its methods,
+ * it will retrieve and display the data within our
+ * database for the user. Some data will be displayed
+ * as a JFreeChart Line chart.
+ */
 public class CrumUI extends JFrame {
     private JTabbedPane tabbedPane1;
     private JPanel rootPanel;
@@ -46,7 +60,10 @@ public class CrumUI extends JFrame {
     public ArrayList<DiskPanel> diskList = new ArrayList<>();
     // Database Connection object, assigned to c from CRUM.java
     private Connection c;
+
+    // ChartPanels for JFreeChart usage
     private ChartPanel cpuChartPanel;
+    private ChartPanel ramChartPanel;
 
     /**
      * This constructor method also handles
@@ -54,6 +71,8 @@ public class CrumUI extends JFrame {
      * multiples of a hardware component, like Disk.
      * Any additional tabs will be added within here,
      * as the constructor has access to tabbedPane1
+     * Constructor also handles initial JFreeChart creation
+     * for the graphs
      * @param title title of Frame
      * @param c Database Connection
      */
@@ -74,6 +93,9 @@ public class CrumUI extends JFrame {
             diskList.add(diskPanel);
         }
 
+        /**
+         * Initialize JFreeCharts throughout the tabs
+         */
         // create CPU chart and add it to cpuGraphPanel
         String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
         JDBCCategoryDataset dataset = new JDBCCategoryDataset(c, sql);
@@ -82,8 +104,19 @@ public class CrumUI extends JFrame {
         cpuChartPanel = new ChartPanel(cpuChart);
         this.cpuGraphPanel.add(cpuChartPanel, BorderLayout.CENTER);
 
+        // create and add ramChart to ramGraphPanel
+        String ramSql = "SELECT TIMESTAMP, USED_SPACE FROM RAM";
+        JDBCCategoryDataset ramDS = new JDBCCategoryDataset(c, ramSql);
+        JFreeChart ramChart = ChartFactory.createLineChart("RAM Usage", "Time", "Usage",
+                ramDS, PlotOrientation.VERTICAL, false, false, false);
+        ramChartPanel = new ChartPanel(ramChart);
+        this.RAMGraphPanel.add(ramChartPanel, BorderLayout.CENTER);
+
         this.pack();
 
+        /**
+         * ActionListeners for any JButtons (mostly on Main tab)
+         */
         // Set CPU main button to switch to CPU tab
         CPUButton.addActionListener(new ActionListener() {
             @Override
@@ -171,6 +204,7 @@ public class CrumUI extends JFrame {
         refreshUILabels();
         refreshDisks();
         refreshCPU();
+        refreshRAM();
     }
 
     /**
@@ -194,6 +228,24 @@ public class CrumUI extends JFrame {
         }
         
         cpuStmt.close();
+    }
+
+    /**
+     * Refreshes the JLabels of RAM
+     * @throws SQLException
+     */
+    public void refreshRAM() throws SQLException {
+
+        // Get and Display RAM total size and usage
+        String getRAMData = "SELECT TOTAL_SPACE, USED_SPACE FROM RAM";
+        Statement stmt = c.createStatement();
+        ResultSet rs = stmt.executeQuery(getRAMData);
+        while (rs.next()){
+            RAMUsedLabel.setText("In Use: " + rs.getLong("USED_SPACE") / 1000000000 + "GB");
+            RAMSizeLabel.setText("Total RAM: " + rs.getLong("TOTAL_SPACE") / 1000000000 + "GB");
+        }
+        stmt.close();
+
     }
 
 }
