@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
@@ -45,6 +46,7 @@ public class CRUM {
                 getDiskData(calendar);
                 getCPUData(calendar);
                 getMemoryData(calendar);
+                cullDatabase();
                 ui.refresh();
                 TimeUnit.SECONDS.sleep(1);
             }
@@ -289,6 +291,26 @@ public class CRUM {
     }
 
 
+    public static void cullDatabase() throws SQLException {
+        Calendar tempCalendar = Calendar.getInstance();
+        int tempMonth = tempCalendar.get(Calendar.MONTH);
+        if (tempMonth == 0)
+            tempMonth = 11;
+        else
+            tempMonth--;
+        tempCalendar.set(Calendar.MONTH,tempMonth);
+        java.sql.Timestamp lastMonth = new java.sql.Timestamp(tempCalendar.getTime().getTime());
+        LOGGER.info("TimeStamp:  {}", lastMonth.toString());
+        String timeSearch = lastMonth.toString();
+        String[] timeSplitTemp = timeSearch.split(Pattern.quote("."));
+        timeSearch = timeSplitTemp[0];
 
+        String diskDeleteStatement = "DELETE FROM DISC WHERE DATETIME(TIMESTAMP)<='"+timeSearch+"'";
+        stmt.execute(diskDeleteStatement);
+        String cpuDeleteStatement = "DELETE FROM CPU WHERE DATETIME(TIMESTAMP)<='"+timeSearch+"'";
+        stmt.execute(cpuDeleteStatement);
+        String ramDeleteStatement = "DELETE FROM RAM WHERE DATETIME(TIMESTAMP)<='"+timeSearch+"'";
+        stmt.execute(ramDeleteStatement);
+    }
 
 }
