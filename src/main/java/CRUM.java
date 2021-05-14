@@ -37,13 +37,6 @@ public class CRUM {
             // unless I do it this way, sorry -Paul
             CrumUI ui = new CrumUI("C.R.U.M", c);
             ui.createUI(ui);
-            for(int i = 0; i < disks.size(); i++){
-                HWDiskStore disk = disks.get(i);
-                //System.out.println();
-                //System.out.println("disk name: " + disk.getName());
-                //System.out.println("disk model: " + disk.getModel());
-                //System.out.println("disk size: " + (disk.getSize() / 1073741824) + " GB");
-            }
             while(true){
                 calendar = Calendar.getInstance();
                 getDiskData(calendar);
@@ -135,6 +128,11 @@ public class CRUM {
         }
     }
 
+    /**
+     * Initializes the various OSHI objects that will be used to gather information.
+     * We initialize them here rather than in their own method in order to simplify
+     * the gathering steps, and ensure that these objects all exist before we attempt to gather data
+     */
     public void initOSHI(){
         si = new SystemInfo();
         hal = si.getHardware();
@@ -147,6 +145,14 @@ public class CRUM {
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
     }
 
+    /**
+     * Since the Machine table is static in our application, we only need to pass
+     * values to it once. As such, we only need to gather some basic information
+     * like Serial Number, Model, and Manufacturer at the start of CRUM. These
+     * values will not change during operation, so there is no need to call this function
+     * more than once at the start
+     *
+     */
     public void initMachine() throws SQLException {
         Calendar calendar = Calendar.getInstance();
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
@@ -159,6 +165,20 @@ public class CRUM {
         smi.execute();
     }
 
+    /**
+     * This function gathers usage statistics from disk and inserts them into the disk table.
+     * We make use of the OSHI disks to gather some basic information like name and model,
+     * however other details use an OSHI object called a file store
+     * While disk is the hardware specifications of each storage device, this means that certain
+     * values are not stored in a disk, for example the total size of a disk is the hardware specified
+     * size, where 1 KB = 1000 Bytes, instead of 1 KB = 1024 bytes as reported by the operating system and software
+     *
+     * To get the software values and some other statistics we use something called an OSFileStore, another OSHI
+     * object that uses the software reported values for some statistics like correct amount of total space, or
+     * amount of space remaining on the disk.
+     *
+     * @param calendar We pass a calendar into each data gathering method to ensure timestamps are the same for each round of collection
+     */
     public static void getDiskData(Calendar calendar){
         try {
           for(int i = 0; i < disks.size(); i++) {
@@ -195,6 +215,18 @@ public class CRUM {
         }
     }
 
+    /**
+     * Gathers usage statistics from the CPU using an OSHI CPU object. We also make use of a processor
+     * Identifier to gather some static information, such as processor ID and name. Most values are fairly standard
+     * Except for currentload, a percentage of the total amount of the CPU in use.
+     * This uses an OSHI method that returns the percentage load for each logical core on a processor, compared to the
+     * Previous load on that processor. We use this information to gather the average amount of usage as a percentage,
+     * However in order to break this down to one total CPU average, we have to sum the values returned and divide by the
+     * number of cores, resulting in one value for the entire CPU's average usage.
+     *
+     * @param @param calendar We pass a calendar into each data gathering method to ensure timestamps are the same for each round of collection
+     * @throws SQLException
+     */
     public static void getCPUData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         currLoadTicks = cpu.getProcessorCpuLoadBetweenTicks(prevLoadTicks);          //Returns the percentage of load for each logical processor
@@ -225,6 +257,13 @@ public class CRUM {
         //LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
     }
 
+    /**
+     * Gathers information about the Memory. This means simply the total space, and the amount being used.
+     * Not much here right now, as we are sorting out the RAM_ID value
+     *
+     * @param @param calendar We pass a calendar into each data gathering method to ensure timestamps are the same for each round of collection
+     * @throws SQLException
+     */
     public static void getMemoryData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         /*
