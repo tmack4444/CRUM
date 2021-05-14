@@ -265,7 +265,9 @@ public class CRUM {
 
     /**
      * Gathers information about the Memory. This means simply the total space, and the amount being used.
-     * Not much here right now, as we are sorting out the RAM_ID value
+     * We use the number of physical modules of RAM as the key, since that should not change during use
+     * (and if it does, there are much bigger problems then CRUM not functioning correctly, such as windows crashing)
+     * Other than that, we just grab some basic memory metrics from OSHI.
      *
      * @param @param calendar We pass a calendar into each data gathering method to ensure timestamps are the same for each round of collection
      * @throws SQLException
