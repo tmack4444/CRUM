@@ -43,7 +43,7 @@ public class CRUMTest {
       String machineID = crum.hal.getComputerSystem().getSerialNumber();
       String sourceFile = "test.txt";
       try {
-          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+          c = DriverManager.getConnection("jdbc:sqlite:crum.db");
           stmt = c.createStatement();
           String sql_Search = "SELECT * FROM DISC ";
           ResultSet rs = stmt.executeQuery(sql_Search);
@@ -56,7 +56,7 @@ public class CRUMTest {
           os.close();
           calendar = Calendar.getInstance();
           crum.getDiskData(calendar);
-          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+          c = DriverManager.getConnection("jdbc:sqlite:crum.db");
           stmt = c.createStatement();
           java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
           String timeSearch = currentTime.toString();
@@ -80,7 +80,7 @@ public class CRUMTest {
 
   @Test
   public void initDBTest() throws SQLException {
-      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
       stmt = c.createStatement();
       CRUM crum = new CRUM();
       crum.initDB();
@@ -105,7 +105,7 @@ public class CRUMTest {
       crum.initOSHI();
       crum.initDB();
       crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
       stmt = c.createStatement();
       String sql_Search = "SELECT * FROM MACHINE ";
       ResultSet rs = stmt.executeQuery(sql_Search);
@@ -121,7 +121,7 @@ public class CRUMTest {
       crum.initOSHI();
       crum.initDB();
       crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
       long usedSpace = crum.memory.getTotal() - crum.memory.getTotal();
       stmt = c.createStatement();
       String sql_Search = "SELECT * FROM RAM ";

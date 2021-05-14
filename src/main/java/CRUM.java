@@ -54,9 +54,28 @@ public class CRUM {
 
     public void initDB(){
         try {
-            c = DriverManager.getConnection("jdbc:sqlite:test.db");
+            c = DriverManager.getConnection("jdbc:sqlite:crum.db");
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
+
+            String machine_del = "DROP TABLE IF EXISTS MACHINE";
+            stmt.execute(machine_del);
+
+            String disc_del = "DROP TABLE IF EXISTS DISC";
+            stmt.execute(disc_del);
+
+            String user_del = "DROP TABLE IF EXISTS USER";
+            stmt.execute(user_del);
+
+            String cpu_del = "DROP TABLE IF EXISTS CPU";
+            stmt.execute(cpu_del);
+
+            String network_del = "DROP TABLE IF EXISTS NETWORK";
+            stmt.execute(network_del);
+
+            String ram_del = "DROP TABLE IF EXISTS RAM";
+            stmt.execute(ram_del);
+
 
             String sql_machine = "CREATE TABLE IF NOT EXISTS MACHINE " +
                     "(MACHINE_ID TEXT      NOT NULL," +
