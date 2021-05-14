@@ -36,6 +36,9 @@ public class CrumUI extends JFrame {
     private JLabel usageLabel;
     private JLabel processesLabel;
     private JLabel clockSpeedLabel;
+    private JLabel RAMUsedLabel;
+    private JLabel RAMSizeLabel;
+    private JPanel RAMGraphPanel;
 
     // this ArrayList will store our disks, if more than one
     // use this to edit/refresh each DiskPanel component

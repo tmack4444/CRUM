@@ -226,7 +226,7 @@ public class CRUM {
     }
 
     public static void getMemoryData(Calendar calendar) throws SQLException {
-        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime())
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         /*
         String sql_ram = "CREATE TABLE IF NOT EXISTS RAM " +
                 "(RAM_ID INT NOT NULL, " +
