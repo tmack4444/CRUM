@@ -25,6 +25,12 @@ public class CRUMTest {
       assertNotNull(crum.hal);
       assertNotNull(crum.disks);
       assertNotNull(crum.SerialNum);
+      assertNotNull(crum.fs);
+      assertNotNull(crum.numDisks);
+      assertNotNull(crum.cpu);
+      assertNotNull(crum.prevLoadTicks);
+      assertNotNull(crum.memory);
+      assertNotNull(crum.numMemModules);
   }
 
   @Test
@@ -86,6 +92,10 @@ public class CRUMTest {
       assertEquals("DISC", res.getString("TABLE_NAME"));
       res = meta.getTables(null, null, "USER", new String[] {"TABLE"});
       assertEquals("USER", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "CPU", new String[] {"TABLE"});
+      assertEquals("CPU", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "RAM", new String[] {"TABLE"});
+      assertEquals("RAM", res.getString("TABLE_NAME"));
       c.close();
   }
 
@@ -102,6 +112,23 @@ public class CRUMTest {
       assertEquals(crum.SerialNum, rs.getString("MACHINE_ID"));
       assertEquals(crum.hal.getComputerSystem().getModel(), rs.getString("MACHINE_MODEL"));
       assertEquals(crum.hal.getComputerSystem().getManufacturer(), rs.getString("MACHINE_VENDOR"));
+      c.close();
+  }
+
+  @Test
+  public void getMemoryTest() throws SQLException {
+      CRUM crum = new CRUM();
+      crum.initOSHI();
+      crum.initDB();
+      crum.initMachine();
+      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      long usedSpace = crum.memory.getTotal() - crum.memory.getTotal();
+      stmt = c.createStatement();
+      String sql_Search = "SELECT * FROM RAM ";
+      ResultSet rs = stmt.executeQuery(sql_Search);
+      assertEquals(crum.numMemModules, rs.getString("RAM_ID"));
+      assertEquals(crum.memory.getTotal(), rs.getString("TOTAL_SPACE"));
+      assertEquals(usedSpace, rs.getString("USED_SPACE"));
       c.close();
   }
 }
