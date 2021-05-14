@@ -1,5 +1,6 @@
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
+import oshi.hardware.GlobalMemory;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HardwareAbstractionLayer;
 import org.slf4j.*;
@@ -19,7 +20,9 @@ public class CRUM {
     public static List<OSFileStore> fileStores;
     public static SystemInfo si;
     public static HardwareAbstractionLayer hal;
+    public static GlobalMemory memory;
     public static String SerialNum;
+    public static int numMemModules;
     public static int numDisks;
     public static CentralProcessor cpu;
     public static long[][] prevLoadTicks;
@@ -41,6 +44,7 @@ public class CRUM {
                 calendar = Calendar.getInstance();
                 getDiskData(calendar);
                 getCPUData(calendar);
+                getMemoryData(calendar);
                 ui.refresh();
                 TimeUnit.SECONDS.sleep(1);
             }
@@ -143,6 +147,8 @@ public class CRUM {
         numDisks = disks.size();
         cpu = hal.getProcessor();
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
+        memory = hal.getMemory();
+        numMemModules = memory.getPhysicalMemory().size();
     }
 
     /**
@@ -266,18 +272,20 @@ public class CRUM {
      */
     public static void getMemoryData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-        /*
-        String sql_ram = "CREATE TABLE IF NOT EXISTS RAM " +
-                "(RAM_ID INT NOT NULL, " +
-                "MACHINE_ID TEXT NOT NULL," +
-                "TIMESTAMP TIMESTAMP NOT NULL," +
-                "TOTAL_SPACE INT NOT NULL," +
-                "USED_SPACE INT NOT NULL," +
-                "PRIMARY KEY(RAM_ID, MACHINE_ID, TIMESTAMP)," +
-                "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
-        stmt.executeUpdate(sql_ram);
-         */
+        long usedMemory = memory.getTotal() - memory.getAvailable();
+        String sql_mach_insert = "INSERT INTO RAM VALUES(?,?,?,?,?)";
+        PreparedStatement smi = c.prepareStatement(sql_mach_insert);
+        smi.setLong(1, numMemModules);
+        smi.setString(2, SerialNum);
+        smi.setTimestamp(3, currentTime);
+        smi.setLong(4, memory.getTotal());
+        smi.setLong(5, usedMemory);
+        smi.execute();
+        LOGGER.info("Num Mem Modules: {}", numMemModules);
+        LOGGER.info("Total Memory:  {}", memory.getTotal());
+        LOGGER.info("Used Memory {}", usedMemory);
     }
+
 
 
 
