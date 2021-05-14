@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class CRUM {
     static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
@@ -48,6 +49,7 @@ public class CRUM {
                 calendar = Calendar.getInstance();
                 getDiskData(calendar);
                 getCPUData(calendar);
+                cullDatabase();
                 ui.refresh();
                 TimeUnit.SECONDS.sleep(1);
             }
@@ -178,6 +180,7 @@ public class CRUM {
             smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace()));
             smi.setLong(8, disk.getTransferTime());
             smi.execute();
+              LOGGER.info("TimeStamp:  {}", currentTime.toString());
               LOGGER.info("Disk:  {}", disk.getName());
               LOGGER.info("Reads:  {}", disk.getReads());
               LOGGER.info("Bytes read: {}", disk.getReadBytes());
@@ -224,5 +227,25 @@ public class CRUM {
         //LOGGER.info("Frequency {}", cpu.getCurrentFreq());
         //LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
 
+    }
+
+    public static void cullDatabase() throws SQLException {
+        Calendar tempCalendar = Calendar.getInstance();
+        int tempMonth = tempCalendar.get(Calendar.MONTH);
+        if (tempMonth == 0)
+            tempMonth = 11;
+        else
+            tempMonth--;
+        tempCalendar.set(Calendar.MONTH,tempMonth);
+        java.sql.Timestamp lastMonth = new java.sql.Timestamp(tempCalendar.getTime().getTime());
+        LOGGER.info("TimeStamp:  {}", lastMonth.toString());
+        String timeSearch = lastMonth.toString();
+        String[] timeSplitTemp = timeSearch.split(Pattern.quote("."));
+        timeSearch = timeSplitTemp[0];
+
+        String diskDeleteStatement = "DELETE FROM DISC WHERE DATETIME(TIMESTAMP)<='"+timeSearch+"'";
+        stmt.execute(diskDeleteStatement);
+        String cpuDeleteStatement = "DELETE FROM CPU WHERE DATETIME(TIMESTAMP)<='"+timeSearch+"'";
+        stmt.execute(cpuDeleteStatement);
     }
 }
