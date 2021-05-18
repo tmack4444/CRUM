@@ -25,6 +25,12 @@ public class CRUMTest {
       assertNotNull(crum.hal);
       assertNotNull(crum.disks);
       assertNotNull(crum.SerialNum);
+      assertNotNull(crum.fs);
+      assertNotNull(crum.numDisks);
+      assertNotNull(crum.cpu);
+      assertNotNull(crum.prevLoadTicks);
+      assertNotNull(crum.memory);
+      assertNotNull(crum.numMemModules);
   }
 
   @Test
@@ -37,7 +43,7 @@ public class CRUMTest {
       String machineID = crum.hal.getComputerSystem().getSerialNumber();
       String sourceFile = "test.txt";
       try {
-          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+          c = DriverManager.getConnection("jdbc:sqlite:crum.db");
           stmt = c.createStatement();
           String sql_Search = "SELECT * FROM DISC ";
           ResultSet rs = stmt.executeQuery(sql_Search);
@@ -50,7 +56,7 @@ public class CRUMTest {
           os.close();
           calendar = Calendar.getInstance();
           crum.getDiskData(calendar);
-          c = DriverManager.getConnection("jdbc:sqlite:test.db");
+          c = DriverManager.getConnection("jdbc:sqlite:crum.db");
           stmt = c.createStatement();
           java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
           String timeSearch = currentTime.toString();
@@ -74,7 +80,7 @@ public class CRUMTest {
 
   @Test
   public void initDBTest() throws SQLException {
-      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
       stmt = c.createStatement();
       CRUM crum = new CRUM();
       crum.initDB();
@@ -86,6 +92,10 @@ public class CRUMTest {
       assertEquals("DISC", res.getString("TABLE_NAME"));
       res = meta.getTables(null, null, "USER", new String[] {"TABLE"});
       assertEquals("USER", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "CPU", new String[] {"TABLE"});
+      assertEquals("CPU", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "RAM", new String[] {"TABLE"});
+      assertEquals("RAM", res.getString("TABLE_NAME"));
       c.close();
   }
 
@@ -95,13 +105,30 @@ public class CRUMTest {
       crum.initOSHI();
       crum.initDB();
       crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
       stmt = c.createStatement();
       String sql_Search = "SELECT * FROM MACHINE ";
       ResultSet rs = stmt.executeQuery(sql_Search);
       assertEquals(crum.SerialNum, rs.getString("MACHINE_ID"));
       assertEquals(crum.hal.getComputerSystem().getModel(), rs.getString("MACHINE_MODEL"));
       assertEquals(crum.hal.getComputerSystem().getManufacturer(), rs.getString("MACHINE_VENDOR"));
+      c.close();
+  }
+
+  @Test
+  public void getMemoryTest() throws SQLException {
+      CRUM crum = new CRUM();
+      crum.initOSHI();
+      crum.initDB();
+      crum.initMachine();
+      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+      long usedSpace = crum.memory.getTotal() - crum.memory.getTotal();
+      stmt = c.createStatement();
+      String sql_Search = "SELECT * FROM RAM ";
+      ResultSet rs = stmt.executeQuery(sql_Search);
+      assertEquals(crum.numMemModules, rs.getString("RAM_ID"));
+      assertEquals(crum.memory.getTotal(), rs.getString("TOTAL_SPACE"));
+      assertEquals(usedSpace, rs.getString("USED_SPACE"));
       c.close();
   }
 }
