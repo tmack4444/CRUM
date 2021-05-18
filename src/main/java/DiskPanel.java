@@ -1,3 +1,5 @@
+import org.jfree.chart.ChartPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
@@ -24,6 +26,7 @@ public class DiskPanel extends JPanel {
     private JLabel diskSize = new JLabel("Size available: ");
     private JLabel amountUsed = new JLabel("Amount used: ");
     private JLabel speed = new JLabel("Disk speed: ");
+    private JPanel DiskGraphPanel = new JPanel(new BorderLayout());
     private ArrayList<JLabel> labels = new ArrayList<JLabel>();
 
 
@@ -41,6 +44,8 @@ public class DiskPanel extends JPanel {
      */
     DiskPanel(){
         // Set preferred sizes so that the JLabels actually display in full
+        DiskGraphPanel.setPreferredSize(new Dimension(500, 500));
+
         Dimension dim = new Dimension(10000, 100);
         labels.add(diskName);
         labels.add(model);
