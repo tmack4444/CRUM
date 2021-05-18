@@ -6,6 +6,7 @@ import oshi.hardware.HardwareAbstractionLayer;
 import org.slf4j.*;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
+import oshi.hardware.NetworkIF;
 
 import javax.swing.*;
 import java.sql.*;
@@ -23,8 +24,10 @@ public class CRUM {
     public static HardwareAbstractionLayer hal;
     public static GlobalMemory memory;
     public static String SerialNum;
+    public static List<NetworkIF> netInterfaces;
     public static int numMemModules;
     public static int numDisks;
+    public static int numNetworkIFs;
     public static CentralProcessor cpu;
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
@@ -170,6 +173,7 @@ public class CRUM {
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
         memory = hal.getMemory();
         numMemModules = memory.getPhysicalMemory().size();
+        netInterfaces = hal.getNetworkIFs();
     }
 
     /**
