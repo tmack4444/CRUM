@@ -10,6 +10,7 @@ import oshi.hardware.NetworkIF;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -129,10 +130,8 @@ public class CRUM {
                     "(NETWORK_ID INT NOT NULL, " +
                     "MACHINE_ID TEXT NOT NULL," +
                     "TIMESTAMP TIMESTAMP NOT NULL," +
-                    "INBOUND_WIFI INT NOT NULL," +
-                    "OUTBOUND_WIFI INT NOT NULL," +
-                    "INBOUND_ETHERNET INT NOT NULL," +
-                    "OUTBOUND_ETHERNET INT NOT NULL," +
+                    "INBOUND_TRAFFIC INT NOT NULL," +
+                    "OUTBOUND_TRAFFIC INT NOT NULL," +
                     "MAC_ADDRESS TEXT NOT NULL," +
                     "PRIMARY KEY(NETWORK_ID, MACHINE_ID, TIMESTAMP)," +
                     "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
@@ -311,6 +310,7 @@ public class CRUM {
         LOGGER.info("Num Mem Modules: {}", numMemModules);
         LOGGER.info("Total Memory:  {}", memory.getTotal());
         LOGGER.info("Used Memory {}", usedMemory);
+
     }
 
 
