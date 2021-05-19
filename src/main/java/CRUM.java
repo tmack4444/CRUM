@@ -50,6 +50,7 @@ public class CRUM {
                 getDiskData(calendar);
                 getCPUData(calendar);
                 getMemoryData(calendar);
+                getNetworkData(calendar);
                 cullDatabase();
                 ui.refresh();
                 TimeUnit.SECONDS.sleep(1);
@@ -127,7 +128,7 @@ public class CRUM {
             stmt.executeUpdate(sql_cpu);
 
             String sql_network = "CREATE TABLE IF NOT EXISTS NETWORK " +
-                    "(NETWORK_ID INT NOT NULL, " +
+                    "(NETWORK_ID TEXT NOT NULL, " +
                     "MACHINE_ID TEXT NOT NULL," +
                     "TIMESTAMP TIMESTAMP NOT NULL," +
                     "INBOUND_TRAFFIC INT NOT NULL," +
@@ -278,13 +279,13 @@ public class CRUM {
         smi.setDouble(8, currentLoad);
         smi.setLong(9,10);
         smi.execute();
-        //LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
-        //LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
-        //LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
-        //LOGGER.info("Current Load: {}", currentLoad);
-        //LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
-        //LOGGER.info("Frequency {}", cpu.getCurrentFreq());
-        //LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
+        LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
+        LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
+        LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
+        LOGGER.info("Current Load: {}", currentLoad);
+        LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
+        LOGGER.info("Frequency {}", cpu.getCurrentFreq());
+        LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
     }
 
     /**
@@ -309,8 +310,54 @@ public class CRUM {
         smi.execute();
         LOGGER.info("Num Mem Modules: {}", numMemModules);
         LOGGER.info("Total Memory:  {}", memory.getTotal());
-        LOGGER.info("Used Memory {}", usedMemory);
+        LOGGER.info("Total Physical:  {}", memory.getPhysicalMemory());
+        LOGGER.info("Used Memory {} \n", usedMemory);
 
+    }
+
+    public static void getNetworkData(Calendar calendar) throws SQLException {
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+        long totalInbound = 0;
+        long totalOutbound = 0;
+        String IPs = "";
+        String Macs = "";
+        for(int i = 0; i < netInterfaces.size(); i++){
+          NetworkIF netIF = netInterfaces.get(i);
+          totalInbound += netIF.getBytesRecv();
+          totalOutbound += netIF.getBytesSent();
+          String[] currIP = netIF.getIPv4addr();
+          for(int j = 0; j < currIP.length; j++){
+              IPs += currIP[j];
+              if(j < currIP.length-1){
+                  IPs += ".";
+              }
+          }
+          IPs += " ";
+          Macs += netIF.getMacaddr() + " ";
+        }
+        String sql_mach_insert = "INSERT INTO Network VALUES(?,?,?,?,?,?)";
+        PreparedStatement smi = c.prepareStatement(sql_mach_insert);
+        smi.setString(1, IPs);
+        smi.setString(2, SerialNum);
+        smi.setTimestamp(3, currentTime);
+        smi.setLong(4, totalInbound);
+        smi.setLong(5, totalOutbound);
+        smi.setString(6, Macs);
+        smi.execute();
+        String sql_network = "CREATE TABLE IF NOT EXISTS NETWORK " +
+                "(NETWORK_ID INT NOT NULL, " +
+                "MACHINE_ID TEXT NOT NULL," +
+                "TIMESTAMP TIMESTAMP NOT NULL," +
+                "INBOUND_TRAFFIC INT NOT NULL," +
+                "OUTBOUND_TRAFFIC INT NOT NULL," +
+                "MAC_ADDRESS TEXT NOT NULL," +
+                "PRIMARY KEY(NETWORK_ID, MACHINE_ID, TIMESTAMP)," +
+                "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
+        stmt.executeUpdate(sql_network);
+        LOGGER.info("IPs: {}", IPs);
+        LOGGER.info("Macs:  {}", Macs);
+        LOGGER.info("Total In {}", totalInbound);
+        LOGGER.info("Total Out {} \n", totalOutbound);
     }
 
 
