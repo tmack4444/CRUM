@@ -143,6 +143,8 @@ public class CRUM {
                     "MACHINE_ID TEXT NOT NULL," +
                     "TIMESTAMP TIMESTAMP NOT NULL," +
                     "TOTAL_SPACE INT NOT NULL," +
+                    "TOTAL_PHYSICAL INT NOT NULL," +
+                    "TOTAL_VIRTUAL INT NOT NULL," +
                     "USED_SPACE INT NOT NULL," +
                     "PRIMARY KEY(RAM_ID, MACHINE_ID, TIMESTAMP)," +
                     "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
