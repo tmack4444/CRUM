@@ -291,7 +291,7 @@ public class CRUM {
     /**
      * Gathers information about the Memory. This means simply the total space, and the amount being used.
      * We use the number of physical modules of RAM as the key, since that should not change during use
-     * (and if it does, there are much bigger problems then CRUM not functioning correctly, such as windows crashing)
+     * (and if it does, there are much bigger problems than CRUM not functioning correctly, such as windows crashing)
      * Other than that, we just grab some basic memory metrics from OSHI.
      *
      * @param @param calendar We pass a calendar into each data gathering method to ensure timestamps are the same for each round of collection
@@ -344,16 +344,6 @@ public class CRUM {
         smi.setLong(5, totalOutbound);
         smi.setString(6, Macs);
         smi.execute();
-        String sql_network = "CREATE TABLE IF NOT EXISTS NETWORK " +
-                "(NETWORK_ID INT NOT NULL, " +
-                "MACHINE_ID TEXT NOT NULL," +
-                "TIMESTAMP TIMESTAMP NOT NULL," +
-                "INBOUND_TRAFFIC INT NOT NULL," +
-                "OUTBOUND_TRAFFIC INT NOT NULL," +
-                "MAC_ADDRESS TEXT NOT NULL," +
-                "PRIMARY KEY(NETWORK_ID, MACHINE_ID, TIMESTAMP)," +
-                "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
-        stmt.executeUpdate(sql_network);
         LOGGER.info("IPs: {}", IPs);
         LOGGER.info("Macs:  {}", Macs);
         LOGGER.info("Total In {}", totalInbound);

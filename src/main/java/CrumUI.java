@@ -5,6 +5,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
+import org.jfree.data.jdbc.JDBCXYDataset;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +56,10 @@ public class CrumUI extends JFrame {
     private JLabel RAMUsedLabel;
     private JLabel RAMSizeLabel;
     private JPanel RAMGraphPanel;
+    private JLabel macAddrLabel;
+    private JLabel outBoundLabel;
+    private JLabel inboundLabel;
+    private JPanel netGraphPanel;
 
     // this ArrayList will store our disks, if more than one
     // use this to edit/refresh each DiskPanel component
@@ -63,19 +68,25 @@ public class CrumUI extends JFrame {
     // Database Connection object, assigned to c from CRUM.java
     private Connection c;
 
-    // SQL Strings and JDBCCategoryDataSet
-    public String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
+    // SQL Strings and JDBCCategoryDataSets
+    public final String sql = "SELECT TIMESTAMP, CORE_USAGE FROM CPU";
     JDBCCategoryDataset dataset;
-    public String ramSql = "SELECT TIMESTAMP, USED_SPACE FROM RAM";
+
+    public final String ramSql = "SELECT TIMESTAMP, USED_SPACE FROM RAM";
     JDBCCategoryDataset ramDS;
+
+    public final String netSQL = "SELECT TIMESTAMP, INBOUND_TRAFFIC, OUTBOUND_TRAFFIC FROM NETWORK";
+    JDBCCategoryDataset netDS;
 
     // ChartPanels for JFreeChart usage
     private ChartPanel cpuChartPanel;
     private ChartPanel ramChartPanel;
+    private ChartPanel netChartPanel;
 
     // JFreeCharts
     JFreeChart ramChart;
     JFreeChart cpuChart;
+    JFreeChart netChart;
 
 
     /**
@@ -124,6 +135,16 @@ public class CrumUI extends JFrame {
         ramChartPanel = new ChartPanel(ramChart);
         this.RAMGraphPanel.add(ramChartPanel, BorderLayout.CENTER);
 
+
+        // Network ChartPanel, graph, pray that two lines display
+        netDS = new JDBCCategoryDataset(c, netSQL);
+        netChart = ChartFactory.createLineChart("Network Traffic", "Time",
+                "Traffic", netDS, PlotOrientation.VERTICAL, true, true, true);
+        netChartPanel = new ChartPanel(netChart);
+        this.netGraphPanel.add(netChartPanel, BorderLayout.CENTER);
+
+
+
         this.pack();
 
         /**
@@ -169,7 +190,7 @@ public class CrumUI extends JFrame {
      * @param frame
      */
     public static void createUI(JFrame frame){
-        frame.setSize(1000, 900);
+        frame.setSize(1400, 900);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -189,11 +210,11 @@ public class CrumUI extends JFrame {
 
     /**
      * This method is basically the same as refreshDisks, but for
-     * all the other UI components created by CrumUI.
+     * main Tab
      * Disk is separate because they are dynamically added later
      *
      */
-    public void refreshUILabels() throws SQLException {
+    public void refreshMain() throws SQLException {
         Statement stmt = c.createStatement();
         // Get and Display Machine data and info from Machine table
         String sqlGetMachineData = "SELECT MACHINE_ID, MACHINE_MODEL, MACHINE_VENDOR FROM MACHINE";
@@ -213,10 +234,11 @@ public class CrumUI extends JFrame {
      * @throws SQLException
      */
     public void refresh() throws SQLException {
-        refreshUILabels();
+        refreshMain();
         refreshDisks();
         refreshCPU();
         refreshRAM();
+        refreshNetwork();
     }
 
     /**
@@ -265,6 +287,26 @@ public class CrumUI extends JFrame {
 
         stmt.close();
 
+    }
+
+    /**
+     * Refresh the JLabels and ChartPanel for the
+     * Network tab
+     */
+    private void refreshNetwork() throws SQLException {
+        String getNetData = "SELECT * FROM NETWORK";
+        Statement stmt = c.createStatement();
+        ResultSet rs = stmt.executeQuery(getNetData);
+        while (rs.next()){
+            macAddrLabel.setText("MAC Address: "+ rs.getString("MAC_ADDRESS"));
+            inboundLabel.setText("Inbound: "+ rs.getInt("INBOUND_TRAFFIC"));
+            outBoundLabel.setText("Outbound: "+rs.getInt("OUTBOUND_TRAFFIC"));
+        }
+
+        // re execute query, redraw graph
+        netDS.executeQuery(netSQL);
+
+        stmt.close();
     }
 
 }
