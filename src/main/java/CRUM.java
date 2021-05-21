@@ -1,12 +1,8 @@
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
-import oshi.hardware.GlobalMemory;
-import oshi.hardware.HWDiskStore;
-import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.*;
 import org.slf4j.*;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
-import oshi.hardware.NetworkIF;
 
 import javax.swing.*;
 import java.sql.*;
@@ -33,6 +29,7 @@ public class CRUM {
     public static CentralProcessor cpu;
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
+    public static long[] prevFreeSpace;
     static Connection c = null;
     static Statement stmt = null;
 
@@ -171,7 +168,7 @@ public class CRUM {
         fs = si.getOperatingSystem().getFileSystem();
         fileStores = fs.getFileStores();
         disks = hal.getDiskStores();
-        numDisks = disks.size();
+        numDisks = fileStores.size();
         cpu = hal.getProcessor();
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
         memory = hal.getMemory();
@@ -179,11 +176,16 @@ public class CRUM {
         netInterfaces = hal.getNetworkIFs();
         baselineBytesIn = new long[netInterfaces.size()];
         baselineBytesOut = new long[netInterfaces.size()];
+        prevFreeSpace = new long[fileStores.size()];
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
             baselineBytesIn[i] += netIF.getBytesRecv();
             baselineBytesOut[i] += netIF.getBytesSent();
             netIF.updateAttributes();
+        }
+        for(int j = 0; j < fileStores.size(); j++){
+            OSFileStore currStore = fileStores.get(j);
+            prevFreeSpace[j] = currStore.getFreeSpace();
         }
     }
 
@@ -223,32 +225,45 @@ public class CRUM {
      */
     public static void getDiskData(Calendar calendar){
         try {
-            for(int i = 0; i < disks.size(); i++) {
+            for(int j = 0; j < disks.size(); j++){
+                HWDiskStore disk = disks.get(j);
+                List <HWPartition> Partitions = disk.getPartitions();
+                for(int k = 0; k < Partitions.size(); k++){
+                    HWPartition partition = Partitions.get(k);
+                    LOGGER.info("Partition:  {}", partition.getMountPoint());
+                    LOGGER.info("UUID:  {}", partition.getUuid());
+                }
+            }
+            for(int i = 0; i < fileStores.size(); i++) {
                 java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-                HWDiskStore disk = disks.get(i);
-                List<OSFileStore> fileStores = fs.getFileStores();
                 OSFileStore currStore = fileStores.get(i);
-                disk.updateAttributes();
+                currStore.updateAttributes();
+                long usage = Math.abs(currStore.getFreeSpace() - prevFreeSpace[i]);
                 String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
                 PreparedStatement smi = c.prepareStatement(sql_mach_insert);
                 smi.setInt(1, i);
                 smi.setString(2, SerialNum);
                 smi.setTimestamp(3, currentTime);
-                smi.setString(4, disk.getName());
-                smi.setString(5, disk.getModel());
-                smi.setLong(6, disk.getSize()/1000000000);
+                smi.setString(4, currStore.getMount());
+                smi.setString(5, "MODEL IS DEPRECATED");
+                smi.setLong(6, currStore.getTotalSpace()/1000000000);
                 smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
-                smi.setLong(8, disk.getTransferTime());
+                smi.setLong(8, usage);
                 smi.execute();
-                //LOGGER.info("Disk:  {}", disk.getName());
+                LOGGER.info("Disk:  {}", currStore.getName());
+                LOGGER.info("Description:  {}", currStore.getDescription());
+                LOGGER.info("Label:  {}", currStore.getLabel());
+                LOGGER.info("Logical Volume:  {}", currStore.getLogicalVolume());
+                LOGGER.info("Mount Volume:  {}", currStore.getMount());
+                LOGGER.info("UUID:  {}", currStore.getUUID());
                 //LOGGER.info("Reads:  {}", disk.getReads());
                 //LOGGER.info("Bytes read: {}", disk.getReadBytes());
                 //LOGGER.info("Writes:  {}", disk.getWrites());
                 //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-                //LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
-                //LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
-                //LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
-                //LOGGER.info("usable space in GB: {}", currStore.getFreeSpace() / (1024 * 1024 * 1024));
+                LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
+                LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
+                LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+                LOGGER.info("usable space in GB: {} \n", currStore.getFreeSpace() / (1024 * 1024 * 1024));
                 //LOGGER.info("Time in use: {} \n", disk.getTransferTime());
             }
         } catch ( Exception e ) {
@@ -313,8 +328,8 @@ public class CRUM {
         long usedMemory = memory.getTotal() - memory.getAvailable();
         long totalPhysMem = 0;
         for(int i = 0; i < memory.getPhysicalMemory().size(); i++){
-            LOGGER.info("Memory Bank: {}", i);
-            LOGGER.info("Memory in that module:  {}", memory.getPhysicalMemory().get(i).getCapacity());
+            //LOGGER.info("Memory Bank: {}", i);
+            //LOGGER.info("Memory in that module:  {}", memory.getPhysicalMemory().get(i).getCapacity());
             totalPhysMem += memory.getPhysicalMemory().get(i).getCapacity();
         }
         String sql_mach_insert = "INSERT INTO RAM VALUES(?,?,?,?,?,?,?)";
@@ -381,8 +396,8 @@ public class CRUM {
         smi.setLong(5, (totalOutbound * 8)/1000000);
         smi.setString(6, Macs);
         smi.execute();
-        LOGGER.info("IPs: {}", IPs);
-        LOGGER.info("Macs:  {}", Macs);
+        //LOGGER.info("IPs: {}", IPs);
+        //LOGGER.info("Macs:  {}", Macs);
     }
 
 
