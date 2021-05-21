@@ -236,7 +236,7 @@
               <grid id="352c5" binding="RAMGraphPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="700" height="500"/>
+                    <preferred-size width="1000" height="800"/>
                   </grid>
                 </constraints>
                 <properties/>
@@ -272,7 +272,7 @@
               <grid id="7b7f5" binding="netGraphPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="700" height="500"/>
+                    <preferred-size width="1000" height="800"/>
                   </grid>
                 </constraints>
                 <properties/>
