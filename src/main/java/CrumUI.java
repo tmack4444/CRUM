@@ -190,7 +190,7 @@ public class CrumUI extends JFrame {
      * @param frame
      */
     public static void createUI(JFrame frame){
-        frame.setSize(1400, 900);
+        frame.setSize(1800, 900);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
