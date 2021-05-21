@@ -254,7 +254,7 @@ public class CrumUI extends JFrame {
         ResultSet cpuRS = cpuStmt.executeQuery(sqlGetCPUData);
         while(cpuRS.next()){
             cpuModelLabel.setText(cpuRS.getString("CPU_MODEL"));
-            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getDouble("CLOCK_SPEED") / 1000000000 + "GHz");
+            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getDouble("CLOCK_SPEED")  + "GHz");
             physicalCoresLabel.setText("Physical Cores: " + cpuRS.getInt("CORE_PHYSICAL"));
             logicalCoresLabel.setText("Logical Cores: " + cpuRS.getInt("CORE_LOGICAL"));
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
@@ -274,12 +274,12 @@ public class CrumUI extends JFrame {
     public void refreshRAM() throws SQLException {
 
         // Get and Display RAM total size and usage
-        String getRAMData = "SELECT TOTAL_SPACE, USED_SPACE FROM RAM";
+        String getRAMData = "SELECT TOTAL_PHYSICAL, USED_SPACE FROM RAM";
         Statement stmt = c.createStatement();
         ResultSet rs = stmt.executeQuery(getRAMData);
         while (rs.next()){
-            RAMUsedLabel.setText("In Use: " + rs.getLong("USED_SPACE") / 1000000000 + "GB");
-            RAMSizeLabel.setText("Total RAM: " + rs.getLong("TOTAL_SPACE") / 1000000000 + "GB");
+            RAMUsedLabel.setText("In Use: " + rs.getLong("USED_SPACE")  + "GB");
+            RAMSizeLabel.setText("Total RAM: " + rs.getLong("TOTAL_PHYSICAL") + "GB");
         }
 
         // Re-execute query to change dataset, automatically redraws graph
@@ -299,8 +299,8 @@ public class CrumUI extends JFrame {
         ResultSet rs = stmt.executeQuery(getNetData);
         while (rs.next()){
             macAddrLabel.setText("MAC Address: "+ rs.getString("MAC_ADDRESS"));
-            inboundLabel.setText("Inbound: "+ rs.getInt("INBOUND_TRAFFIC") / 1000000000 + "Mbps");
-            outBoundLabel.setText("Outbound: "+rs.getInt("OUTBOUND_TRAFFIC") / 1000000000 + "Mbps");
+            inboundLabel.setText("Inbound: "+ rs.getInt("INBOUND_TRAFFIC")  + "Mbps");
+            outBoundLabel.setText("Outbound: "+rs.getInt("OUTBOUND_TRAFFIC") + "Mbps");
         }
 
         // re execute query, redraw graph
