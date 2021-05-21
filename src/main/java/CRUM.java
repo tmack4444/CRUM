@@ -334,20 +334,24 @@ public class CRUM {
         //LOGGER.info("Used Memory {} \n", usedMemory);
 
     }
-    
+
     public static void getNetworkData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         long totalInbound = 0;
         long totalOutbound = 0;
+        long currentIn = 0;
+        long currentOut = 0;
         String IPs = "";
         String Macs = "";
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
             netIF.updateAttributes();
-            totalInbound += netIF.getBytesRecv() - baselineBytesIn[i];
-            totalOutbound += netIF.getBytesSent() - baselineBytesOut[i];
-            baselineBytesIn[i] += netIF.getBytesRecv();
-            baselineBytesOut[i] += netIF.getBytesSent();
+            currentIn += netIF.getBytesRecv() - baselineBytesIn[i];
+            currentOut += netIF.getBytesSent() - baselineBytesOut[i];
+            baselineBytesIn[i] += currentIn;
+            baselineBytesOut[i] += currentOut;
+            totalInbound += currentIn;
+            totalOutbound += currentOut;
             String[] currIP = netIF.getIPv4addr();
             for(int j = 0; j < currIP.length; j++){
                 IPs += currIP[j];
