@@ -190,8 +190,8 @@ public class CrumUI extends JFrame {
      * @param frame
      */
     public static void createUI(JFrame frame){
-        frame.setSize(1400, 900);
-        frame.setLocationRelativeTo(null);
+        // make it full screen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
     }
 
