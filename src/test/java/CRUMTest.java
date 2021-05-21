@@ -122,13 +122,15 @@ public class CRUMTest {
       crum.initDB();
       crum.initMachine();
       c = DriverManager.getConnection("jdbc:sqlite:crum.db");
-      long usedSpace = crum.memory.getTotal() - crum.memory.getTotal();
+      long usedSpace = (crum.memory.getTotal() - crum.memory.getAvailable())/1000000;
+      Calendar calendar = Calendar.getInstance();
+      crum.getMemoryData(calendar);
       stmt = c.createStatement();
       String sql_Search = "SELECT * FROM RAM ";
       ResultSet rs = stmt.executeQuery(sql_Search);
-      assertEquals(crum.numMemModules, rs.getString("RAM_ID"));
-      assertEquals(crum.memory.getTotal(), rs.getString("TOTAL_SPACE"));
-      assertEquals(usedSpace, rs.getString("USED_SPACE"));
+      assertEquals(crum.numMemModules, rs.getInt("RAM_ID"));
+      assertEquals(crum.memory.getTotal()/1000000, rs.getLong("TOTAL_SPACE"));
+      assertEquals(usedSpace, rs.getLong("USED_SPACE"));
       c.close();
   }
 }
