@@ -227,8 +227,8 @@ public class CRUM {
             smi.setTimestamp(3, currentTime);
             smi.setString(4, disk.getName());
             smi.setString(5, disk.getModel());
-            smi.setLong(6, disk.getSize());
-            smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace()));
+            smi.setLong(6, disk.getSize()/1000000000);
+            smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
             smi.setLong(8, disk.getTransferTime());
             smi.execute();
               LOGGER.info("Disk:  {}", disk.getName());
@@ -302,21 +302,29 @@ public class CRUM {
     public static void getMemoryData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         long usedMemory = memory.getTotal() - memory.getAvailable();
-        String sql_mach_insert = "INSERT INTO RAM VALUES(?,?,?,?,?)";
+        long totalPhysMem = 0;
+        for(int i = 0; i < memory.getPhysicalMemory().size(); i++){
+            LOGGER.info("Memory Bank: {}", i);
+            LOGGER.info("Memory in that module:  {}", memory.getPhysicalMemory().get(i).getCapacity());
+            totalPhysMem += memory.getPhysicalMemory().get(i).getCapacity();
+        }
+        String sql_mach_insert = "INSERT INTO RAM VALUES(?,?,?,?,?,?,?)";
         PreparedStatement smi = c.prepareStatement(sql_mach_insert);
         smi.setLong(1, numMemModules);
         smi.setString(2, SerialNum);
         smi.setTimestamp(3, currentTime);
-        smi.setLong(4, memory.getTotal());
-        smi.setLong(5, usedMemory);
+        smi.setLong(4, memory.getTotal()/1000000000);
+        smi.setLong(5, totalPhysMem/1000000000);
+        smi.setLong(6, memory.getVirtualMemory().getVirtualMax()/1000000000);
+        smi.setLong(7, usedMemory);
         smi.execute();
         LOGGER.info("Num Mem Modules: {}", numMemModules);
         LOGGER.info("Total Memory:  {}", memory.getTotal());
-        LOGGER.info("Total Physical:  {}", memory.getPhysicalMemory());
+        LOGGER.info("Total Physical:  {}", totalPhysMem);
+        LOGGER.info("Total Virtual:  {}", memory.getVirtualMemory().getVirtualMax());
         LOGGER.info("Used Memory {} \n", usedMemory);
 
     }
-
     public static void getNetworkData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         long totalInbound = 0;
@@ -342,14 +350,14 @@ public class CRUM {
         smi.setString(1, IPs);
         smi.setString(2, SerialNum);
         smi.setTimestamp(3, currentTime);
-        smi.setLong(4, totalInbound);
-        smi.setLong(5, totalOutbound);
+        smi.setLong(4, totalInbound/1000000);
+        smi.setLong(5, totalOutbound/1000000);
         smi.setString(6, Macs);
         smi.execute();
         LOGGER.info("IPs: {}", IPs);
         LOGGER.info("Macs:  {}", Macs);
-        LOGGER.info("Total In {}", totalInbound);
-        LOGGER.info("Total Out {} \n", totalOutbound);
+        LOGGER.info("Total In {}", totalInbound/1000000);
+        LOGGER.info("Total Out {} \n", totalOutbound/1000000);
     }
 
 
