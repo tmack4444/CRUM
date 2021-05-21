@@ -6,9 +6,7 @@ import oshi.software.os.OSFileStore;
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -30,6 +28,7 @@ public class CRUM {
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
     public static long[] prevFreeSpace;
+    public static Map<Integer, Integer> FileStoresToDisks;
     static Connection c = null;
     static Statement stmt = null;
 
@@ -177,6 +176,7 @@ public class CRUM {
         baselineBytesIn = new long[netInterfaces.size()];
         baselineBytesOut = new long[netInterfaces.size()];
         prevFreeSpace = new long[fileStores.size()];
+        FileStoresToDisks = new HashMap<>();
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
             baselineBytesIn[i] += netIF.getBytesRecv();
@@ -186,6 +186,23 @@ public class CRUM {
         for(int j = 0; j < fileStores.size(); j++){
             OSFileStore currStore = fileStores.get(j);
             prevFreeSpace[j] = currStore.getFreeSpace();
+        }
+        for(int j = 0; j < disks.size(); j++){
+            HWDiskStore disk = disks.get(j);
+            List <HWPartition> Partitions = disk.getPartitions();
+            for(int k = 0; k < Partitions.size(); k++){
+                HWPartition partition = Partitions.get(k);
+                System.out.println("Partition ID: " + partition.getUuid());
+                for(int l = 0; l < fileStores.size(); l++){
+                    OSFileStore currStore = fileStores.get(l);
+                    System.out.println("Filestore ID: " + currStore.getUUID());
+                    if(currStore.getUUID().equals(partition.getUuid())){
+                        FileStoresToDisks.put(l, j);
+                    }
+                }
+                LOGGER.info("Partition:  {}", partition.getMountPoint());
+                LOGGER.info("UUID:  {}", partition.getUuid());
+            }
         }
     }
 
@@ -225,30 +242,21 @@ public class CRUM {
      */
     public static void getDiskData(Calendar calendar){
         try {
-            for(int j = 0; j < disks.size(); j++){
-                HWDiskStore disk = disks.get(j);
-                List <HWPartition> Partitions = disk.getPartitions();
-                for(int k = 0; k < Partitions.size(); k++){
-                    HWPartition partition = Partitions.get(k);
-                    LOGGER.info("Partition:  {}", partition.getMountPoint());
-                    LOGGER.info("UUID:  {}", partition.getUuid());
-                }
-            }
             for(int i = 0; i < fileStores.size(); i++) {
                 java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
                 OSFileStore currStore = fileStores.get(i);
                 currStore.updateAttributes();
-                long usage = Math.abs(currStore.getFreeSpace() - prevFreeSpace[i]);
                 String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
                 PreparedStatement smi = c.prepareStatement(sql_mach_insert);
+                HWDiskStore currDisk = disks.get(FileStoresToDisks.get(i));
                 smi.setInt(1, i);
                 smi.setString(2, SerialNum);
                 smi.setTimestamp(3, currentTime);
                 smi.setString(4, currStore.getMount());
-                smi.setString(5, "MODEL IS DEPRECATED");
+                smi.setString(5, currDisk.getModel());
                 smi.setLong(6, currStore.getTotalSpace()/1000000000);
                 smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
-                smi.setLong(8, usage);
+                smi.setLong(8, currDisk.getTransferTime());
                 smi.execute();
                 LOGGER.info("Disk:  {}", currStore.getName());
                 LOGGER.info("Description:  {}", currStore.getDescription());
