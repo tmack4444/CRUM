@@ -345,8 +345,8 @@ public class CRUM {
             netIF.updateAttributes();
             totalInbound += netIF.getBytesRecv() - baselineBytesIn[i];
             totalOutbound += netIF.getBytesSent() - baselineBytesOut[i];
-            baselineBytesIn[i] += totalInbound;
-            baselineBytesOut[i] += totalOutbound;
+            baselineBytesIn[i] += netIF.getBytesRecv();
+            baselineBytesOut[i] += netIF.getBytesSent();
             String[] currIP = netIF.getIPv4addr();
             for(int j = 0; j < currIP.length; j++){
                 IPs += currIP[j];
@@ -356,10 +356,10 @@ public class CRUM {
             }
             IPs += " ";
             Macs += netIF.getMacaddr() + " ";
-            LOGGER.info("Total In {}", totalInbound);
-            LOGGER.info("Total Out {} ", totalOutbound);
-            LOGGER.info("baseLine in {}", baselineBytesIn);
-            LOGGER.info("baseline out {} \n", baselineBytesOut);
+            //LOGGER.info("Total In {}", totalInbound);
+            //LOGGER.info("Total Out {} ", totalOutbound);
+            //LOGGER.info("baseLine in {}", baselineBytesIn);
+            //LOGGER.info("baseline out {} \n", baselineBytesOut);
         }
         String sql_mach_insert = "INSERT INTO Network VALUES(?,?,?,?,?,?)";
         PreparedStatement smi = c.prepareStatement(sql_mach_insert);
