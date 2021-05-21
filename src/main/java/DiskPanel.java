@@ -102,7 +102,7 @@ public class DiskPanel extends JPanel {
             model.setText("Disk Model: " + rs.getString("DISC_MODEL"));
             diskSize.setText("Disk Size: " + rs.getLong("DISC_SIZE") / 1000000000 + " GB");
             amountUsed.setText("Disk Used: " +rs.getLong("DISC_USED") / 1000000000 + " GB");
-            speed.setText("Disk Speed: " + rs.getInt("DISC_SPEED"));
+            speed.setText("Disk Speed: " + rs.getLong("DISC_SPEED")/1000000000 + "MB/s");
         }
         stmt.close();
     }

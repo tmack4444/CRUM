@@ -299,8 +299,8 @@ public class CrumUI extends JFrame {
         ResultSet rs = stmt.executeQuery(getNetData);
         while (rs.next()){
             macAddrLabel.setText("MAC Address: "+ rs.getString("MAC_ADDRESS"));
-            inboundLabel.setText("Inbound: "+ rs.getInt("INBOUND_TRAFFIC"));
-            outBoundLabel.setText("Outbound: "+rs.getInt("OUTBOUND_TRAFFIC"));
+            inboundLabel.setText("Inbound: "+ rs.getInt("INBOUND_TRAFFIC") / 1000000000 + "Mbps");
+            outBoundLabel.setText("Outbound: "+rs.getInt("OUTBOUND_TRAFFIC") / 1000000000 + "Mbps");
         }
 
         // re execute query, redraw graph
