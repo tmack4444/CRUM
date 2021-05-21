@@ -352,6 +352,12 @@ public class CRUM {
             baselineBytesOut[i] += currentOut;
             totalInbound += currentIn;
             totalOutbound += currentOut;
+            if(totalInbound < 0){
+                totalInbound = 0;
+            }
+            if(totalOutbound < 0){
+                totalOutbound = 0;
+            }
             String[] currIP = netIF.getIPv4addr();
             for(int j = 0; j < currIP.length; j++){
                 IPs += currIP[j];
