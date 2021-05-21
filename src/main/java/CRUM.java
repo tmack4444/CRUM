@@ -28,8 +28,8 @@ public class CRUM {
     public static List<NetworkIF> netInterfaces;
     public static int numMemModules;
     public static int numDisks;
-    public static long baselineBytesIn;
-    public static long baselineBytesOut;
+    public static long[] baselineBytesIn;
+    public static long[] baselineBytesOut;
     public static CentralProcessor cpu;
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
@@ -177,10 +177,12 @@ public class CRUM {
         memory = hal.getMemory();
         numMemModules = memory.getPhysicalMemory().size();
         netInterfaces = hal.getNetworkIFs();
+        baselineBytesIn = new long[netInterfaces.size()];
+        baselineBytesOut = new long[netInterfaces.size()];
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
-            baselineBytesIn += netIF.getBytesRecv();
-            baselineBytesOut += netIF.getBytesSent();
+            baselineBytesIn[i] += netIF.getBytesRecv();
+            baselineBytesOut[i] += netIF.getBytesSent();
             netIF.updateAttributes();
         }
     }
@@ -341,10 +343,10 @@ public class CRUM {
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
             netIF.updateAttributes();
-            totalInbound += netIF.getBytesRecv() - baselineBytesIn;
-            totalOutbound += netIF.getBytesSent() - baselineBytesOut;
-            baselineBytesIn += totalInbound;
-            baselineBytesOut += totalOutbound;
+            totalInbound += netIF.getBytesRecv() - baselineBytesIn[i];
+            totalOutbound += netIF.getBytesSent() - baselineBytesOut[i];
+            baselineBytesIn[i] += totalInbound;
+            baselineBytesOut[i] += totalOutbound;
             String[] currIP = netIF.getIPv4addr();
             for(int j = 0; j < currIP.length; j++){
                 IPs += currIP[j];
