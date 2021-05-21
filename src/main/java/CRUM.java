@@ -29,6 +29,8 @@ public class CRUM {
     public static int numMemModules;
     public static int numDisks;
     public static int numNetworkIFs;
+    public static long baselineBytesIn;
+    public static long baselineBytesOut;
     public static CentralProcessor cpu;
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
@@ -176,6 +178,11 @@ public class CRUM {
         memory = hal.getMemory();
         numMemModules = memory.getPhysicalMemory().size();
         netInterfaces = hal.getNetworkIFs();
+        for(int i = 0; i < netInterfaces.size(); i++){
+            NetworkIF netIF = netInterfaces.get(i);
+            baselineBytesIn += netIF.getBytesRecv();
+            baselineBytesOut += netIF.getBytesSent();
+        }
     }
 
     /**
@@ -333,8 +340,11 @@ public class CRUM {
         String Macs = "";
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
-            totalInbound += netIF.getBytesRecv();
-            totalOutbound += netIF.getBytesSent();
+            netIF.updateAttributes();
+            totalInbound += netIF.getBytesRecv() - baselineBytesIn;
+            totalOutbound += netIF.getBytesSent() - baselineBytesOut;
+            baselineBytesIn += totalInbound;
+            baselineBytesOut += totalOutbound;
             String[] currIP = netIF.getIPv4addr();
             for(int j = 0; j < currIP.length; j++){
                 IPs += currIP[j];
@@ -344,6 +354,10 @@ public class CRUM {
             }
             IPs += " ";
             Macs += netIF.getMacaddr() + " ";
+            LOGGER.info("Total In {}", totalInbound);
+            LOGGER.info("Total Out {} ", totalOutbound);
+            LOGGER.info("baseLine in {}", baselineBytesIn);
+            LOGGER.info("baseline out {} \n", baselineBytesOut);
         }
         String sql_mach_insert = "INSERT INTO Network VALUES(?,?,?,?,?,?)";
         PreparedStatement smi = c.prepareStatement(sql_mach_insert);
@@ -356,8 +370,6 @@ public class CRUM {
         smi.execute();
         LOGGER.info("IPs: {}", IPs);
         LOGGER.info("Macs:  {}", Macs);
-        LOGGER.info("Total In {}", totalInbound/1000000);
-        LOGGER.info("Total Out {} \n", totalOutbound/1000000);
     }
 
 
