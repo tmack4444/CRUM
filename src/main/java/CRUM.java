@@ -28,7 +28,6 @@ public class CRUM {
     public static List<NetworkIF> netInterfaces;
     public static int numMemModules;
     public static int numDisks;
-    public static int numNetworkIFs;
     public static long baselineBytesIn;
     public static long baselineBytesOut;
     public static CentralProcessor cpu;
@@ -182,6 +181,7 @@ public class CRUM {
             NetworkIF netIF = netInterfaces.get(i);
             baselineBytesIn += netIF.getBytesRecv();
             baselineBytesOut += netIF.getBytesSent();
+            netIF.updateAttributes();
         }
     }
 
@@ -238,16 +238,16 @@ public class CRUM {
                 smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
                 smi.setLong(8, disk.getTransferTime());
                 smi.execute();
-                LOGGER.info("Disk:  {}", disk.getName());
-                LOGGER.info("Reads:  {}", disk.getReads());
-                LOGGER.info("Bytes read: {}", disk.getReadBytes());
-                LOGGER.info("Writes:  {}", disk.getWrites());
-                LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-                LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
-                LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
-                LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
-                LOGGER.info("usable space in GB: {}", currStore.getFreeSpace() / (1024 * 1024 * 1024));
-                LOGGER.info("Time in use: {} \n", disk.getTransferTime());
+                //LOGGER.info("Disk:  {}", disk.getName());
+                //LOGGER.info("Reads:  {}", disk.getReads());
+                //LOGGER.info("Bytes read: {}", disk.getReadBytes());
+                //LOGGER.info("Writes:  {}", disk.getWrites());
+                //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
+                //LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
+                //LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
+                //LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+                //LOGGER.info("usable space in GB: {}", currStore.getFreeSpace() / (1024 * 1024 * 1024));
+                //LOGGER.info("Time in use: {} \n", disk.getTransferTime());
             }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -288,13 +288,13 @@ public class CRUM {
         smi.setDouble(8, currentLoad);
         smi.setLong(9,10);
         smi.execute();
-        LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
-        LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
-        LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
-        LOGGER.info("Current Load: {}", currentLoad);
-        LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
-        LOGGER.info("Frequency {}", cpu.getCurrentFreq());
-        LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
+        //LOGGER.info("Context Switches:  {}", cpu.getContextSwitches());
+        //LOGGER.info("Curr Load Ticks:  {}", currLoadTicks);
+        //LOGGER.info("Prev Load Ticks: {}", prevLoadTicks);
+        //LOGGER.info("Current Load: {}", currentLoad);
+        //LOGGER.info("Load over 1 Minute:  {}", cpu.getSystemLoadAverage(3));
+        //LOGGER.info("Frequency {}", cpu.getCurrentFreq());
+        //LOGGER.info("Max Frequency {} \n", cpu.getMaxFreq());
     }
 
     /**
@@ -325,11 +325,11 @@ public class CRUM {
         smi.setLong(6, memory.getVirtualMemory().getVirtualMax()/1000000000);
         smi.setLong(7, usedMemory/1000000000);
         smi.execute();
-        LOGGER.info("Num Mem Modules: {}", numMemModules);
-        LOGGER.info("Total Memory:  {}", memory.getTotal());
-        LOGGER.info("Total Physical:  {}", totalPhysMem);
-        LOGGER.info("Total Virtual:  {}", memory.getVirtualMemory().getVirtualMax());
-        LOGGER.info("Used Memory {} \n", usedMemory);
+        //LOGGER.info("Num Mem Modules: {}", numMemModules);
+        //LOGGER.info("Total Memory:  {}", memory.getTotal());
+        //LOGGER.info("Total Physical:  {}", totalPhysMem);
+        //LOGGER.info("Total Virtual:  {}", memory.getVirtualMemory().getVirtualMax());
+        //LOGGER.info("Used Memory {} \n", usedMemory);
 
     }
     public static void getNetworkData(Calendar calendar) throws SQLException {
@@ -364,8 +364,8 @@ public class CRUM {
         smi.setString(1, IPs);
         smi.setString(2, SerialNum);
         smi.setTimestamp(3, currentTime);
-        smi.setLong(4, totalInbound/1000000);
-        smi.setLong(5, totalOutbound/1000000);
+        smi.setLong(4, (totalInbound * 8)/1000000);
+        smi.setLong(5, (totalOutbound * 8)/1000000);
         smi.setString(6, Macs);
         smi.execute();
         LOGGER.info("IPs: {}", IPs);
