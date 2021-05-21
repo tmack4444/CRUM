@@ -334,6 +334,7 @@ public class CRUM {
         //LOGGER.info("Used Memory {} \n", usedMemory);
 
     }
+    
     public static void getNetworkData(Calendar calendar) throws SQLException {
         java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
         long totalInbound = 0;
