@@ -322,10 +322,10 @@ public class CRUM {
         smi.setLong(1, numMemModules);
         smi.setString(2, SerialNum);
         smi.setTimestamp(3, currentTime);
-        smi.setLong(4, memory.getTotal()/1000000000);
-        smi.setLong(5, totalPhysMem/1000000000);
-        smi.setLong(6, memory.getVirtualMemory().getVirtualMax()/1000000000);
-        smi.setLong(7, usedMemory/1000000000);
+        smi.setLong(4, memory.getTotal()/1000000);
+        smi.setLong(5, totalPhysMem/1000000);
+        smi.setLong(6, memory.getVirtualMemory().getVirtualMax()/1000000);
+        smi.setLong(7, usedMemory/1000000);
         smi.execute();
         //LOGGER.info("Num Mem Modules: {}", numMemModules);
         //LOGGER.info("Total Memory:  {}", memory.getTotal());
