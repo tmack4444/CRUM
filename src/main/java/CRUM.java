@@ -36,25 +36,25 @@ public class CRUM {
     static Statement stmt = null;
 
     public static void main(String[] args) throws InterruptedException, SQLException {
-            Calendar calendar = Calendar.getInstance();
-            CRUM crum = new CRUM();
-            crum.initDB();
-            crum.initOSHI();
-            crum.initMachine();
-            // Realized I can't manipulate labels accurately
-            // unless I do it this way, sorry -Paul
-            CrumUI ui = new CrumUI("C.R.U.M", c);
-            ui.createUI(ui);
-            while(true){
-                calendar = Calendar.getInstance();
-                getDiskData(calendar);
-                getCPUData(calendar);
-                getMemoryData(calendar);
-                getNetworkData(calendar);
-                cullDatabase();
-                ui.refresh();
-                TimeUnit.SECONDS.sleep(1);
-            }
+        Calendar calendar = Calendar.getInstance();
+        CRUM crum = new CRUM();
+        crum.initDB();
+        crum.initOSHI();
+        crum.initMachine();
+        // Realized I can't manipulate labels accurately
+        // unless I do it this way, sorry -Paul
+        CrumUI ui = new CrumUI("C.R.U.M", c);
+        ui.createUI(ui);
+        while(true){
+            calendar = Calendar.getInstance();
+            getDiskData(calendar);
+            getCPUData(calendar);
+            getMemoryData(calendar);
+            getNetworkData(calendar);
+            cullDatabase();
+            ui.refresh();
+            TimeUnit.SECONDS.sleep(1);
+        }
     }
 
     public void initDB(){
@@ -214,34 +214,34 @@ public class CRUM {
      */
     public static void getDiskData(Calendar calendar){
         try {
-          for(int i = 0; i < disks.size(); i++) {
-            java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-            HWDiskStore disk = disks.get(i);
-            List<OSFileStore> fileStores = fs.getFileStores();
-            OSFileStore currStore = fileStores.get(i);
-            disk.updateAttributes();
-            String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
-            PreparedStatement smi = c.prepareStatement(sql_mach_insert);
-            smi.setInt(1, i);
-            smi.setString(2, SerialNum);
-            smi.setTimestamp(3, currentTime);
-            smi.setString(4, disk.getName());
-            smi.setString(5, disk.getModel());
-            smi.setLong(6, disk.getSize()/1000000000);
-            smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
-            smi.setLong(8, disk.getTransferTime());
-            smi.execute();
-              LOGGER.info("Disk:  {}", disk.getName());
-              LOGGER.info("Reads:  {}", disk.getReads());
-              LOGGER.info("Bytes read: {}", disk.getReadBytes());
-              LOGGER.info("Writes:  {}", disk.getWrites());
-              LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-              LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
-              LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
-              LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
-              LOGGER.info("usable space in GB: {}", currStore.getFreeSpace() / (1024 * 1024 * 1024));
-              LOGGER.info("Time in use: {} \n", disk.getTransferTime());
-          }
+            for(int i = 0; i < disks.size(); i++) {
+                java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
+                HWDiskStore disk = disks.get(i);
+                List<OSFileStore> fileStores = fs.getFileStores();
+                OSFileStore currStore = fileStores.get(i);
+                disk.updateAttributes();
+                String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
+                PreparedStatement smi = c.prepareStatement(sql_mach_insert);
+                smi.setInt(1, i);
+                smi.setString(2, SerialNum);
+                smi.setTimestamp(3, currentTime);
+                smi.setString(4, disk.getName());
+                smi.setString(5, disk.getModel());
+                smi.setLong(6, disk.getSize()/1000000000);
+                smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
+                smi.setLong(8, disk.getTransferTime());
+                smi.execute();
+                LOGGER.info("Disk:  {}", disk.getName());
+                LOGGER.info("Reads:  {}", disk.getReads());
+                LOGGER.info("Bytes read: {}", disk.getReadBytes());
+                LOGGER.info("Writes:  {}", disk.getWrites());
+                LOGGER.info("Bytes written: {}", disk.getWriteBytes());
+                LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
+                LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
+                LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+                LOGGER.info("usable space in GB: {}", currStore.getFreeSpace() / (1024 * 1024 * 1024));
+                LOGGER.info("Time in use: {} \n", disk.getTransferTime());
+            }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -332,18 +332,18 @@ public class CRUM {
         String IPs = "";
         String Macs = "";
         for(int i = 0; i < netInterfaces.size(); i++){
-          NetworkIF netIF = netInterfaces.get(i);
-          totalInbound += netIF.getBytesRecv();
-          totalOutbound += netIF.getBytesSent();
-          String[] currIP = netIF.getIPv4addr();
-          for(int j = 0; j < currIP.length; j++){
-              IPs += currIP[j];
-              if(j < currIP.length-1){
-                  IPs += ".";
-              }
-          }
-          IPs += " ";
-          Macs += netIF.getMacaddr() + " ";
+            NetworkIF netIF = netInterfaces.get(i);
+            totalInbound += netIF.getBytesRecv();
+            totalOutbound += netIF.getBytesSent();
+            String[] currIP = netIF.getIPv4addr();
+            for(int j = 0; j < currIP.length; j++){
+                IPs += currIP[j];
+                if(j < currIP.length-1){
+                    IPs += ".";
+                }
+            }
+            IPs += " ";
+            Macs += netIF.getMacaddr() + " ";
         }
         String sql_mach_insert = "INSERT INTO Network VALUES(?,?,?,?,?,?)";
         PreparedStatement smi = c.prepareStatement(sql_mach_insert);
