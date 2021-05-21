@@ -130,7 +130,7 @@ public class CrumUI extends JFrame {
         // create and add ramChart to ramGraphPanel
 
         ramDS = new JDBCCategoryDataset(c, ramSql);
-        ramChart = ChartFactory.createLineChart("RAM Usage", "Time", "Usage",
+        ramChart = ChartFactory.createLineChart("RAM Usage in MB", "Time", "Usage",
                 ramDS, PlotOrientation.VERTICAL, false, false, false);
         ramChartPanel = new ChartPanel(ramChart);
         this.RAMGraphPanel.add(ramChartPanel, BorderLayout.CENTER);
@@ -278,8 +278,8 @@ public class CrumUI extends JFrame {
         Statement stmt = c.createStatement();
         ResultSet rs = stmt.executeQuery(getRAMData);
         while (rs.next()){
-            RAMUsedLabel.setText("In Use: " + rs.getLong("USED_SPACE")  + "GB");
-            RAMSizeLabel.setText("Total RAM: " + rs.getLong("TOTAL_PHYSICAL") + "GB");
+            RAMUsedLabel.setText("In Use: " + rs.getLong("USED_SPACE")   + "MB");
+            RAMSizeLabel.setText("Total RAM: " + rs.getLong("TOTAL_PHYSICAL")  + "MB");
         }
 
         // Re-execute query to change dataset, automatically redraws graph
