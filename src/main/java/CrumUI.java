@@ -254,7 +254,7 @@ public class CrumUI extends JFrame {
         ResultSet cpuRS = cpuStmt.executeQuery(sqlGetCPUData);
         while(cpuRS.next()){
             cpuModelLabel.setText(cpuRS.getString("CPU_MODEL"));
-            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getDouble("CLOCK_SPEED")  + "GHz");
+            clockSpeedLabel.setText("Clock Speed: " + cpuRS.getDouble("CLOCK_SPEED") / 1000000000  + "GHz");
             physicalCoresLabel.setText("Physical Cores: " + cpuRS.getInt("CORE_PHYSICAL"));
             logicalCoresLabel.setText("Logical Cores: " + cpuRS.getInt("CORE_LOGICAL"));
             usageLabel.setText("Usage: "+ cpuRS.getInt("CORE_USAGE") + "%");
