@@ -39,7 +39,7 @@ public class DiskTest {
         ResultSet rs = stmt.executeQuery(sql_Search);
         assertEquals(0, rs.getInt("DISC_ID"));
         assertEquals(crum.diskData.fileStores.get(0).getMount(), rs.getString("DISC_NAME"));
-        assertEquals((crum.diskData.fileStores.get(0).getTotalSpace()/1000000000), rs.getLong("DISC_SIZE"));
+        assertEquals((crum.diskData.fileStores.get(0).getTotalSpace()/ (1024 * 1024 * 1024)), rs.getLong("DISC_SIZE"));
         c.close();
     }
 
