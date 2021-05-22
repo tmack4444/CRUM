@@ -1,16 +1,11 @@
-import oshi.SystemInfo;
-import oshi.hardware.HWDiskStore;
-import oshi.hardware.HardwareAbstractionLayer;
+import CRUM.CRUM;
 
 import java.io.*;
 import java.sql.*;
 import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import oshi.hardware.NetworkIF;
 
 
 public class DiskTest {
@@ -33,7 +28,7 @@ public class DiskTest {
         assertNotNull(crum.diskData.prevBytesWritten);
         c = DriverManager.getConnection("jdbc:sqlite:crum.db");
         Calendar calendar = Calendar.getInstance();
-        crum.diskData.getDiskData(calendar, crum.SerialNum, crum.c);
+        crum.diskData.getDiskData(calendar, crum.SerialNum, c);
         stmt = c.createStatement();
         String sql_Search = "SELECT * FROM DISC ";
         ResultSet rs = stmt.executeQuery(sql_Search);
@@ -49,7 +44,7 @@ public class DiskTest {
         Calendar calendar = Calendar.getInstance();
         crum.initOSHI();
         crum.initDB();
-        crum.diskData.getDiskData(calendar, crum.SerialNum, crum.c);
+        crum.diskData.getDiskData(calendar, crum.SerialNum, c);
         String machineID = crum.hal.getComputerSystem().getSerialNumber();
         String sourceFile = "test.txt";
         try {
@@ -65,7 +60,7 @@ public class DiskTest {
             is.close();
             os.close();
             calendar = Calendar.getInstance();
-            crum.diskData.getDiskData(calendar, crum.SerialNum, crum.c);
+            crum.diskData.getDiskData(calendar, crum.SerialNum, c);
             c = DriverManager.getConnection("jdbc:sqlite:crum.db");
             stmt = c.createStatement();
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());

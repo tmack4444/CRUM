@@ -1,16 +1,10 @@
-import oshi.SystemInfo;
-import oshi.hardware.HWDiskStore;
-import oshi.hardware.HardwareAbstractionLayer;
+import CRUM.CRUM;
 
-import java.io.*;
 import java.sql.*;
 import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import oshi.hardware.NetworkIF;
 
 
 public class MemoryTest {
@@ -36,7 +30,7 @@ public class MemoryTest {
         c = DriverManager.getConnection("jdbc:sqlite:crum.db");
         long usedSpace = (crum.memoryData.memory.getTotal() - crum.memoryData.memory.getAvailable())/1000000;
         Calendar calendar = Calendar.getInstance();
-        crum.memoryData.getMemoryData(calendar, crum.SerialNum, crum.c);
+        crum.memoryData.getMemoryData(calendar, crum.SerialNum, c);
         stmt = c.createStatement();
         String sql_Search = "SELECT * FROM RAM ";
         ResultSet rs = stmt.executeQuery(sql_Search);
