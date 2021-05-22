@@ -29,6 +29,8 @@ public class CRUM {
     public static double[] currLoadTicks;
     public static long[] prevFreeSpace;
     public static long[] prevTransferTime;
+    public static long[] prevBytesWritten;
+    public static long[] prevBytesRead;
     public static Map<Integer, Integer> FileStoresToDisks;
     static Connection c = null;
     static Statement stmt = null;
@@ -169,6 +171,8 @@ public class CRUM {
         baselineBytesOut = new long[netInterfaces.size()];
         prevFreeSpace = new long[fileStores.size()];
         prevTransferTime = new long[numDisks];
+        prevBytesWritten = new long[numDisks];
+        prevBytesRead = new long[numDisks];
         FileStoresToDisks = new HashMap<>();
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
@@ -183,6 +187,8 @@ public class CRUM {
         for(int j = 0; j < disks.size(); j++){
             HWDiskStore disk = disks.get(j);
             prevTransferTime[j] = disk.getTransferTime();
+            prevBytesRead[j] = disk.getReadBytes();
+            prevBytesWritten[j] = disk.getWriteBytes();
             List <HWPartition> Partitions = disk.getPartitions();
             for(int k = 0; k < Partitions.size(); k++){
                 HWPartition partition = Partitions.get(k);
@@ -245,7 +251,12 @@ public class CRUM {
                 PreparedStatement smi = c.prepareStatement(sql_mach_insert);
                 HWDiskStore currDisk = disks.get(FileStoresToDisks.get(i));
                 long transferTime = currDisk.getTransferTime() - prevTransferTime[i];
+                long writesPerSec = currDisk.getWriteBytes() - prevBytesWritten[i];
+                long readsPerSec = currDisk.getReadBytes() - prevBytesRead[i];
+                long totalBytesPerSec = writesPerSec + readsPerSec;
                 prevTransferTime[i] = currDisk.getTransferTime();
+                prevBytesRead[i] = currDisk.getReadBytes();
+                prevBytesWritten[i] = currDisk.getWriteBytes();
                 currStore.updateAttributes();
                 currDisk.updateAttributes();
                 smi.setInt(1, i);
@@ -267,7 +278,9 @@ public class CRUM {
                 //LOGGER.info("Bytes read: {}", disk.getReadBytes());
                 //LOGGER.info("Writes:  {}", disk.getWrites());
                 //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-                LOGGER.info("usage: {} ", usage);
+                LOGGER.info("Writes per second: {} ", writesPerSec);
+                LOGGER.info("Reads per second: {} ", readsPerSec);
+                LOGGER.info("Total bytes per second: {} ", totalBytesPerSec);
                 LOGGER.info("Transfer time: {} ", transferTime);
                 LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
                 LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
