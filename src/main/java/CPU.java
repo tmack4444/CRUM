@@ -9,17 +9,13 @@ import java.util.Calendar;
 
 public class CPU {
     public static CRUM crum;
-    public static SystemInfo si;
-    public static HardwareAbstractionLayer hal;
     public static CentralProcessor cpu;
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
 
     public static void initCPU(CRUM crumObj){
         crum = crumObj;
-        si = new SystemInfo();
-        hal = si.getHardware();
-        cpu = hal.getProcessor();
+        cpu = crum.hal.getProcessor();
         prevLoadTicks = cpu.getProcessorCpuLoadTicks();
     }
 

@@ -16,27 +16,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Disk {
-    public static List<HWDiskStore> disks;
-    public static FileSystem fs;
     static Logger LOGGER = LoggerFactory.getLogger(Disk.class);
+    public static FileSystem fs;
+    public static List<HWDiskStore> disks;
     public static List<OSFileStore> fileStores;
     public static long[] prevFreeSpace;
     public static long[] prevTransferTime;
     public static long[] prevBytesWritten;
     public static long[] prevBytesRead;
-    public static SystemInfo si;
-    public static HardwareAbstractionLayer hal;
     public static Map<Integer, Integer> FileStoresToDisks;
     public static CRUM crum;
     static Statement stmt = null;
 
     public static int initDisk(CRUM crumObj){
         crum = crumObj;
-        si = new SystemInfo();
-        hal = si.getHardware();
-        fs = si.getOperatingSystem().getFileSystem();
+        fs = crum.si.getOperatingSystem().getFileSystem();
         fileStores = fs.getFileStores();
-        disks = hal.getDiskStores();
+        disks = crum.hal.getDiskStores();
         prevFreeSpace = new long[fileStores.size()];
         FileStoresToDisks = new HashMap<>();
         prevTransferTime = new long[fileStores.size()];

@@ -20,8 +20,6 @@ import java.util.Map;
 public class Memory {
     public static List<HWDiskStore> disks;
     static Logger LOGGER = LoggerFactory.getLogger(Memory.class);
-    public static SystemInfo si;
-    public static HardwareAbstractionLayer hal;
     public static CRUM crum;
     public static GlobalMemory memory;
     public static int numMemModules;
@@ -29,9 +27,7 @@ public class Memory {
 
     public static void initMemory(CRUM crumObj){
         crum = crumObj;
-        si = new SystemInfo();
-        hal = si.getHardware();
-        memory = hal.getMemory();
+        memory = crum.hal.getMemory();
         numMemModules = memory.getPhysicalMemory().size();
     }
 
