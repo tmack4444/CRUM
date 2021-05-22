@@ -133,6 +133,7 @@ public class CRUMTest {
     }
  */
 
+    /*
     @Test
     public void initNetworkTest() throws SQLException {
         CRUM crum = new CRUM();
@@ -172,6 +173,8 @@ public class CRUMTest {
         assertEquals(Macs, rs.getString("MAC_ADDRESS"));
         c.close();
     }
+    
+     */
 
  /*    @Test
     void getDiskDataTest(){

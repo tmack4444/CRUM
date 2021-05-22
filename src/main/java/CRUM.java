@@ -18,10 +18,8 @@ public class CRUM {
     public static Disk diskData;
     public static Memory memoryData;
     public static CPU CPUdata;
-    public static List<NetworkIF> netInterfaces;
+    public static Network networkData;
     public static int numDisks;
-    public static long[] baselineBytesIn;
-    public static long[] baselineBytesOut;
     static Connection c = null;
     static Statement stmt = null;
 
@@ -40,7 +38,7 @@ public class CRUM {
             diskData.getDiskData(calendar, SerialNum, c);
             CPUdata.getCPUData(calendar, SerialNum, c);
             memoryData.getMemoryData(calendar, SerialNum, c);
-            getNetworkData(calendar);
+            networkData.getNetworkData(calendar, SerialNum, c);
             cullDatabase();
             ui.refresh();
             TimeUnit.SECONDS.sleep(1);
@@ -151,19 +149,11 @@ public class CRUM {
         CPUdata = new CPU();
         memoryData = new Memory();
         diskData = new Disk();
+        networkData = new Network();
         CPUdata.initCPU(this);
         memoryData.initMemory(this);
+        networkData.initNetwork(this);
         numDisks = diskData.initDisk(this);
-        netInterfaces = hal.getNetworkIFs();
-        baselineBytesIn = new long[netInterfaces.size()];
-        baselineBytesOut = new long[netInterfaces.size()];
-        for(int i = 0; i < netInterfaces.size(); i++){
-            NetworkIF netIF = netInterfaces.get(i);
-            baselineBytesIn[i] += netIF.getBytesRecv();
-            baselineBytesOut[i] += netIF.getBytesSent();
-            netIF.updateAttributes();
-        }
-
     }
 
     /**
@@ -185,59 +175,6 @@ public class CRUM {
         smi.setString(4, hal.getComputerSystem().getManufacturer());
         smi.execute();
     }
-
-
-
-    public static void getNetworkData(Calendar calendar) throws SQLException {
-        java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-        long totalInbound = 0;
-        long totalOutbound = 0;
-        long currentIn = 0;
-        long currentOut = 0;
-        String IPs = "";
-        String Macs = "";
-        for(int i = 0; i < netInterfaces.size(); i++){
-            NetworkIF netIF = netInterfaces.get(i);
-            netIF.updateAttributes();
-            currentIn += netIF.getBytesRecv() - baselineBytesIn[i];
-            currentOut += netIF.getBytesSent() - baselineBytesOut[i];
-            baselineBytesIn[i] += currentIn;
-            baselineBytesOut[i] += currentOut;
-            totalInbound += currentIn;
-            totalOutbound += currentOut;
-            if(totalInbound < 0){
-                totalInbound = 0;
-            }
-            if(totalOutbound < 0){
-                totalOutbound = 0;
-            }
-            String[] currIP = netIF.getIPv4addr();
-            for(int j = 0; j < currIP.length; j++){
-                IPs += currIP[j];
-                if(j < currIP.length-1){
-                    IPs += ".";
-                }
-            }
-            IPs += " ";
-            Macs += netIF.getMacaddr() + " ";
-            //LOGGER.info("Total In {}", totalInbound);
-            //LOGGER.info("Total Out {} ", totalOutbound);
-            //LOGGER.info("baseLine in {}", baselineBytesIn);
-            //LOGGER.info("baseline out {} \n", baselineBytesOut);
-        }
-        String sql_mach_insert = "INSERT INTO Network VALUES(?,?,?,?,?,?)";
-        PreparedStatement smi = c.prepareStatement(sql_mach_insert);
-        smi.setString(1, IPs);
-        smi.setString(2, SerialNum);
-        smi.setTimestamp(3, currentTime);
-        smi.setLong(4, (totalInbound * 8)/1000000);
-        smi.setLong(5, (totalOutbound * 8)/1000000);
-        smi.setString(6, Macs);
-        smi.execute();
-        //LOGGER.info("IPs: {}", IPs);
-        //LOGGER.info("Macs:  {}", Macs);
-    }
-
 
     public static void cullDatabase() throws SQLException {
         Calendar tempCalendar = Calendar.getInstance();
