@@ -28,6 +28,7 @@ public class CRUM {
     public static long[][] prevLoadTicks;
     public static double[] currLoadTicks;
     public static long[] prevFreeSpace;
+    public static long[] prevTransferTime;
     public static Map<Integer, Integer> FileStoresToDisks;
     static Connection c = null;
     static Statement stmt = null;
@@ -167,6 +168,7 @@ public class CRUM {
         baselineBytesIn = new long[netInterfaces.size()];
         baselineBytesOut = new long[netInterfaces.size()];
         prevFreeSpace = new long[fileStores.size()];
+        prevTransferTime = new long[numDisks];
         FileStoresToDisks = new HashMap<>();
         for(int i = 0; i < netInterfaces.size(); i++){
             NetworkIF netIF = netInterfaces.get(i);
@@ -180,6 +182,7 @@ public class CRUM {
         }
         for(int j = 0; j < disks.size(); j++){
             HWDiskStore disk = disks.get(j);
+            prevTransferTime[j] = disk.getTransferTime();
             List <HWPartition> Partitions = disk.getPartitions();
             for(int k = 0; k < Partitions.size(); k++){
                 HWPartition partition = Partitions.get(k);
@@ -236,10 +239,15 @@ public class CRUM {
             for(int i = 0; i < fileStores.size(); i++) {
                 java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
                 OSFileStore currStore = fileStores.get(i);
-                currStore.updateAttributes();
+                long usage = Math.abs(currStore.getFreeSpace() - prevFreeSpace[i]);
+                prevFreeSpace[i] = currStore.getFreeSpace();
                 String sql_mach_insert = "INSERT INTO DISC VALUES(?,?,?,?,?,?,?,?)";
                 PreparedStatement smi = c.prepareStatement(sql_mach_insert);
                 HWDiskStore currDisk = disks.get(FileStoresToDisks.get(i));
+                long transferTime = currDisk.getTransferTime() - prevTransferTime[i];
+                prevTransferTime[i] = currDisk.getTransferTime();
+                currStore.updateAttributes();
+                currDisk.updateAttributes();
                 smi.setInt(1, i);
                 smi.setString(2, SerialNum);
                 smi.setTimestamp(3, currentTime);
@@ -247,7 +255,7 @@ public class CRUM {
                 smi.setString(5, currDisk.getModel());
                 smi.setLong(6, currStore.getTotalSpace()/1000000000);
                 smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
-                smi.setLong(8, currDisk.getTransferTime());
+                smi.setLong(8, transferTime);
                 smi.execute();
                 LOGGER.info("Disk:  {}", currStore.getName());
                 LOGGER.info("Description:  {}", currStore.getDescription());
@@ -259,11 +267,13 @@ public class CRUM {
                 //LOGGER.info("Bytes read: {}", disk.getReadBytes());
                 //LOGGER.info("Writes:  {}", disk.getWrites());
                 //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
+                LOGGER.info("usage: {} ", usage);
+                LOGGER.info("Transfer time: {} ", transferTime);
                 LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
                 LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
                 LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
                 LOGGER.info("usable space in GB: {} \n", currStore.getFreeSpace() / (1024 * 1024 * 1024));
-                //LOGGER.info("Time in use: {} \n", disk.getTransferTime());
+                currDisk.updateAttributes();
             }
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
