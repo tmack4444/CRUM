@@ -39,16 +39,16 @@ public class DiskTest {
     }
 
     @Test
-    void getDiskDataTest(){
-        CRUM crum = new CRUM();
-        Calendar calendar = Calendar.getInstance();
-        crum.initOSHI();
-        crum.initDB();
-        crum.diskData.getDiskData(calendar, crum.SerialNum, c);
-        String machineID = crum.hal.getComputerSystem().getSerialNumber();
-        String sourceFile = "test.txt";
+    void getDiskDataTest(){;
         try {
             c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+            CRUM crum = new CRUM();
+            Calendar calendar = Calendar.getInstance();
+            crum.initOSHI();
+            crum.initDB();
+            crum.diskData.getDiskData(calendar, crum.SerialNum, c);
+            String machineID = crum.hal.getComputerSystem().getSerialNumber();
+            String sourceFile = "test.txt";
             stmt = c.createStatement();
             String sql_Search = "SELECT * FROM DISC ";
             ResultSet rs = stmt.executeQuery(sql_Search);
@@ -60,8 +60,8 @@ public class DiskTest {
             is.close();
             os.close();
             calendar = Calendar.getInstance();
-            crum.diskData.getDiskData(calendar, crum.SerialNum, c);
             c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+            crum.diskData.getDiskData(calendar, crum.SerialNum, c);
             stmt = c.createStatement();
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
             String timeSearch = currentTime.toString();
@@ -71,6 +71,7 @@ public class DiskTest {
             rs = stmt.executeQuery(secondSearch);
             int finalUsed = rs.getInt("DISC_USED");
             assertTrue((finalUsed > initUsed));
+            System.out.println("CLOSE 2");
             c.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
