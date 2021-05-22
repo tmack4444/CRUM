@@ -103,9 +103,9 @@ public class Disk {
                 smi.setTimestamp(3, currentTime);
                 smi.setString(4, currStore.getMount());
                 smi.setString(5, currDisk.getModel());
-                smi.setLong(6, currStore.getTotalSpace()/1000000000);
-                smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace())/1000000000);
-                smi.setLong(8, transferTime);
+                smi.setLong(6, currStore.getTotalSpace() / (1024 * 1024 * 1024));
+                smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+                smi.setLong(8, totalBytesPerSec / (1024));
                 smi.execute();
                 LOGGER.info("Disk:  {}", currStore.getName());
                 LOGGER.info("Description:  {}", currStore.getDescription());
