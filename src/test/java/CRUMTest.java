@@ -24,14 +24,12 @@ public class CRUMTest {
       crum.initOSHI();
       assertNotNull(crum.si);
       assertNotNull(crum.hal);
-      //assertNotNull(crum.disks);
+      assertNotNull(crum.diskData);
       assertNotNull(crum.SerialNum);
       //assertNotNull(crum.fs);
       assertNotNull(crum.numDisks);
-      //assertNotNull(crum.cpu);
-      //assertNotNull(crum.prevLoadTicks);
-      //assertNotNull(crum.memory);
-      //assertNotNull(crum.numMemModules);
+      assertNotNull(crum.CPUdata);
+      assertNotNull(crum.memoryData);
   }
 
   @Test
@@ -70,49 +68,6 @@ public class CRUMTest {
       assertEquals(crum.hal.getComputerSystem().getManufacturer(), rs.getString("MACHINE_VENDOR"));
       c.close();
   }
-
-  /*
-  @Test
-  public void initRAMTest() throws SQLException {
-      CRUM crum = new CRUM();
-      crum.initOSHI();
-      crum.initDB();
-      crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
-      long usedSpace = (crum.memory.getTotal() - crum.memory.getAvailable())/1000000;
-      Calendar calendar = Calendar.getInstance();
-      crum.getMemoryData(calendar);
-      stmt = c.createStatement();
-      String sql_Search = "SELECT * FROM RAM ";
-      ResultSet rs = stmt.executeQuery(sql_Search);
-      assertEquals(crum.numMemModules, rs.getInt("RAM_ID"));
-      assertEquals(crum.memory.getTotal()/1000000, rs.getLong("TOTAL_SPACE"));
-      assertEquals(usedSpace, rs.getLong("USED_SPACE"));
-      c.close();
-  }
-
-   */
-
-    /*
-    @Test
-    public void initCPUTest() throws SQLException {
-        CRUM crum = new CRUM();
-        crum.initOSHI();
-        crum.initDB();
-        crum.initMachine();
-        c = DriverManager.getConnection("jdbc:sqlite:crum.db");
-        Calendar calendar = Calendar.getInstance();
-        crum.getCPUData(calendar);
-        stmt = c.createStatement();
-        String sql_Search = "SELECT * FROM CPU ";
-        ResultSet rs = stmt.executeQuery(sql_Search);
-        assertEquals(crum.cpu.getProcessorIdentifier().getProcessorID(), rs.getString("CPU_ID"));
-        assertEquals(crum.cpu.getProcessorIdentifier().getName(), rs.getString("CPU_MODEL"));
-        assertEquals(crum.cpu.getPhysicalProcessorCount(), rs.getLong("CORE_PHYSICAL"));
-        assertEquals(crum.cpu.getLogicalProcessorCount(), rs.getLong("CORE_LOGICAL"));
-        c.close();
-    }
-     */
 
 /*    @Test
     public void initDiscTest() throws SQLException {
@@ -173,7 +128,7 @@ public class CRUMTest {
         assertEquals(Macs, rs.getString("MAC_ADDRESS"));
         c.close();
     }
-    
+
      */
 
  /*    @Test
