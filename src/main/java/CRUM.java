@@ -101,15 +101,6 @@ public class CRUM {
                     "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
             stmt.executeUpdate(sql_disc);
 
-            String sql_user = "CREATE TABLE IF NOT EXISTS USER " +
-                    "(USER_ID INT NOT NULL, " +
-                    "MACHINE_ID TEXT NOT NULL," +
-                    "TIMESTAMP TIMESTAMP NOT NULL," +
-                    "PASSWORD_HASH TEXT NOT NULL," +
-                    "PRIMARY KEY(USER_ID, MACHINE_ID, TIMESTAMP)," +
-                    "FOREIGN KEY(MACHINE_ID) REFERENCES MACHINE(MACHINE_ID))";
-            stmt.executeUpdate(sql_user);
-
             String sql_cpu = "CREATE TABLE IF NOT EXISTS CPU " +
                     "(CPU_ID TEXT NOT NULL, " +
                     "MACHINE_ID TEXT NOT NULL," +
