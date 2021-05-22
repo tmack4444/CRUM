@@ -1,21 +1,16 @@
+package CRUM;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 import oshi.hardware.HWDiskStore;
-import oshi.hardware.HWPartition;
-import oshi.hardware.HardwareAbstractionLayer;
-import oshi.software.os.FileSystem;
-import oshi.software.os.OSFileStore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Memory {
     public static List<HWDiskStore> disks;

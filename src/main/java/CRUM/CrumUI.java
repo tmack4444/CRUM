@@ -1,11 +1,10 @@
+package CRUM;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.general.DatasetChangeEvent;
-import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
-import org.jfree.data.jdbc.JDBCXYDataset;
 
 import javax.swing.*;
 import java.awt.*;

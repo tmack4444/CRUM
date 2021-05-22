@@ -1,6 +1,6 @@
-import oshi.SystemInfo;
+package CRUM;
+
 import oshi.hardware.CentralProcessor;
-import oshi.hardware.HardwareAbstractionLayer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

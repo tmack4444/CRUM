@@ -1,3 +1,5 @@
+package CRUM;
+
 import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;

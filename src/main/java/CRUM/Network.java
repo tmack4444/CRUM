@@ -1,3 +1,5 @@
+package CRUM;
+
 import oshi.hardware.NetworkIF;
 
 import java.sql.Connection;
