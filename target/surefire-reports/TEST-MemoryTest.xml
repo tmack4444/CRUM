@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="MemoryTest" time="1.225" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="MemoryTest" time="0.901" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\Tom\AppData\Local\Temp\surefire333139801719613731\surefirebooter5906543299833032827.jar C:\Users\Tom\AppData\Local\Temp\surefire333139801719613731 2021-05-23T17-13-05_183-jvmRun1 surefire2846635719621253204tmp surefire_01219905740405960192tmp"/>
+    <property name="sun.java.command" value="C:\Users\Tom\AppData\Local\Temp\surefire6270939889650604967\surefirebooter8308759180832337150.jar C:\Users\Tom\AppData\Local\Temp\surefire6270939889650604967 2021-05-23T17-24-00_251-jvmRun1 surefire7366604955973156045tmp surefire_05182355471372502007tmp"/>
     <property name="surefire.test.class.path" value="C:\Users\Tom\Desktop\710\target\test-classes;C:\Users\Tom\Desktop\710\target\classes;C:\Users\Tom\.m2\repository\com\github\oshi\oshi-core\5.6.0\oshi-core-5.6.0.jar;C:\Users\Tom\.m2\repository\net\java\dev\jna\jna\5.7.0\jna-5.7.0.jar;C:\Users\Tom\.m2\repository\net\java\dev\jna\jna-platform\5.7.0\jna-platform-5.7.0.jar;C:\Users\Tom\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\Tom\.m2\repository\org\slf4j\slf4j-simple\1.7.5\slf4j-simple-1.7.5.jar;C:\Users\Tom\.m2\repository\org\xerial\sqlite-jdbc\3.34.0\sqlite-jdbc-3.34.0.jar;C:\Users\Tom\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.5.2\junit-jupiter-engine-5.5.2.jar;C:\Users\Tom\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\Tom\.m2\repository\org\junit\platform\junit-platform-engine\1.5.2\junit-platform-engine-1.5.2.jar;C:\Users\Tom\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.5.2\junit-jupiter-api-5.5.2.jar;C:\Users\Tom\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Tom\.m2\repository\org\junit\platform\junit-platform-commons\1.5.2\junit-platform-commons-1.5.2.jar;C:\Users\Tom\.m2\repository\org\jfree\jfreechart\1.5.2\jfreechart-1.5.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Tom"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Tom\AppData\Local\Temp\surefire333139801719613731\surefirebooter5906543299833032827.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Tom\AppData\Local\Temp\surefire6270939889650604967\surefirebooter8308759180832337150.jar"/>
     <property name="sun.boot.class.path" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\resources.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\rt.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\sunrsasign.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\jsse.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\jce.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\charsets.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\jfr.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -42,7 +42,7 @@
     <property name="java.endorsed.dirs" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\endorsed"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="Cp1252"/>
-    <property name="jnidispatch.path" value="C:\Users\Tom\AppData\Local\Temp\jna-84274\jna7494465899702863661.dll"/>
+    <property name="jnidispatch.path" value="C:\Users\Tom\AppData\Local\Temp\jna-84274\jna8218903719171434160.dll"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="localRepository" value="C:\Users\Tom\.m2\repository"/>
     <property name="jna.loaded" value="true"/>
@@ -63,7 +63,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="initMemoryTest" classname="MemoryTest" time="0.571">
+  <testcase name="initMemoryTest" classname="MemoryTest" time="0.429">
     <system-out><![CDATA[Partition ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
 Filestore ID: cd0de60d-0000-0000-0000-500600000000
 Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
@@ -98,7 +98,7 @@ Opened database successfully
 Tables created successfully
 ]]></system-out>
   </testcase>
-  <testcase name="getMemoryDataTest" classname="MemoryTest" time="0.652">
+  <testcase name="getMemoryDataTest" classname="MemoryTest" time="0.471">
     <system-out><![CDATA[Partition ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
 Filestore ID: cd0de60d-0000-0000-0000-500600000000
 Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963

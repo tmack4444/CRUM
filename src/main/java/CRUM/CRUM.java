@@ -4,6 +4,7 @@ import oshi.SystemInfo;
 import oshi.hardware.*;
 //import org.slf4j.*;
 
+import java.io.File;
 import java.sql.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -25,8 +26,8 @@ public class CRUM {
     public static void main(String[] args) throws InterruptedException, SQLException {
         Calendar calendar = Calendar.getInstance();
         CRUM crum = new CRUM();
-        crum.initDB();
         crum.initOSHI();
+        crum.initDB();
         crum.initMachine();
         //  Realized I can't manipulate labels accurately
         //  unless I do it this way, sorry -Paul
@@ -142,6 +143,9 @@ public class CRUM {
      * the gathering steps, and ensure that these objects all exist before we attempt to gather data
      */
     public void initOSHI(){
+        String databaseLocation = "C:/tmp/";
+        File file = new File(databaseLocation);
+        file.mkdir();
         si = new SystemInfo();
         hal = si.getHardware();
         SerialNum = hal.getComputerSystem().getSerialNumber();
