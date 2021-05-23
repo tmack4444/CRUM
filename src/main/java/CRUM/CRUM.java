@@ -2,7 +2,7 @@ package CRUM;
 
 import oshi.SystemInfo;
 import oshi.hardware.*;
-import org.slf4j.*;
+//import org.slf4j.*;
 
 import java.sql.*;
 import java.util.*;
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public class CRUM {
-    static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
+    //static Logger LOGGER = LoggerFactory.getLogger(CRUM.class);
     public static SystemInfo si;
     public static HardwareAbstractionLayer hal;
     public static String SerialNum;
@@ -187,7 +187,7 @@ public class CRUM {
         else
             tempCalendar.set(Calendar.DAY_OF_YEAR,tempDay-1);
         java.sql.Timestamp lastMonth = new java.sql.Timestamp(tempCalendar.getTime().getTime());
-        LOGGER.info("TimeStamp:  {}", lastMonth.toString());
+        //LOGGER.info("TimeStamp:  {}", lastMonth.toString());
         String timeSearch = lastMonth.toString();
         String[] timeSplitTemp = timeSearch.split(Pattern.quote("."));
         timeSearch = timeSplitTemp[0];

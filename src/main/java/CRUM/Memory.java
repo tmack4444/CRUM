@@ -1,7 +1,7 @@
 package CRUM;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import oshi.hardware.GlobalMemory;
 import oshi.hardware.HWDiskStore;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Memory {
     public static List<HWDiskStore> disks;
-    static Logger LOGGER = LoggerFactory.getLogger(Memory.class);
+    //static Logger LOGGER = LoggerFactory.getLogger(Memory.class);
     public static CRUM crum;
     public static GlobalMemory memory;
     public static int numMemModules;

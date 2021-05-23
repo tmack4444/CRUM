@@ -1,7 +1,7 @@
 package CRUM;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import oshi.hardware.HWDiskStore;
 import oshi.hardware.HWPartition;
 import oshi.software.os.FileSystem;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Disk {
-    static Logger LOGGER = LoggerFactory.getLogger(Disk.class);
+    //static Logger LOGGER = LoggerFactory.getLogger(Disk.class);
     public static FileSystem fs;
     public static List<HWDiskStore> disks;
     public static List<OSFileStore> fileStores;
@@ -58,8 +58,8 @@ public class Disk {
                         FileStoresToDisks.put(l, j);
                     }
                 }
-                LOGGER.info("Partition:  {}", partition.getMountPoint());
-                LOGGER.info("UUID:  {}", partition.getUuid());
+                //LOGGER.info("Partition:  {}", partition.getMountPoint());
+                //LOGGER.info("UUID:  {}", partition.getUuid());
             }
         }
         return fileStores.size();
@@ -107,24 +107,24 @@ public class Disk {
                 smi.setLong(7,  (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
                 smi.setLong(8, totalBytesPerSec / (1024));
                 smi.execute();
-                LOGGER.info("Disk:  {}", currStore.getName());
-                LOGGER.info("Description:  {}", currStore.getDescription());
-                LOGGER.info("Label:  {}", currStore.getLabel());
-                LOGGER.info("Logical Volume:  {}", currStore.getLogicalVolume());
-                LOGGER.info("Mount Volume:  {}", currStore.getMount());
-                LOGGER.info("UUID:  {}", currStore.getUUID());
+                //LOGGER.info("Disk:  {}", currStore.getName());
+                //LOGGER.info("Description:  {}", currStore.getDescription());
+                //LOGGER.info("Label:  {}", currStore.getLabel());
+                //LOGGER.info("Logical Volume:  {}", currStore.getLogicalVolume());
+                //LOGGER.info("Mount Volume:  {}", currStore.getMount());
+                //LOGGER.info("UUID:  {}", currStore.getUUID());
                 //LOGGER.info("Reads:  {}", disk.getReads());
                 //LOGGER.info("Bytes read: {}", disk.getReadBytes());
                 //LOGGER.info("Writes:  {}", disk.getWrites());
                 //LOGGER.info("Bytes written: {}", disk.getWriteBytes());
-                LOGGER.info("Writes per second: {} ", writesPerSec);
-                LOGGER.info("Reads per second: {} ", readsPerSec);
-                LOGGER.info("Total bytes per second: {} ", totalBytesPerSec);
-                LOGGER.info("Transfer time: {} ", transferTime);
-                LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
-                LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
-                LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
-                LOGGER.info("usable space in GB: {} \n", currStore.getFreeSpace() / (1024 * 1024 * 1024));
+                //LOGGER.info("Writes per second: {} ", writesPerSec);
+                //LOGGER.info("Reads per second: {} ", readsPerSec);
+                //LOGGER.info("Total bytes per second: {} ", totalBytesPerSec);
+                //LOGGER.info("Transfer time: {} ", transferTime);
+                //LOGGER.info("usedSpace: {}", currStore.getFreeSpace());
+                //LOGGER.info("Total Space in GB: {}", currStore.getTotalSpace() / (1024 * 1024 * 1024));
+                //LOGGER.info("usedSpace in GB: {}", (currStore.getTotalSpace() - currStore.getFreeSpace()) / (1024 * 1024 * 1024));
+                //LOGGER.info("usable space in GB: {} \n", currStore.getFreeSpace() / (1024 * 1024 * 1024));
                 currDisk.updateAttributes();
             }
         } catch ( Exception e ) {
