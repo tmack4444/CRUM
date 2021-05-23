@@ -22,7 +22,7 @@ public class NetworkTest {
         assertNotNull(crum.networkData.netInterfaces);
         assertNotNull(crum.networkData.baselineBytesIn);
         assertNotNull(crum.networkData.baselineBytesOut);
-        c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+        c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
         crum.networkData.getNetworkData(calendar, crum.SerialNum, c);
         String IPs = "";
         String Macs = "";

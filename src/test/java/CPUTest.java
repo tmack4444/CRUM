@@ -27,7 +27,7 @@ public class CPUTest {
         crum.initOSHI();
         crum.initDB();
         crum.initMachine();
-        c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+        c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
         Calendar calendar = Calendar.getInstance();
         crum.CPUdata.getCPUData(calendar, crum.SerialNum, c);
         stmt = c.createStatement();

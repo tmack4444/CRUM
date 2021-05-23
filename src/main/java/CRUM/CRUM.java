@@ -28,8 +28,8 @@ public class CRUM {
         crum.initDB();
         crum.initOSHI();
         crum.initMachine();
-        // Realized I can't manipulate labels accurately
-        // unless I do it this way, sorry -Paul
+        //  Realized I can't manipulate labels accurately
+        //  unless I do it this way, sorry -Paul
         CrumUI ui = new CrumUI("C.R.U.M", c);
         ui.createUI(ui);
         while(true){
@@ -46,7 +46,7 @@ public class CRUM {
 
     public void initDB(){
         try {
-            c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+            c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
 

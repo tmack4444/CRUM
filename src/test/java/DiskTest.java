@@ -26,7 +26,7 @@ public class DiskTest {
         assertNotNull(crum.diskData.prevTransferTime);
         assertNotNull(crum.diskData.prevBytesRead);
         assertNotNull(crum.diskData.prevBytesWritten);
-        c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+        c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
         Calendar calendar = Calendar.getInstance();
         crum.diskData.getDiskData(calendar, crum.SerialNum, c);
         stmt = c.createStatement();
@@ -41,7 +41,7 @@ public class DiskTest {
     @Test
     void getDiskDataTest(){;
         try {
-            c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+            c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
             CRUM crum = new CRUM();
             Calendar calendar = Calendar.getInstance();
             crum.initOSHI();
@@ -60,7 +60,7 @@ public class DiskTest {
             is.close();
             os.close();
             calendar = Calendar.getInstance();
-            c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+            c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
             crum.diskData.getDiskData(calendar, crum.SerialNum, c);
             stmt = c.createStatement();
             java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());

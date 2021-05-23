@@ -27,7 +27,7 @@ public class CRUMTest {
 
   @Test
   public void initDBTest() throws SQLException {
-      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+      c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
       stmt = c.createStatement();
       CRUM crum = new CRUM();
       crum.initDB();
@@ -52,7 +52,7 @@ public class CRUMTest {
       crum.initOSHI();
       crum.initDB();
       crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+      c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
       stmt = c.createStatement();
       String sql_Search = "SELECT * FROM MACHINE ";
       ResultSet rs = stmt.executeQuery(sql_Search);

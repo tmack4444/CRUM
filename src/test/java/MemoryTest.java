@@ -27,7 +27,7 @@ public class MemoryTest {
         crum.initOSHI();
         crum.initDB();
         crum.initMachine();
-        c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+        c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
         long usedSpace = (crum.memoryData.memory.getTotal() - crum.memoryData.memory.getAvailable())/1000000;
         Calendar calendar = Calendar.getInstance();
         crum.memoryData.getMemoryData(calendar, crum.SerialNum, c);
