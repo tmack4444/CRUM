@@ -9,6 +9,11 @@
     <version>1.0</version>
     <packaging>jar</packaging>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -24,10 +29,8 @@
                         <archive>
                             <manifest>
                                 <addClasspath>true</addClasspath>
-                                <mainClass>CRUM</mainClass>
+                                <mainClass>CRUM.CRUM</mainClass>
                                 <packageName>CRUM</packageName>
-                                <addClasspath>true</addClasspath>
-                                <classpathPrefix>lib/</classpathPrefix>
                             </manifest>
                         </archive>
                     </configuration>
