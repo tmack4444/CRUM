@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="NetworkTest" time="0.462" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\Tom\Desktop\710\target\test-classes;C:\Users\Tom\Desktop\710\target\classes;C:\Users\Tom\.m2\repository\com\github\oshi\oshi-core\5.6.0\oshi-core-5.6.0.jar;C:\Users\Tom\.m2\repository\net\java\dev\jna\jna\5.7.0\jna-5.7.0.jar;C:\Users\Tom\.m2\repository\net\java\dev\jna\jna-platform\5.7.0\jna-platform-5.7.0.jar;C:\Users\Tom\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\Tom\.m2\repository\org\slf4j\slf4j-simple\1.7.5\slf4j-simple-1.7.5.jar;C:\Users\Tom\.m2\repository\org\xerial\sqlite-jdbc\3.34.0\sqlite-jdbc-3.34.0.jar;C:\Users\Tom\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.5.2\junit-jupiter-engine-5.5.2.jar;C:\Users\Tom\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\Tom\.m2\repository\org\junit\platform\junit-platform-engine\1.5.2\junit-platform-engine-1.5.2.jar;C:\Users\Tom\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.5.2\junit-jupiter-api-5.5.2.jar;C:\Users\Tom\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Tom\.m2\repository\org\junit\platform\junit-platform-commons\1.5.2\junit-platform-commons-1.5.2.jar;C:\Users\Tom\.m2\repository\org\jfree\jfreechart\1.5.2\jfreechart-1.5.2.jar;"/>
+    <property name="java.vm.vendor" value="Amazon.com Inc."/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://aws.amazon.com/corretto/"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\Tom\AppData\Local\Temp\surefire6270939889650604967\surefirebooter8308759180832337150.jar C:\Users\Tom\AppData\Local\Temp\surefire6270939889650604967 2021-05-23T17-24-00_251-jvmRun1 surefire7366604955973156045tmp surefire_05182355471372502007tmp"/>
+    <property name="surefire.test.class.path" value="C:\Users\Tom\Desktop\710\target\test-classes;C:\Users\Tom\Desktop\710\target\classes;C:\Users\Tom\.m2\repository\com\github\oshi\oshi-core\5.6.0\oshi-core-5.6.0.jar;C:\Users\Tom\.m2\repository\net\java\dev\jna\jna\5.7.0\jna-5.7.0.jar;C:\Users\Tom\.m2\repository\net\java\dev\jna\jna-platform\5.7.0\jna-platform-5.7.0.jar;C:\Users\Tom\.m2\repository\org\slf4j\slf4j-api\1.7.30\slf4j-api-1.7.30.jar;C:\Users\Tom\.m2\repository\org\slf4j\slf4j-simple\1.7.5\slf4j-simple-1.7.5.jar;C:\Users\Tom\.m2\repository\org\xerial\sqlite-jdbc\3.34.0\sqlite-jdbc-3.34.0.jar;C:\Users\Tom\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.5.2\junit-jupiter-engine-5.5.2.jar;C:\Users\Tom\.m2\repository\org\apiguardian\apiguardian-api\1.1.0\apiguardian-api-1.1.0.jar;C:\Users\Tom\.m2\repository\org\junit\platform\junit-platform-engine\1.5.2\junit-platform-engine-1.5.2.jar;C:\Users\Tom\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.5.2\junit-jupiter-api-5.5.2.jar;C:\Users\Tom\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Tom\.m2\repository\org\junit\platform\junit-platform-commons\1.5.2\junit-platform-commons-1.5.2.jar;C:\Users\Tom\.m2\repository\org\jfree\jfreechart\1.5.2\jfreechart-1.5.2.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\Tom"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre"/>
+    <property name="basedir" value="C:\Users\Tom\Desktop\710"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\Tom\AppData\Local\Temp\surefire6270939889650604967\surefirebooter8308759180832337150.jar"/>
+    <property name="sun.boot.class.path" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\resources.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\rt.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\sunrsasign.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\jsse.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\jce.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\charsets.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\jfr.jar;C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_292-b10"/>
+    <property name="user.name" value="Tom"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="jnidispatch.path" value="C:\Users\Tom\AppData\Local\Temp\jna-84274\jna8218903719171434160.dll"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\Tom\.m2\repository"/>
+    <property name="jna.loaded" value="true"/>
+    <property name="java.vendor.url.bug" value="https://github.com/corretto/corretto-8/issues/"/>
+    <property name="java.io.tmpdir" value="C:\Users\Tom\AppData\Local\Temp\"/>
+    <property name="idea.version" value="2020.3.2"/>
+    <property name="java.version" value="1.8.0_292"/>
+    <property name="user.dir" value="C:\Users\Tom\Desktop\710"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\libnvvp;c:\programdata\oracle\java\javapath;c:\program files (x86)\intel\icls client\;c:\program files\intel\icls client\;c:\windows\system32;c:\windows;c:\windows\system32\wbem;c:\windows\system32\windowspowershell\v1.0\;c:\program files\microsoft sql server\110\tools\binn\;c:\program files (x86)\smart projects\isobuster;c:\program files\intel\intel(r) management engine components\dal;c:\program files\intel\intel(r) management engine components\ipt;c:\program files (x86)\intel\intel(r) management engine components\dal;c:\program files (x86)\intel\intel(r) management engine components\ipt;c:\program files (x86)\quicktime\qtsystem\;c:\program files (x86)\common files\acronis\snapapi\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32\wbem;C:\WINDOWS\system32\windowspowershell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Live\Shared;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Calibre2\;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\scala\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\Tom\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\Tom\AppData\Local\Programs\Python\Python37-32\;C:\Users\Tom\AppData\Local\Microsoft\WindowsApps;C:\Users\Tom\AppData\Local\atom\bin;C:\Program Files\Java\jdk1.8.0_121\bin;C:\Users\Tom\AppData\Local\Microsoft\WindowsApps;C:\Users\Tom\AppData\Roaming\npm;C:\Users\Tom\Desktop\Masters\MSCS 710\Project\apache-maven-3.6.3\bin;C:\Program Files\MongoDB\Server\4.4\bin;C:\Users\Tom\Desktop\Masters\MSCS 710\CRUM\sqlite-amalgamation-3350400;;C:\Program Files (x86)\Common Files\Acronis\TibMounter64;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Amazon.com Inc."/>
+    <property name="java.vm.version" value="25.292-b10"/>
+    <property name="java.ext.dirs" value="C:\Users\Tom\.jdks\corretto-1.8.0_292\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="initNetworkTest" classname="NetworkTest" time="0.46">
+    <system-out><![CDATA[Partition ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
+Filestore ID: cd0de60d-0000-0000-0000-500600000000
+Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: 80eebe6d-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
+Filestore ID: 6788e64d-39fc-4aa1-90ba-9f854cab5dd5
+Partition ID: 6788e64d-39fc-4aa1-90ba-9f854cab5dd5
+Filestore ID: cd0de60d-0000-0000-0000-500600000000
+Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: 80eebe6d-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
+Filestore ID: 6788e64d-39fc-4aa1-90ba-9f854cab5dd5
+Partition ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: cd0de60d-0000-0000-0000-500600000000
+Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: 80eebe6d-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
+Filestore ID: 6788e64d-39fc-4aa1-90ba-9f854cab5dd5
+Partition ID: 80eebe6d-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: cd0de60d-0000-0000-0000-500600000000
+Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: 80eebe6d-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
+Filestore ID: 6788e64d-39fc-4aa1-90ba-9f854cab5dd5
+Partition ID: cd0de60d-0000-0000-0000-500600000000
+Filestore ID: cd0de60d-0000-0000-0000-500600000000
+Filestore ID: 80eebe6c-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: 80eebe6d-01c2-11e3-9e59-806e6f6e6963
+Filestore ID: a838cf77-0c75-4a56-afaf-aa82691f3c3c
+Filestore ID: 6788e64d-39fc-4aa1-90ba-9f854cab5dd5
+Opened database successfully
+Tables created successfully
+]]></system-out>
+  </testcase>
+</testsuite>

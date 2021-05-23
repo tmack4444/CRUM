@@ -1,12 +1,7 @@
-import oshi.SystemInfo;
-import oshi.hardware.HWDiskStore;
-import oshi.hardware.HardwareAbstractionLayer;
+import CRUM.CRUM;
 
-import java.io.*;
 import java.sql.*;
 import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -23,64 +18,16 @@ public class CRUMTest {
       crum.initOSHI();
       assertNotNull(crum.si);
       assertNotNull(crum.hal);
-      assertNotNull(crum.disks);
+      assertNotNull(crum.diskData);
       assertNotNull(crum.SerialNum);
-      assertNotNull(crum.fs);
       assertNotNull(crum.numDisks);
-      assertNotNull(crum.cpu);
-      assertNotNull(crum.prevLoadTicks);
-      assertNotNull(crum.memory);
-      assertNotNull(crum.numMemModules);
-  }
-
-  @Test
-  void getDiskDataTest(){
-      CRUM crum = new CRUM();
-      Calendar calendar = Calendar.getInstance();
-      crum.initOSHI();
-      crum.initDB();
-      crum.getDiskData(calendar);
-      String machineID = crum.hal.getComputerSystem().getSerialNumber();
-      String sourceFile = "test.txt";
-      try {
-          c = DriverManager.getConnection("jdbc:sqlite:crum.db");
-          stmt = c.createStatement();
-          String sql_Search = "SELECT * FROM DISC ";
-          ResultSet rs = stmt.executeQuery(sql_Search);
-          int initUsed = rs.getInt("DISC_USED");
-          OutputStream os = new FileOutputStream("test2.txt");
-          InputStream is = new FileInputStream(sourceFile);
-          os.write(is.read());
-          c.close();
-          is.close();
-          os.close();
-          calendar = Calendar.getInstance();
-          crum.getDiskData(calendar);
-          c = DriverManager.getConnection("jdbc:sqlite:crum.db");
-          stmt = c.createStatement();
-          java.sql.Timestamp currentTime = new java.sql.Timestamp(calendar.getTime().getTime());
-          String timeSearch = currentTime.toString();
-          String[] timeSplitTemp = timeSearch.split(".");
-          timeSearch = timeSplitTemp[0];
-          String secondSearch = "SELECT * FROM DISC WHERE DATETIME(TIMESTAMP) >= '" + timeSearch + "'";
-          rs = stmt.executeQuery(secondSearch);
-          int finalUsed = rs.getInt("DISC_USED");
-          assertTrue((finalUsed > initUsed));
-          c.close();
-      } catch (FileNotFoundException e) {
-          e.printStackTrace();
-      } catch (IOException e) {
-          e.printStackTrace();
-      } catch (SQLException throwables) {
-          throwables.printStackTrace();
-      } catch (Exception e){
-
-      }
+      assertNotNull(crum.CPUdata);
+      assertNotNull(crum.memoryData);
   }
 
   @Test
   public void initDBTest() throws SQLException {
-      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+      c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
       stmt = c.createStatement();
       CRUM crum = new CRUM();
       crum.initDB();
@@ -90,12 +37,12 @@ public class CRUMTest {
       assertEquals("MACHINE", res.getString("TABLE_NAME"));
       res = meta.getTables(null, null, "DISC", new String[] {"TABLE"});
       assertEquals("DISC", res.getString("TABLE_NAME"));
-      res = meta.getTables(null, null, "USER", new String[] {"TABLE"});
-      assertEquals("USER", res.getString("TABLE_NAME"));
       res = meta.getTables(null, null, "CPU", new String[] {"TABLE"});
       assertEquals("CPU", res.getString("TABLE_NAME"));
       res = meta.getTables(null, null, "RAM", new String[] {"TABLE"});
       assertEquals("RAM", res.getString("TABLE_NAME"));
+      res = meta.getTables(null, null, "NETWORK", new String[] {"TABLE"});
+      assertEquals("NETWORK", res.getString("TABLE_NAME"));
       c.close();
   }
 
@@ -105,7 +52,7 @@ public class CRUMTest {
       crum.initOSHI();
       crum.initDB();
       crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
+      c = DriverManager.getConnection("jdbc:sqlite:C:/tmp/crum.db");
       stmt = c.createStatement();
       String sql_Search = "SELECT * FROM MACHINE ";
       ResultSet rs = stmt.executeQuery(sql_Search);
@@ -115,20 +62,4 @@ public class CRUMTest {
       c.close();
   }
 
-  @Test
-  public void getMemoryTest() throws SQLException {
-      CRUM crum = new CRUM();
-      crum.initOSHI();
-      crum.initDB();
-      crum.initMachine();
-      c = DriverManager.getConnection("jdbc:sqlite:crum.db");
-      long usedSpace = crum.memory.getTotal() - crum.memory.getTotal();
-      stmt = c.createStatement();
-      String sql_Search = "SELECT * FROM RAM ";
-      ResultSet rs = stmt.executeQuery(sql_Search);
-      assertEquals(crum.numMemModules, rs.getString("RAM_ID"));
-      assertEquals(crum.memory.getTotal(), rs.getString("TOTAL_SPACE"));
-      assertEquals(usedSpace, rs.getString("USED_SPACE"));
-      c.close();
-  }
 }

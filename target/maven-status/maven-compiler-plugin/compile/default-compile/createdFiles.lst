@@ -1,3 +1,11 @@
-Test.class
-CrumUI.class
-CRUM.class
+CRUM\DiskPanel.class
+CRUM\Network.class
+CRUM\CrumUI$3.class
+CRUM\CRUM.class
+CRUM\CPU.class
+CRUM\CrumUI.class
+CRUM\CrumUI$1.class
+CRUM\CrumUI$4.class
+CRUM\Memory.class
+CRUM\CrumUI$2.class
+CRUM\Disk.class
